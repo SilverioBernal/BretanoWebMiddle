@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Business", "Business", "{28A0298B-572E-435B-93B3-2E2470910582}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orkidea.Bretano.WebMiddle.BackEnd.Business", "Orkidea.Bretano.WebMiddle.BackEnd.Business\Orkidea.Bretano.WebMiddle.BackEnd.Business.csproj", "{3BE779F9-56BF-49EE-B2BE-E895A1D90437}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{65939202-254E-468C-8E14-DA7B0A574518}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orkidea.Bretano.WebMiddle.BackEnd.Contracts", "Orkidea.Bretano.WebMiddle.BackEnd.Contracts\Orkidea.Bretano.WebMiddle.BackEnd.Contracts.csproj", "{7DFD35A5-D162-4A84-821E-CC260A00DDF3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orkidea.Bretano.WebMiddle.BackEnd.Core", "Orkidea.Bretano.WebMiddle.BackEnd.Core\Orkidea.Bretano.WebMiddle.BackEnd.Core.csproj", "{A78D6A9A-8971-4194-A957-227258F24538}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hosts", "Hosts", "{018A4C31-3408-45C2-8CBB-AA697C5EF480}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orkidea.Bretano.WebMiddle.BackEnd.EndPoint", "Orkidea.Bretano.WebMiddle.BackEnd.EndPoint\Orkidea.Bretano.WebMiddle.BackEnd.EndPoint.csproj", "{6CDCEBDC-B50A-4286-BC0D-2E446ED84415}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTest", "UnitTest", "{00776B62-E180-4026-8027-4022A74436D5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3BE779F9-56BF-49EE-B2BE-E895A1D90437}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BE779F9-56BF-49EE-B2BE-E895A1D90437}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BE779F9-56BF-49EE-B2BE-E895A1D90437}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BE779F9-56BF-49EE-B2BE-E895A1D90437}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DFD35A5-D162-4A84-821E-CC260A00DDF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DFD35A5-D162-4A84-821E-CC260A00DDF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DFD35A5-D162-4A84-821E-CC260A00DDF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DFD35A5-D162-4A84-821E-CC260A00DDF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A78D6A9A-8971-4194-A957-227258F24538}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A78D6A9A-8971-4194-A957-227258F24538}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A78D6A9A-8971-4194-A957-227258F24538}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A78D6A9A-8971-4194-A957-227258F24538}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CDCEBDC-B50A-4286-BC0D-2E446ED84415}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CDCEBDC-B50A-4286-BC0D-2E446ED84415}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CDCEBDC-B50A-4286-BC0D-2E446ED84415}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CDCEBDC-B50A-4286-BC0D-2E446ED84415}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3BE779F9-56BF-49EE-B2BE-E895A1D90437} = {28A0298B-572E-435B-93B3-2E2470910582}
+		{7DFD35A5-D162-4A84-821E-CC260A00DDF3} = {65939202-254E-468C-8E14-DA7B0A574518}
+		{A78D6A9A-8971-4194-A957-227258F24538} = {65939202-254E-468C-8E14-DA7B0A574518}
+		{6CDCEBDC-B50A-4286-BC0D-2E446ED84415} = {018A4C31-3408-45C2-8CBB-AA697C5EF480}
+	EndGlobalSection
+EndGlobal
