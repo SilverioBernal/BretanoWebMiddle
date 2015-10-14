@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.Global.UserDefinedFileds" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.Global.UserDefinedFileds" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="UdfType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Alphanumeric" />
+      <xs:enumeration value="Numeric" />
+      <xs:enumeration value="Datetime" />
+      <xs:enumeration value="Price" />
+      <xs:enumeration value="Text" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="UdfType" nillable="true" type="tns:UdfType" />
+</xs:schema>

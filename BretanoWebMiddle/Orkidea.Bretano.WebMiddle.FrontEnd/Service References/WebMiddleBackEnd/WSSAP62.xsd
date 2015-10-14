@@ -1,0 +1,931 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://WSSAP" elementFormDefault="qualified" targetNamespace="http://WSSAP" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://190.216.129.83:8085/wssap/WSSAP.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.BusinessPartners" />
+  <xs:import schemaLocation="http://190.216.129.83:8085/wssap/WSSAP.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.Global.UserDefinedFileds" />
+  <xs:import schemaLocation="http://190.216.129.83:8085/wssap/WSSAP.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.Inventory" />
+  <xs:import schemaLocation="http://190.216.129.83:8085/wssap/WSSAP.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.Global.Administration" />
+  <xs:element name="GetBusinessPartners">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.BusinessPartners" minOccurs="0" name="cardType" type="q1:CardType" />
+        <xs:element minOccurs="0" name="oAppConnData" nillable="true" type="tns:AppConnData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="AppConnData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="adoConnString" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="dataBaseName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="sapUser" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="sapUserPassword" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="wsAppKey" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="wsSecret" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AppConnData" nillable="true" type="tns:AppConnData" />
+  <xs:element name="GetBusinessPartnersResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetBusinessPartnersResult" nillable="true" type="tns:ArrayOfGenericBusinessPartner" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ArrayOfGenericBusinessPartner">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="GenericBusinessPartner" nillable="true" type="tns:GenericBusinessPartner" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfGenericBusinessPartner" nillable="true" type="tns:ArrayOfGenericBusinessPartner" />
+  <xs:complexType name="GenericBusinessPartner">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="cardCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="cardName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="listNum" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GenericBusinessPartner" nillable="true" type="tns:GenericBusinessPartner" />
+  <xs:complexType name="DataAccessFault">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ErrorID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ErrorSAP" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DataAccessFault" nillable="true" type="tns:DataAccessFault" />
+  <xs:element name="GetBusinessPartner">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="cardCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="oAppConnData" nillable="true" type="tns:AppConnData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetBusinessPartnerResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetBusinessPartnerResult" nillable="true" type="tns:BusinessPartner" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="BusinessPartner">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="address" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="addresses" nillable="true" type="tns:ArrayOfBusinessPartnerAddress" />
+      <xs:element minOccurs="0" name="agentCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="blockDunn" type="xs:boolean" />
+      <xs:element minOccurs="0" name="cardCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="cardFName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="cardName" nillable="true" type="xs:string" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.BusinessPartners" minOccurs="0" name="cardType" type="q2:CardType" />
+      <xs:element minOccurs="0" name="cellular" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="cntctPrsn" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="contactPersons" nillable="true" type="tns:ArrayOfContactEmployee" />
+      <xs:element minOccurs="0" name="creditLine" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="currency" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="debPayAcct" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="debitLine" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="discount" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="dunTerm" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="e_Mail" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="fax" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="freeText" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="groupCode" type="xs:int" />
+      <xs:element minOccurs="0" name="groupNum" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="intrstRate" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="licTradNum" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="listNum" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="phone1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="phone2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="qryGroup1" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup10" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup11" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup12" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup13" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup14" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup15" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup16" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup17" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup18" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup19" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup2" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup20" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup21" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup22" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup23" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup24" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup25" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup26" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup27" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup28" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup29" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup3" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup30" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup31" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup32" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup33" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup34" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup35" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup36" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup37" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup38" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup39" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup4" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup40" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup41" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup42" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup43" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup44" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup45" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup46" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup47" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup48" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup49" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup5" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup50" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup51" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup52" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup53" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup54" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup55" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup56" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup57" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup58" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup59" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup6" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup60" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup61" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup62" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup63" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup64" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup7" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup8" type="xs:boolean" />
+      <xs:element minOccurs="0" name="qryGroup9" type="xs:boolean" />
+      <xs:element minOccurs="0" name="slpCode" type="xs:int" />
+      <xs:element minOccurs="0" name="territory" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="userDefinedFields" nillable="true" type="tns:ArrayOfUserDefinedField" />
+      <xs:element minOccurs="0" name="withholdingTaxes" nillable="true" type="tns:ArrayOfBusinessPartnerWithholdingTax" />
+      <xs:element minOccurs="0" name="wtLiable" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BusinessPartner" nillable="true" type="tns:BusinessPartner" />
+  <xs:complexType name="ArrayOfBusinessPartnerAddress">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="BusinessPartnerAddress" nillable="true" type="tns:BusinessPartnerAddress" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBusinessPartnerAddress" nillable="true" type="tns:ArrayOfBusinessPartnerAddress" />
+  <xs:complexType name="BusinessPartnerAddress">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="UserDefinedFields" nillable="true" type="tns:ArrayOfUserDefinedField" />
+      <xs:element minOccurs="0" name="address" nillable="true" type="xs:string" />
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.BusinessPartners" minOccurs="0" name="addressType" type="q3:AddressType" />
+      <xs:element minOccurs="0" name="block" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="cardCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="city" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="country" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="county" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="defaultAddress" type="xs:boolean" />
+      <xs:element minOccurs="0" name="state" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="street" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="streetNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="taxCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="zipCode" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BusinessPartnerAddress" nillable="true" type="tns:BusinessPartnerAddress" />
+  <xs:complexType name="ArrayOfUserDefinedField">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="UserDefinedField" nillable="true" type="tns:UserDefinedField" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUserDefinedField" nillable="true" type="tns:ArrayOfUserDefinedField" />
+  <xs:complexType name="UserDefinedField">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
+      <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.Global.UserDefinedFileds" minOccurs="0" name="type" type="q4:UdfType" />
+      <xs:element minOccurs="0" name="value" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UserDefinedField" nillable="true" type="tns:UserDefinedField" />
+  <xs:complexType name="ArrayOfContactEmployee">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ContactEmployee" nillable="true" type="tns:ContactEmployee" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfContactEmployee" nillable="true" type="tns:ArrayOfContactEmployee" />
+  <xs:complexType name="ContactEmployee">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="address" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="cardCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="cellolar" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="defaultContact" type="xs:boolean" />
+      <xs:element minOccurs="0" name="e_mail" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="firstName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="lastName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="middleName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="position" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="telephone1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="telephone2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="title" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ContactEmployee" nillable="true" type="tns:ContactEmployee" />
+  <xs:complexType name="ArrayOfBusinessPartnerWithholdingTax">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="BusinessPartnerWithholdingTax" nillable="true" type="tns:BusinessPartnerWithholdingTax" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBusinessPartnerWithholdingTax" nillable="true" type="tns:ArrayOfBusinessPartnerWithholdingTax" />
+  <xs:complexType name="BusinessPartnerWithholdingTax">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="cardCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="wtCode" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BusinessPartnerWithholdingTax" nillable="true" type="tns:BusinessPartnerWithholdingTax" />
+  <xs:element name="GetAllBusinessPratnerGroup">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.BusinessPartners" minOccurs="0" name="cardType" type="q5:CardType" />
+        <xs:element minOccurs="0" name="oAppConnData" nillable="true" type="tns:AppConnData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllBusinessPratnerGroupResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetAllBusinessPratnerGroupResult" nillable="true" type="tns:ArrayOfBusinessPartnerGroup" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ArrayOfBusinessPartnerGroup">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="BusinessPartnerGroup" nillable="true" type="tns:BusinessPartnerGroup" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBusinessPartnerGroup" nillable="true" type="tns:ArrayOfBusinessPartnerGroup" />
+  <xs:complexType name="BusinessPartnerGroup">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="groupCode" type="xs:int" />
+      <xs:element minOccurs="0" name="groupName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="groupType" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BusinessPartnerGroup" nillable="true" type="tns:BusinessPartnerGroup" />
+  <xs:element name="AddBusinessPartner">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="partner" nillable="true" type="tns:BusinessPartner" />
+        <xs:element minOccurs="0" name="oAppConnData" nillable="true" type="tns:AppConnData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddBusinessPartnerResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddBusinessPartnerContact">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="contact" nillable="true" type="tns:ContactEmployee" />
+        <xs:element minOccurs="0" name="oAppConnData" nillable="true" type="tns:AppConnData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddBusinessPartnerContactResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetContactList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="cardCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="oAppConnData" nillable="true" type="tns:AppConnData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetContactListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetContactListResult" nillable="true" type="tns:ArrayOfContactEmployee" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAddressList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="cardCode" nillable="true" type="xs:string" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.BusinessPartners" minOccurs="0" name="addressType" type="q6:AddressType" />
+        <xs:element minOccurs="0" name="oAppConnData" nillable="true" type="tns:AppConnData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAddressListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetAddressListResult" nillable="true" type="tns:ArrayOfBusinessPartnerAddress" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPaymentAgeList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="cardCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="oAppConnData" nillable="true" type="tns:AppConnData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPaymentAgeListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetPaymentAgeListResult" nillable="true" type="tns:ArrayOfPaymentAge" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ArrayOfPaymentAge">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PaymentAge" nillable="true" type="tns:PaymentAge" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPaymentAge" nillable="true" type="tns:ArrayOfPaymentAge" />
+  <xs:complexType name="PaymentAge">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="cardCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="cardName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="docDate" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="docDueDate" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="docNum" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="pendingToPay" type="xs:double" />
+      <xs:element minOccurs="0" name="up120" type="xs:double" />
+      <xs:element minOccurs="0" name="up30" type="xs:double" />
+      <xs:element minOccurs="0" name="up60" type="xs:double" />
+      <xs:element minOccurs="0" name="up90" type="xs:double" />
+      <xs:element minOccurs="0" name="up9999" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PaymentAge" nillable="true" type="tns:PaymentAge" />
+  <xs:element name="AddBusinessPartnerAddress">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="address" nillable="true" type="tns:BusinessPartnerAddress" />
+        <xs:element minOccurs="0" name="oAppConnData" nillable="true" type="tns:AppConnData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddBusinessPartnerAddressResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDunninTermList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="oAppConnData" nillable="true" type="tns:AppConnData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDunninTermListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetDunninTermListResult" nillable="true" type="tns:ArrayOfBusinessPartnerDunninTerm" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ArrayOfBusinessPartnerDunninTerm">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="BusinessPartnerDunninTerm" nillable="true" type="tns:BusinessPartnerDunninTerm" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBusinessPartnerDunninTerm" nillable="true" type="tns:ArrayOfBusinessPartnerDunninTerm" />
+  <xs:complexType name="BusinessPartnerDunninTerm">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="termCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="termName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BusinessPartnerDunninTerm" nillable="true" type="tns:BusinessPartnerDunninTerm" />
+  <xs:element name="GetBusinessPartnerWithholdingTaxList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="cardCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="oAppConnData" nillable="true" type="tns:AppConnData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetBusinessPartnerWithholdingTaxListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetBusinessPartnerWithholdingTaxListResult" nillable="true" type="tns:ArrayOfBusinessPartnerWithholdingTax" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddBusinessPartnerWithholdingTax">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="withholdingTax" nillable="true" type="tns:BusinessPartnerWithholdingTax" />
+        <xs:element minOccurs="0" name="oAppConnData" nillable="true" type="tns:AppConnData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddBusinessPartnerWithholdingTaxResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddSalesOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="document" nillable="true" type="tns:MarketingDocument" />
+        <xs:element minOccurs="0" name="oAppConnData" nillable="true" type="tns:AppConnData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="MarketingDocument">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="canceled" type="xs:boolean" />
+      <xs:element minOccurs="0" name="cardCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="cardName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="comments" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="docDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="docDueDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="docEntry" type="xs:int" />
+      <xs:element minOccurs="0" name="docNum" type="xs:int" />
+      <xs:element minOccurs="0" name="docStatus" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="doctype" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="groupNum" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="invntsttus" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="lines" nillable="true" type="tns:ArrayOfMarketingDocumentLine" />
+      <xs:element minOccurs="0" name="numAtCard" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="objtype" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="payToCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="serie" type="xs:int" />
+      <xs:element minOccurs="0" name="shipToCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="slpCode" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="taxDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="updateDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="userDefinedFields" nillable="true" type="tns:ArrayOfUserDefinedField" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MarketingDocument" nillable="true" type="tns:MarketingDocument" />
+  <xs:complexType name="ArrayOfMarketingDocumentLine">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MarketingDocumentLine" nillable="true" type="tns:MarketingDocumentLine" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMarketingDocumentLine" nillable="true" type="tns:ArrayOfMarketingDocumentLine" />
+  <xs:complexType name="MarketingDocumentLine">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="baseEntry" type="xs:int" />
+      <xs:element minOccurs="0" name="baseLine" type="xs:int" />
+      <xs:element minOccurs="0" name="baseType" type="xs:int" />
+      <xs:element minOccurs="0" name="batchNumbers" nillable="true" type="tns:ArrayOfBatchNumber" />
+      <xs:element minOccurs="0" name="docEntry" type="xs:int" />
+      <xs:element minOccurs="0" name="dscription" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="itemCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="lineNum" type="xs:int" />
+      <xs:element minOccurs="0" name="lineStatus" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="numPerMsr" type="xs:double" />
+      <xs:element minOccurs="0" name="ocrCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="openCreQty" type="xs:double" />
+      <xs:element minOccurs="0" name="openQty" type="xs:double" />
+      <xs:element minOccurs="0" name="price" type="xs:double" />
+      <xs:element minOccurs="0" name="quantity" type="xs:double" />
+      <xs:element minOccurs="0" name="serialNumbers" nillable="true" type="tns:ArrayOfSerialNumber" />
+      <xs:element minOccurs="0" name="targetType" type="xs:int" />
+      <xs:element minOccurs="0" name="taxCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="trgetEntry" type="xs:int" />
+      <xs:element minOccurs="0" name="unitMsr" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="userDefinedFields" nillable="true" type="tns:ArrayOfUserDefinedField" />
+      <xs:element minOccurs="0" name="whsCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="whsName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MarketingDocumentLine" nillable="true" type="tns:MarketingDocumentLine" />
+  <xs:complexType name="ArrayOfBatchNumber">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="BatchNumber" nillable="true" type="tns:BatchNumber" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBatchNumber" nillable="true" type="tns:ArrayOfBatchNumber" />
+  <xs:complexType name="BatchNumber">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DistNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ExpDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Quantity" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BatchNumber" nillable="true" type="tns:BatchNumber" />
+  <xs:complexType name="ArrayOfSerialNumber">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SerialNumber" nillable="true" type="tns:SerialNumber" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSerialNumber" nillable="true" type="tns:ArrayOfSerialNumber" />
+  <xs:complexType name="SerialNumber">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DisNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ExpDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ItemCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LotNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MnfDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="MnfSerial" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Status" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SerialNumber" nillable="true" type="tns:SerialNumber" />
+  <xs:element name="AddSalesOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="AddSalesOrderResult" nillable="true" type="tns:MarketingDocument" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetItems">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="oAppConnData" nillable="true" type="tns:AppConnData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetItemsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetItemsResult" nillable="true" type="tns:ArrayOfGenericItem" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ArrayOfGenericItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="GenericItem" nillable="true" type="tns:GenericItem" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfGenericItem" nillable="true" type="tns:ArrayOfGenericItem" />
+  <xs:complexType name="GenericItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ItemCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ItemName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GenericItem" nillable="true" type="tns:GenericItem" />
+  <xs:element name="GetItemList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="warehouse" nillable="true" type="tns:Warehouse" />
+        <xs:element minOccurs="0" name="oAppConnData" nillable="true" type="tns:AppConnData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="Warehouse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="WhsCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WhsName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Warehouse" nillable="true" type="tns:Warehouse" />
+  <xs:element name="GetItemListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetItemListResult" nillable="true" type="tns:ArrayOfGenericItem" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetItemStockLevel">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="itemCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="oAppConnData" nillable="true" type="tns:AppConnData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetItemStockLevelResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.Inventory" minOccurs="0" name="GetItemStockLevelResult" nillable="true" type="q7:ArrayOfStockLevel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetItemPrice">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="itemCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="priceList" type="xs:int" />
+        <xs:element minOccurs="0" name="oAppConnData" nillable="true" type="tns:AppConnData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetItemPriceResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetItemPriceResult" type="xs:double" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSalesTaxCodeList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="oAppConnData" nillable="true" type="tns:AppConnData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSalesTaxCodeListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetSalesTaxCodeListResult" nillable="true" type="tns:ArrayOfSalesTaxCode" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ArrayOfSalesTaxCode">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SalesTaxCode" nillable="true" type="tns:SalesTaxCode" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSalesTaxCode" nillable="true" type="tns:ArrayOfSalesTaxCode" />
+  <xs:complexType name="SalesTaxCode">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SalesTaxCode" nillable="true" type="tns:SalesTaxCode" />
+  <xs:element name="GetWithholdingTax">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="oAppConnData" nillable="true" type="tns:AppConnData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetWithholdingTaxResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetWithholdingTaxResult" nillable="true" type="tns:ArrayOfWithholdingTax" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ArrayOfWithholdingTax">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WithholdingTax" nillable="true" type="tns:WithholdingTax" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWithholdingTax" nillable="true" type="tns:ArrayOfWithholdingTax" />
+  <xs:complexType name="WithholdingTax">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="wtCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="wtName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WithholdingTax" nillable="true" type="tns:WithholdingTax" />
+  <xs:element name="GetCurrencyList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="oAppConnData" nillable="true" type="tns:AppConnData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCurrencyListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetCurrencyListResult" nillable="true" type="tns:ArrayOfCurrency" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ArrayOfCurrency">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Currency" nillable="true" type="tns:Currency" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCurrency" nillable="true" type="tns:ArrayOfCurrency" />
+  <xs:complexType name="Currency">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="currCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="currName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Currency" nillable="true" type="tns:Currency" />
+  <xs:element name="GetDocumentSeriesList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.Global.Administration" minOccurs="0" name="docType" type="q8:SapDocumentType" />
+        <xs:element minOccurs="0" name="oAppConnData" nillable="true" type="tns:AppConnData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDocumentSeriesListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetDocumentSeriesListResult" nillable="true" type="tns:ArrayOfDocumentSeries" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ArrayOfDocumentSeries">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DocumentSeries" nillable="true" type="tns:DocumentSeries" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDocumentSeries" nillable="true" type="tns:ArrayOfDocumentSeries" />
+  <xs:complexType name="DocumentSeries">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="series" type="xs:int" />
+      <xs:element minOccurs="0" name="seriesName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DocumentSeries" nillable="true" type="tns:DocumentSeries" />
+  <xs:element name="GetDocumentSeriesSingle">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="series" type="xs:int" />
+        <xs:element minOccurs="0" name="oAppConnData" nillable="true" type="tns:AppConnData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDocumentSeriesSingleResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetDocumentSeriesSingleResult" nillable="true" type="tns:DocumentSeries" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSalesPersonList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="oAppConnData" nillable="true" type="tns:AppConnData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSalesPersonListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetSalesPersonListResult" nillable="true" type="tns:ArrayOfSalesPerson" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ArrayOfSalesPerson">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SalesPerson" nillable="true" type="tns:SalesPerson" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSalesPerson" nillable="true" type="tns:ArrayOfSalesPerson" />
+  <xs:complexType name="SalesPerson">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="slpCode" type="xs:int" />
+      <xs:element minOccurs="0" name="slpName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SalesPerson" nillable="true" type="tns:SalesPerson" />
+  <xs:element name="GetPaymentTermList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="oAppConnData" nillable="true" type="tns:AppConnData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPaymentTermListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetPaymentTermListResult" nillable="true" type="tns:ArrayOfPaymentTerm" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ArrayOfPaymentTerm">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PaymentTerm" nillable="true" type="tns:PaymentTerm" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPaymentTerm" nillable="true" type="tns:ArrayOfPaymentTerm" />
+  <xs:complexType name="PaymentTerm">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="groupNum" type="xs:int" />
+      <xs:element minOccurs="0" name="pymntGroup" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PaymentTerm" nillable="true" type="tns:PaymentTerm" />
+  <xs:element name="GetCountryList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="oAppConnData" nillable="true" type="tns:AppConnData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCountryListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetCountryListResult" nillable="true" type="tns:ArrayOfCountry" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ArrayOfCountry">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Country" nillable="true" type="tns:Country" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCountry" nillable="true" type="tns:ArrayOfCountry" />
+  <xs:complexType name="Country">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Country" nillable="true" type="tns:Country" />
+  <xs:element name="GetStateList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="countryCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="oAppConnData" nillable="true" type="tns:AppConnData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetStateListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetStateListResult" nillable="true" type="tns:ArrayOfState" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ArrayOfState">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="State" nillable="true" type="tns:State" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfState" nillable="true" type="tns:ArrayOfState" />
+  <xs:complexType name="State">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="State" nillable="true" type="tns:State" />
+  <xs:element name="GetDistributionRulesList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="oAppConnData" nillable="true" type="tns:AppConnData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDistributionRulesListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetDistributionRulesListResult" nillable="true" type="tns:ArrayOfSapDistributionRule" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ArrayOfSapDistributionRule">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SapDistributionRule" nillable="true" type="tns:SapDistributionRule" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSapDistributionRule" nillable="true" type="tns:ArrayOfSapDistributionRule" />
+  <xs:complexType name="SapDistributionRule">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="prcCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="prcName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SapDistributionRule" nillable="true" type="tns:SapDistributionRule" />
+  <xs:element name="GetUserDefinedFieldValuesList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="tableId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="fieldId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="oAppConnData" nillable="true" type="tns:AppConnData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetUserDefinedFieldValuesListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetUserDefinedFieldValuesListResult" nillable="true" type="tns:ArrayOfUserDefinedFieldValue" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ArrayOfUserDefinedFieldValue">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="UserDefinedFieldValue" nillable="true" type="tns:UserDefinedFieldValue" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUserDefinedFieldValue" nillable="true" type="tns:ArrayOfUserDefinedFieldValue" />
+  <xs:complexType name="UserDefinedFieldValue">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="descr" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="fldValue" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UserDefinedFieldValue" nillable="true" type="tns:UserDefinedFieldValue" />
+  <xs:element name="GetUdoGenericKeyValueList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="tableId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="oAppConnData" nillable="true" type="tns:AppConnData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetUdoGenericKeyValueListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetUdoGenericKeyValueListResult" nillable="true" type="tns:ArrayOfUserDefinedFieldValue" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

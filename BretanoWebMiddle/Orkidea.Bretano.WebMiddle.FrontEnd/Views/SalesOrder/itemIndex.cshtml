@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "itemIndex";
+    Layout = null;
+}
+<table id="whsTable" class="display" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>En stock</th>            
+            <th>Pedido</th>
+            <th>Comprometido</th>
+            <th>Disponible</th>
+            <th></th>
+        </tr>
+    </thead>
+</table>
+
+<script>
+    $(document).ready(function () {
+        var whsTable = $('#whsTable').DataTable({
+            "ajax": '@Url.Action("AsyncStockList", new { id = ViewBag.id})',
+            "columnDefs": [{
+                "targets": -1,
+                "data": null,
+                "defaultContent": "<button data-dismiss='modal'>Seleccionar</button>"
+            }],
+            "language": {
+                "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                "zeroRecords": "Ningun resultado encontrado",
+                "info": "Página _PAGE_ de _PAGES_",
+                "infoEmpty": "Sin registros",
+                "infoFiltered": "(filtered from _MAX_ total records)",
+                "search": "Buscar:",
+                "paginate": {
+                    "first": "Primera",
+                    "last": "Ultima",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                },
+            }
+        });
+
+    });
+</script>

@@ -1,0 +1,206 @@
+﻿@model Orkidea.Bretano.WebMiddle.FrontEnd.Entities.RDR1
+
+@{
+    ViewBag.Title = "AddLine";
+}
+
+<script src="~/Scripts/Custom/ordrLineCreate.js"></script>
+
+<div class="container-fluid">
+    @using (Html.BeginForm("AddLine", "SalesOrder", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <h2>Pedidos</h2>
+
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="row">
+            <div class="well">
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <label class="control-label">Serie</label>
+                            <input type="text" class="form-control" value="@ViewBag.serie" id="serie" style="max-width:100%" disabled />
+                        </div>
+                        <div class="col-md-3">
+                            <label class="control-label">Cliente</label>
+                            <input type="text" class="form-control" value="@ViewBag.cardCode" id="cardCode" style="max-width:100%" disabled />
+                        </div>
+                        <div class="col-md-7">
+                            <label class="control-label">Nombre</label>
+                            <input type="text" class="form-control" value="@ViewBag.cardName" id="cardName" style="max-width:100%" disabled />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <label class="control-label">Fecha documento</label>
+                            <input type="text" class="form-control" value="@ViewBag.docDate" id="docDate" style="max-width:100%" disabled />
+                        </div>
+                        <div class="col-md-2">
+                            <label class="control-label">Fecha entrega</label>
+                            <input type="text" class="form-control" value="@ViewBag.docDueDate" id="docDueDate" style="max-width:100%" disabled />
+                        </div>
+                        <div class="col-md-2">
+                            <label class="control-label">Fecha contabilización</label>
+                            <input type="text" class="form-control" value="@ViewBag.taxDate" id="taxDate" style="max-width:100%" disabled />
+                        </div>
+                        <div class="col-md-2">                            
+                            <input type="text" class="form-control" value="@ViewBag.listNum" id="listNum" style="max-width:100%; visibility:hidden" disabled />
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control" value="@ViewBag.orderId" id="orderId" style="max-width:100%; visibility:hidden" disabled />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <label class="control-label">Comentarios</label>
+                            <textarea class="form-control" rows="5" readonly>@ViewBag.uCssComentarios</textarea>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-5">
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <a href="javascript:void(0);" data-toggle="modal" data-target="#itemModal">@Html.LabelFor(model => model.itemCode, "Codigo artículo", new { @class = "control-label" })</a>
+                                        @Html.TextBoxFor(m => m.itemCode, new { @class = "form-control", title = "Código de cliente sin digito de verificación", readOnly=true })
+                                        @Html.ValidationMessageFor(m => m.itemCode, "Requerido", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-8">
+                                        <label class="control-label">Nombre artículo</label>
+                                        <input type="text" class="form-control" id="itemName" style="max-width:100%" disabled />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <a href="javascript:void(0);" id="whsLink" >@Html.LabelFor(model => model.whsCode, "Codigo almacén", new { @class = "control-label" })</a>
+                                        @Html.TextBoxFor(m => m.whsCode, new { @class = "form-control required", title = "Código de cliente sin digito de verificación", readOnly = true })
+                                        @Html.ValidationMessageFor(m => m.whsCode, "Requerido", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-8">
+                                        <label class="control-label">Nombre almacen</label>
+                                        <input type="text" class="form-control" id="whsName" style="max-width:100%" disabled />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        @Html.LabelFor(model => model.price, "Precio", new { @class = "control-label" })
+                                        @Html.TextBoxFor(m => m.price, new { @class = "form-control required", title = "Código de cliente sin digito de verificación"})
+                                        @Html.ValidationMessageFor(m => m.price, "Requerido", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.LabelFor(model => model.quantity, "Cantidad", new { @class = "control-label" })
+                                        @Html.TextBoxFor(m => m.quantity, new { @class = "form-control required", title = "Código de cliente sin digito de verificación" })
+                                        @Html.ValidationMessageFor(m => m.quantity, "Requerido", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.LabelFor(model => model.taxCode, "Codigo impuestos", new { @class = "control-label" })
+                                        @Html.DropDownListFor(model => model.taxCode, new SelectList(Enumerable.Empty<SelectListItem>()), " ", new { @class = "form-control required", style = "max-width:100%" })
+                                        @Html.ValidationMessageFor(m => m.taxCode, "Requerido", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-md-8">
+                                        @Html.LabelFor(model => model.ocrCode, "Norma de reparto", new { @class = "control-label" })
+                                        @Html.DropDownListFor(model => model.ocrCode, new SelectList(Enumerable.Empty<SelectListItem>()), " ", new { @class = "form-control required", style = "max-width:100%" })
+                                        @Html.ValidationMessageFor(m => m.ocrCode, "Requerido", new { @class = "text-danger" })
+                                    </div>  
+                                    <div class="col-md-4">
+                                        @Html.LabelFor(model => model.uCssEnvaseDevol, "Envase devolutivo", new { @class = "control-label" })
+                                        @Html.DropDownListFor(model => model.uCssEnvaseDevol, new SelectList(Enumerable.Empty<SelectListItem>()), " ", new { @class = "form-control required", style = "max-width:100%" })
+                                        @Html.ValidationMessageFor(m => m.uCssEnvaseDevol, "Requerido", new { @class = "text-danger" })
+                                    </div>                                  
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <table id="ordrLines" class="display" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>item</th>
+                                        <th>Cantidad</th>
+                                        <th>Precio</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th colspan="3" style="text-align:right">Total:</th>
+                                        <th></th>
+                                    </tr>
+                                    
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input type='submit' value=' Agregar linea ' class="btn btn-info" />
+                            | @Html.ActionLink("Terminar", "finish", "SalesOrder", new { id = ViewBag.id}, new { @class = "btn btn-success" })
+                            | @Html.ActionLink("Cancelar", "cancel", "SalesOrder", new { @class = "btn btn-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="modal fade" id="itemModal">
+            <div class="modal-dialog modal-lg" style=" width:auto;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Artículos</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table id="itemsTable" class="display" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Nombre</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="modal-footer">                        
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        
+        <div class="modal fade" id="whsModal">
+            <div class="modal-dialog modal-lg" style=" width:auto;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Artículos</h4>
+                    </div>
+                    <div class="modal-body stockBody">
+                        
+                    </div>
+                    <div class="modal-footer">                       
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+    }
+</div>
+

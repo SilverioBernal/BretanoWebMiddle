@@ -1,7 +1,13 @@
 ﻿using Microsoft.Practices.EnterpriseLibrary.ExceptionHandling;
+using Orkidea.Framework.SAP.BusinessOne.DiApiClient;
+using Orkidea.Framework.SAP.BusinessOne.Entities.Global.Administration;
 using Orkidea.Framework.SAP.BusinessOne.Entities.Global.ExceptionManagement;
+using Orkidea.Framework.SAP.BusinessOne.Entities.Global.Misc;
+using Orkidea.Framework.Security;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +16,7 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
 {
     public static class BizUtilities
     {
+        #region Exceptions
         /// <summary>
         /// Metodo para procesar las excepciones de tipo BALException
         /// </summary>
@@ -100,6 +107,31 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
                     break;
             }
             throw outEx;
-        } 
+        }
+
+        public static bool ValidateServiceConnection(AppConnData appConnData)
+        {
+            string appKey = Cryptography.Decrypt(ConfigurationManager.AppSettings["AppKey"].ToString());
+            string appSecret = Cryptography.Decrypt(ConfigurationManager.AppSettings["AppSecret"].ToString());
+
+            string wsKey = Cryptography.Decrypt(HexSerialization.HexToString(appConnData.wsAppKey));
+            string wsSecret = Cryptography.Decrypt(HexSerialization.HexToString(appConnData.wsSecret));
+
+            if (appKey.Equals(wsKey) && appSecret.Equals(wsSecret))
+                return true;
+            else
+                return false;
+        }
+
+        public static AppConnData GetDataConnection(AppConnData appConnData)
+        {
+            appConnData.dataBaseName = Cryptography.Decrypt(HexSerialization.HexToString(appConnData.dataBaseName));
+            appConnData.sapUser = Cryptography.Decrypt(HexSerialization.HexToString(appConnData.sapUser));
+            appConnData.sapUserPassword = Cryptography.Decrypt(HexSerialization.HexToString(appConnData.sapUserPassword));
+            appConnData.adoConnString = Cryptography.Decrypt(HexSerialization.HexToString(appConnData.adoConnString));
+
+            return appConnData;
+        }
+        #endregion        
     }
 }

@@ -1,0 +1,115 @@
+﻿@model Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.ContactEmployee
+@{
+    ViewBag.Title = "addContact";
+}
+<script src="~/Scripts/Custom/CustomerContactCreate.js"></script>
+<div class="container-fluid">
+    @using (Html.BeginForm("addContact", "Customer", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <h2>Añadir contactos</h2>
+
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="row">
+            <div class="col-md-12">
+                <div class="well">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="control-label">Cliente</label>
+                            <input type="text" class="form-control" value="@ViewBag.cardCode" id="cardCode" />
+                        </div>
+                        <div class="col-md-8">
+                            <label class="control-label">Nombre</label>
+                            <input type="text" class="form-control" value="@ViewBag.cardName" id="cardName" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="well">
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-4">
+                                @Html.LabelFor(model => model.name, "Id contacto", new { @class = "control-label" })
+                                @Html.TextBoxFor(m => m.name, new { @class = "form-control required", title = "id del contacto" })
+                                @Html.ValidationMessageFor(m => m.name, "Requierido", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-8">
+                                @Html.LabelFor(model => model.firstName, "Nombre", new { @class = "control-label" })
+                                @Html.TextBoxFor(m => m.firstName, new { @class = "form-control required", title = "Nombre" })
+                                @Html.ValidationMessageFor(m => m.firstName, "Requierido", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                @Html.LabelFor(model => model.position, "Cargo", new { @class = "control-label" })
+                                @Html.TextBoxFor(m => m.position, new { @class = "form-control required", title = "Cargo" })
+                                @Html.ValidationMessageFor(m => m.name, "Requierido", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                @Html.LabelFor(model => model.telephone1, "Telefono 1", new { @class = "control-label" })
+                                @Html.TextBoxFor(m => m.telephone1, new { @class = "form-control required", title = "Teléfono" })
+                                @Html.ValidationMessageFor(m => m.telephone1, "Requierido", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-6">
+                                @Html.LabelFor(model => model.cellolar, "Móvil", new { @class = "control-label" })
+                                @Html.TextBoxFor(m => m.cellolar, new { @class = "form-control required", title = "Celular" })
+                                @Html.ValidationMessageFor(m => m.cellolar, "Requierido", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-12">
+
+                                @Html.LabelFor(model => model.e_mail, "e-mail", new { @class = "control-label" })
+                                @Html.TextBoxFor(m => m.e_mail, new { type = "email", @class = "form-control", title = "email invalido" })
+                                @Html.ValidationMessageFor(m => m.e_mail, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <br />
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <input type='submit' id='upload-files' value=' Guardar ' class="btn btn-info" />
+                                | @Html.ActionLink("Agregar direcciones", "addAddress", "Customer",new{id = ViewBag.customer},  new { @class="btn btn-success"})
+                                | @Html.ActionLink("Volver al inicio", "Index", "Home")
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="well">
+                <table id="contacts" class="display" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Id Contacto</th>
+                            <th>Nombre</th>
+                        </tr>
+                    </thead>
+                </table>
+                    </div>
+            </div>
+        </div>
+        <div class="row">
+            @ViewBag.mensaje
+        </div>
+    }
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

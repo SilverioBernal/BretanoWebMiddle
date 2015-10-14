@@ -1,0 +1,101 @@
+﻿@model Orkidea.Bretano.WebMiddle.FrontEnd.Entities.WebUserCompany
+@{
+    ViewBag.Title = "Asociate";
+}
+
+<script src="~/Scripts/Custom/WebUserAsociate.js"></script>
+
+<div class="container-fluid">
+    @using (Html.BeginForm("Asociate", "WebUser", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <h2>Asociar compañias</h2>
+
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="well">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <label class="control-label">Usuario</label>
+                            <input type="text" class="form-control" value="@ViewBag.WebUser" id="WebUser" readonly />                            
+                        </div>                        
+                        <div class="col-md-2">
+                            <label class="control-label">Usuario</label>                            
+                            <input type="text" class="form-control" value="@ViewBag.WebUserId" id="WebUserId" readonly />
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="well">
+                    <div class="row">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.companyId, "Compañía", new { @class = "control-label" })
+                            @Html.DropDownListFor(model => model.companyId, new SelectList(Enumerable.Empty<SelectListItem>()), " ", new { @class = "form-control", style = "max-width:100%" })
+                            @Html.ValidationMessageFor(m => m.companyId, "Requierido", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label>
+                            @Html.CheckBoxFor(model => model.admin) Administrador</label>                            
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label>
+                                @Html.CheckBoxFor(model => model.customerCreator) Crea Clientes
+                            </label>                            
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label>
+                                @Html.CheckBoxFor(model => model.purchaseOrderCreator) Crea Pedidos
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.slpCode, "Vendedor", new { @class = "control-label" })
+                            @Html.DropDownListFor(model => model.slpCode, new SelectList(Enumerable.Empty<SelectListItem>()), " ", new { @class = "form-control", style = "max-width:100%" })
+                            @Html.ValidationMessageFor(m => m.slpCode, "Requierido", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <input type='submit' id='upload-files' value=' Agregar ' class="btn btn-info" />
+                            | @Html.ActionLink("Terminar", "index", "Home", new { id = ViewBag.customer }, new { @class = "btn btn-primary" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Compañias asociadas</div>
+                        <div class="panel-body">
+                            <table id="userCompanies" class="display" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>                                        
+                                        <th>Compañia</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            @ViewBag.mensaje
+        </div>
+    }
+</div>

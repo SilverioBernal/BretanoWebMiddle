@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Orkidea.Bretano.WebMiddle.FrontEnd.Entities.WebUser>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container-fluid">
+    <h2>Usuarios</h2>
+    <div class="row">
+        @Html.ActionLink("Crear nuevo", "Create", null, new { @class = "btn btn-info" }) | @Html.ActionLink("Volver al home", "Index", "Home")
+    </div>
+    <br />
+    <div class="row">
+        <table id="companies" class="display" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>Usuario</th>
+                    <th>Activo</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.name</td>
+                        <td>@item.active</td>
+                        <td>
+                            @if (!item.active)
+                            {
+                                <a href="@Url.Action("Enable", new { id = item.id })" class="sepV_a" title="Habilitar"><i class="fa fa-thumbs-up"></i></a>                                 
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("Disable", new { id = item.id })" class="sepV_a" title="Habilitar"><i class="fa fa-thumbs-down"></i></a> 
+                                <span> | </span> 
+                                <a href="@Url.Action("Asociate", new { id = item.id })" class="sepV_a" title="Habilitar"><i class="fa fa-check-square"></i></a> 
+                            }                            
+                            | <a href="@Url.Action("Delete", new { id = item.id })" title="Eliminar"><i class="fa fa-trash"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+<script>
+    $('#companies').dataTable({
+        "language": {
+            "lengthMenu": "Mostrar _MENU_ registros por pagina",
+            "zeroRecords": "Ningun resultado encontrado",
+            "info": "Página _PAGE_ de _PAGES_",
+            "infoEmpty": "Sin registros",
+            "infoFiltered": "(filtered from _MAX_ total records)",
+            "search": "Buscar:",
+            "paginate": {
+                "first": "Primera",
+                "last": "Ultima",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            },
+        }
+    });
+</script>

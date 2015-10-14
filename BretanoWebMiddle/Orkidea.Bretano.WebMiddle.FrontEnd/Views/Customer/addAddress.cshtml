@@ -1,0 +1,181 @@
+﻿@model Orkidea.Bretano.WebMiddle.FrontEnd.Models.BusinessPartnerAddressViewModel
+@{
+    ViewBag.Title = "addAddress";
+}
+<script src="~/Scripts/Custom/CustomerAddressCreate.js"></script>
+
+<div class="container-fluid">
+    @using (Html.BeginForm("addAddress", "Customer", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <h2>Añadir direcciones</h2>
+
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="row">
+            <div class="col-md-12">
+                <div class="well">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="control-label">Cliente</label>
+                            <input type="text" class="form-control" value="@ViewBag.cardCode" id="cardCode" />
+                        </div>
+                        <div class="col-md-8">
+                            <label class="control-label">Nombre</label>
+                            <input type="text" class="form-control" value="@ViewBag.cardName" id="cardName" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="well">
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-2">
+
+                            </div>
+                            <div class="col-md-8">
+                                @Html.LabelFor(model => model.addType, "Tipo de dirección", new { @class = "control-label" })
+                                @Html.DropDownListFor(model => model.addType, new SelectList(Model.addressTypes, "key", "value"), " ", new { @class = "form-control required", style = "max-width:100%" })
+                                @Html.ValidationMessageFor(m => m.addType, "Requierido", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-2">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-7">
+                                @Html.LabelFor(model => model.address, "Nombre", new { @class = "control-label" })
+                                @Html.TextBoxFor(m => m.address, new { @class = "form-control required", title = "Nombre" })
+                                @Html.ValidationMessageFor(m => m.address, "Requierido", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-5">
+                                @Html.LabelFor(model => model.city, "Ciudad", new { @class = "control-label" })
+                                @Html.TextBoxFor(m => m.city, new { @class = "form-control required", title = "Ciudad" })
+                                @Html.ValidationMessageFor(m => m.city, "Requierido", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                @Html.LabelFor(model => model.street, "Dirección", new { @class = "control-label" })
+                                @Html.TextBoxFor(m => m.street, new { @class = "form-control required", title = "Dirección" })
+                                @Html.ValidationMessageFor(m => m.street, "Requierido", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                @Html.LabelFor(model => model.zipCode, "Zona", new { @class = "control-label" })
+                                @Html.DropDownListFor(model => model.zipCode, new SelectList(Enumerable.Empty<SelectListItem>()), " ", new { @class = "form-control", style = "max-width:100%" })
+                                @Html.ValidationMessageFor(m => m.zipCode, "Requierido", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-6">
+                                @Html.LabelFor(model => model.county, "Sucursal", new { @class = "control-label" })
+                                @Html.TextBoxFor(m => m.county, new { @class = "form-control required", title = "Sucursal" })
+                                @Html.ValidationMessageFor(m => m.county, "Requierido", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                @Html.LabelFor(model => model.streetNo, "Localidad", new { @class = "control-label" })
+                                @Html.TextBoxFor(m => m.streetNo, new { @class = "form-control required", title = "Localidad" })
+                                @Html.ValidationMessageFor(m => m.streetNo, "Requierido", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-6">
+                                @Html.LabelFor(model => model.taxCode, "Indicador impuesto", new { @class = "control-label" })
+                                @Html.DropDownListFor(model => model.taxCode, new SelectList(Enumerable.Empty<SelectListItem>()), " ", new { @class = "form-control", style = "max-width:100%" })
+                                @Html.ValidationMessageFor(m => m.taxCode, "Requierido", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                @Html.LabelFor(model => model.country, "País", new { @class = "control-label" })
+                                @Html.DropDownListFor(model => model.country, new SelectList(Enumerable.Empty<SelectListItem>()), " ", new { @class = "form-control", style = "max-width:100%"})
+                                @Html.ValidationMessageFor(m => m.country, "Requierido", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-6">
+                                @Html.LabelFor(model => model.state, "Estado", new { @class = "control-label" })
+                                @Html.DropDownListFor(model => model.state, new SelectList(Enumerable.Empty<SelectListItem>()), " ", new { @class = "form-control", style = "max-width:100%" })
+                                @Html.ValidationMessageFor(m => m.state, "Requierido", new { @class = "text-danger" })
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                @Html.LabelFor(model => model.uCssIva, "Clasificación IVA", new { @class = "control-label" })
+                                @Html.DropDownListFor(model => model.uCssIva, new SelectList(Enumerable.Empty<SelectListItem>()), " ", new { @class = "form-control required", style = "max-width:100%" })
+                                @Html.ValidationMessageFor(m => m.uCssIva, "Requerido", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <input type='submit' id='upload-files' value=' Guardar ' class="btn btn-info" />
+                                | @Html.ActionLink("Definir impuestos", "addTaxes", "Customer", new { id = ViewBag.customer }, new { @class = "btn btn-success" })
+                                | @Html.ActionLink("Volver al inicio", "Index", "Home")
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Direcciones de envío</div>
+                        <div class="panel-body">
+                            <table id="shipAddress" class="display" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Dirección</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Direcciones de facturación</div>
+                        <div class="panel-body">
+                            <table id="billAddress" class="display" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Dirección</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            @ViewBag.mensaje
+        </div>
+    }
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+

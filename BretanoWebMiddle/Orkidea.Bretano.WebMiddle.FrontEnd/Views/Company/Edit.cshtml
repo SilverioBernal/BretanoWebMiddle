@@ -1,0 +1,69 @@
+﻿@model Orkidea.Bretano.WebMiddle.FrontEnd.Entities.Company
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div class="container-fluid">
+    @using (Html.BeginForm("Edit", "Company", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <h2> Creación de compañias</h2>
+
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="row">
+            <div class="well">
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            @Html.LabelFor(model => model.name, "Nombre", new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.name, new { @class = "form-control required", title = "Nombre compañía" })
+                            @Html.ValidationMessageFor(m => m.name, "Requerido", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-4">
+                            @Html.LabelFor(model => model.connStringName, "Cadena conexion", new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.connStringName, new { @class = "form-control required", title = "Nombre de la cadena de conexión en el servicio" })
+                            @Html.ValidationMessageFor(m => m.connStringName, "Requerido", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-4">
+                            @Html.LabelFor(model => model.dataBaseName, "Base de datos", new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.dataBaseName, new { @class = "form-control required", title = "Nombre de la base de datos" })
+                            @Html.ValidationMessageFor(m => m.dataBaseName, "Requerido", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <div class="col-md-4">
+                                @Html.LabelFor(model => model.sapUser, "Usuario SAP", new { @class = "control-label" })
+                                @Html.TextBoxFor(m => m.sapUser, new { @class = "form-control required", title = "Nombre de la base de datos" })
+                                @Html.ValidationMessageFor(m => m.sapUser, "Requerido", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-4">
+                                @Html.LabelFor(model => model.sapPassword, "Password SAP", new { @class = "control-label" })
+                                @Html.TextBoxFor(m => m.sapPassword, new { @class = "form-control required", type = "Password", title = "Nombre de la base de datos" })
+                                @Html.ValidationMessageFor(m => m.sapPassword, "Requerido", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input type='submit' value=' Guardar' class="btn btn-info" /> | @Html.ActionLink("Volver al home", "Index", "Home")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+

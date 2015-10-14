@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewBag.Title = "paymentAge";
+    Layout = null;
+}
+
+<table id="payTable" class="display" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>Documento</th>
+            <th>Contabilización</th>
+            <th>Vencimiento</th>
+            <th>0-30</th>
+            <th>31-60</th>
+            <th>61-90</th>
+            <th>91-120</th>
+            <th>121+</th>            
+        </tr>
+    </thead>
+</table>
+
+<script>
+    $(document).ready(function () {
+        var whsTable = $('#payTable').DataTable({
+            "ajax": '@Url.Action("AsyncGetPaymentAgeList", new { id = ViewBag.id })',            
+            "language": {
+                "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                "zeroRecords": "Ningun resultado encontrado",
+                "info": "Página _PAGE_ de _PAGES_",
+                "infoEmpty": "Sin registros",
+                "infoFiltered": "(filtered from _MAX_ total records)",
+                "search": "Buscar:",
+                "paginate": {
+                    "first": "Primera",
+                    "last": "Ultima",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                },
+            }
+        });
+
+    });
+</script>

@@ -1,0 +1,56 @@
+﻿@model Orkidea.Bretano.WebMiddle.FrontEnd.Entities.WebUser
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="container-fluid">
+    @using (Html.BeginForm("Create", "WebUser", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <h2> Creación de usuarios</h2>
+
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="row">
+            <div class="well">
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            @Html.LabelFor(model => model.name, "Usuario", new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.name, new { @class = "form-control required", title = "Nombre compañía" })
+                            @Html.ValidationMessageFor(m => m.name, "Requerido", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            @Html.LabelFor(model => model.pass, "Password", new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.pass, new { @class = "form-control required", type = "Password", title = "Password" })
+                            @Html.ValidationMessageFor(m => m.pass, "Requerido", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <label>Activo @Html.CheckBoxFor(m => m.active, new { @class = "form-control", title = "Password" }) </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input type='submit' value=' Guardar' class="btn btn-info" /> | @Html.ActionLink("Volver al home", "Index", "Home")
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />            
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

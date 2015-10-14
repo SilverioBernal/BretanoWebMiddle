@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://WSSAP" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://WSSAP" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://WSSAP/Imports">
+      <xsd:import schemaLocation="http://190.216.129.83:8085/wssap/WSSAP.svc?xsd=xsd0" namespace="http://WSSAP" />
+      <xsd:import schemaLocation="http://190.216.129.83:8085/wssap/WSSAP.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://190.216.129.83:8085/wssap/WSSAP.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.BusinessPartners" />
+      <xsd:import schemaLocation="http://190.216.129.83:8085/wssap/WSSAP.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.Global.UserDefinedFileds" />
+      <xsd:import schemaLocation="http://190.216.129.83:8085/wssap/WSSAP.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.Inventory" />
+      <xsd:import schemaLocation="http://190.216.129.83:8085/wssap/WSSAP.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.Global.Administration" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="WSSAP_GetBusinessPartners_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBusinessPartners" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetBusinessPartners_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBusinessPartnersResponse" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetBusinessPartners_DataAccessFaultFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:DataAccessFault" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetBusinessPartner_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBusinessPartner" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetBusinessPartner_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBusinessPartnerResponse" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetBusinessPartner_DataAccessFaultFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:DataAccessFault" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetAllBusinessPratnerGroup_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllBusinessPratnerGroup" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetAllBusinessPratnerGroup_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllBusinessPratnerGroupResponse" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetAllBusinessPratnerGroup_DataAccessFaultFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:DataAccessFault" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_AddBusinessPartner_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddBusinessPartner" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_AddBusinessPartner_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddBusinessPartnerResponse" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_AddBusinessPartner_DataAccessFaultFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:DataAccessFault" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_AddBusinessPartnerContact_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddBusinessPartnerContact" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_AddBusinessPartnerContact_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddBusinessPartnerContactResponse" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_AddBusinessPartnerContact_DataAccessFaultFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:DataAccessFault" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetContactList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetContactList" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetContactList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetContactListResponse" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetContactList_DataAccessFaultFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:DataAccessFault" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetAddressList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAddressList" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetAddressList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAddressListResponse" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetAddressList_DataAccessFaultFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:DataAccessFault" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetPaymentAgeList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPaymentAgeList" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetPaymentAgeList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPaymentAgeListResponse" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetPaymentAgeList_DataAccessFaultFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:DataAccessFault" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_AddBusinessPartnerAddress_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddBusinessPartnerAddress" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_AddBusinessPartnerAddress_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddBusinessPartnerAddressResponse" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_AddBusinessPartnerAddress_DataAccessFaultFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:DataAccessFault" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetDunninTermList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDunninTermList" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetDunninTermList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDunninTermListResponse" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetDunninTermList_DataAccessFaultFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:DataAccessFault" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetBusinessPartnerWithholdingTaxList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBusinessPartnerWithholdingTaxList" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetBusinessPartnerWithholdingTaxList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBusinessPartnerWithholdingTaxListResponse" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetBusinessPartnerWithholdingTaxList_DataAccessFaultFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:DataAccessFault" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_AddBusinessPartnerWithholdingTax_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddBusinessPartnerWithholdingTax" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_AddBusinessPartnerWithholdingTax_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddBusinessPartnerWithholdingTaxResponse" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_AddBusinessPartnerWithholdingTax_DataAccessFaultFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:DataAccessFault" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_AddSalesOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddSalesOrder" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_AddSalesOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddSalesOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_AddSalesOrder_DataAccessFaultFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:DataAccessFault" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetItems_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetItems" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetItems_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetItemsResponse" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetItems_DataAccessFaultFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:DataAccessFault" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetItemList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetItemList" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetItemList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetItemListResponse" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetItemList_DataAccessFaultFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:DataAccessFault" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetItemStockLevel_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetItemStockLevel" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetItemStockLevel_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetItemStockLevelResponse" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetItemStockLevel_DataAccessFaultFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:DataAccessFault" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetItemPrice_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetItemPrice" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetItemPrice_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetItemPriceResponse" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetItemPrice_DataAccessFaultFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:DataAccessFault" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetSalesTaxCodeList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSalesTaxCodeList" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetSalesTaxCodeList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSalesTaxCodeListResponse" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetSalesTaxCodeList_DataAccessFaultFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:DataAccessFault" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetWithholdingTax_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetWithholdingTax" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetWithholdingTax_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetWithholdingTaxResponse" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetWithholdingTax_DataAccessFaultFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:DataAccessFault" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetCurrencyList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCurrencyList" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetCurrencyList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCurrencyListResponse" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetCurrencyList_DataAccessFaultFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:DataAccessFault" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetDocumentSeriesList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDocumentSeriesList" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetDocumentSeriesList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDocumentSeriesListResponse" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetDocumentSeriesList_DataAccessFaultFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:DataAccessFault" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetDocumentSeriesSingle_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDocumentSeriesSingle" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetDocumentSeriesSingle_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDocumentSeriesSingleResponse" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetDocumentSeriesSingle_DataAccessFaultFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:DataAccessFault" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetSalesPersonList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSalesPersonList" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetSalesPersonList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSalesPersonListResponse" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetSalesPersonList_DataAccessFaultFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:DataAccessFault" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetPaymentTermList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPaymentTermList" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetPaymentTermList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPaymentTermListResponse" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetPaymentTermList_DataAccessFaultFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:DataAccessFault" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetCountryList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCountryList" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetCountryList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCountryListResponse" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetCountryList_DataAccessFaultFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:DataAccessFault" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetStateList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetStateList" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetStateList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetStateListResponse" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetStateList_DataAccessFaultFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:DataAccessFault" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetDistributionRulesList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDistributionRulesList" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetDistributionRulesList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDistributionRulesListResponse" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetDistributionRulesList_DataAccessFaultFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:DataAccessFault" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetUserDefinedFieldValuesList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserDefinedFieldValuesList" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetUserDefinedFieldValuesList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserDefinedFieldValuesListResponse" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetUserDefinedFieldValuesList_DataAccessFaultFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:DataAccessFault" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetUdoGenericKeyValueList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUdoGenericKeyValueList" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetUdoGenericKeyValueList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUdoGenericKeyValueListResponse" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetUdoGenericKeyValueList_DataAccessFaultFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:DataAccessFault" />
+  </wsdl:message>
+  <wsdl:portType name="WSSAP">
+    <wsdl:operation name="GetBusinessPartners">
+      <wsdl:input wsaw:Action="http://WSSAP/WSSAP/GetBusinessPartners" message="tns:WSSAP_GetBusinessPartners_InputMessage" />
+      <wsdl:output wsaw:Action="http://WSSAP/WSSAP/GetBusinessPartnersResponse" message="tns:WSSAP_GetBusinessPartners_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://WSSAP/WSSAP/GetBusinessPartnersDataAccessFaultFault" name="DataAccessFaultFault" message="tns:WSSAP_GetBusinessPartners_DataAccessFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBusinessPartner">
+      <wsdl:input wsaw:Action="http://WSSAP/WSSAP/GetBusinessPartner" message="tns:WSSAP_GetBusinessPartner_InputMessage" />
+      <wsdl:output wsaw:Action="http://WSSAP/WSSAP/GetBusinessPartnerResponse" message="tns:WSSAP_GetBusinessPartner_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://WSSAP/WSSAP/GetBusinessPartnerDataAccessFaultFault" name="DataAccessFaultFault" message="tns:WSSAP_GetBusinessPartner_DataAccessFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllBusinessPratnerGroup">
+      <wsdl:input wsaw:Action="http://WSSAP/WSSAP/GetAllBusinessPratnerGroup" message="tns:WSSAP_GetAllBusinessPratnerGroup_InputMessage" />
+      <wsdl:output wsaw:Action="http://WSSAP/WSSAP/GetAllBusinessPratnerGroupResponse" message="tns:WSSAP_GetAllBusinessPratnerGroup_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://WSSAP/WSSAP/GetAllBusinessPratnerGroupDataAccessFaultFault" name="DataAccessFaultFault" message="tns:WSSAP_GetAllBusinessPratnerGroup_DataAccessFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddBusinessPartner">
+      <wsdl:input wsaw:Action="http://WSSAP/WSSAP/AddBusinessPartner" message="tns:WSSAP_AddBusinessPartner_InputMessage" />
+      <wsdl:output wsaw:Action="http://WSSAP/WSSAP/AddBusinessPartnerResponse" message="tns:WSSAP_AddBusinessPartner_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://WSSAP/WSSAP/AddBusinessPartnerDataAccessFaultFault" name="DataAccessFaultFault" message="tns:WSSAP_AddBusinessPartner_DataAccessFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddBusinessPartnerContact">
+      <wsdl:input wsaw:Action="http://WSSAP/WSSAP/AddBusinessPartnerContact" message="tns:WSSAP_AddBusinessPartnerContact_InputMessage" />
+      <wsdl:output wsaw:Action="http://WSSAP/WSSAP/AddBusinessPartnerContactResponse" message="tns:WSSAP_AddBusinessPartnerContact_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://WSSAP/WSSAP/AddBusinessPartnerContactDataAccessFaultFault" name="DataAccessFaultFault" message="tns:WSSAP_AddBusinessPartnerContact_DataAccessFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetContactList">
+      <wsdl:input wsaw:Action="http://WSSAP/WSSAP/GetContactList" message="tns:WSSAP_GetContactList_InputMessage" />
+      <wsdl:output wsaw:Action="http://WSSAP/WSSAP/GetContactListResponse" message="tns:WSSAP_GetContactList_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://WSSAP/WSSAP/GetContactListDataAccessFaultFault" name="DataAccessFaultFault" message="tns:WSSAP_GetContactList_DataAccessFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAddressList">
+      <wsdl:input wsaw:Action="http://WSSAP/WSSAP/GetAddressList" message="tns:WSSAP_GetAddressList_InputMessage" />
+      <wsdl:output wsaw:Action="http://WSSAP/WSSAP/GetAddressListResponse" message="tns:WSSAP_GetAddressList_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://WSSAP/WSSAP/GetAddressListDataAccessFaultFault" name="DataAccessFaultFault" message="tns:WSSAP_GetAddressList_DataAccessFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPaymentAgeList">
+      <wsdl:input wsaw:Action="http://WSSAP/WSSAP/GetPaymentAgeList" message="tns:WSSAP_GetPaymentAgeList_InputMessage" />
+      <wsdl:output wsaw:Action="http://WSSAP/WSSAP/GetPaymentAgeListResponse" message="tns:WSSAP_GetPaymentAgeList_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://WSSAP/WSSAP/GetPaymentAgeListDataAccessFaultFault" name="DataAccessFaultFault" message="tns:WSSAP_GetPaymentAgeList_DataAccessFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddBusinessPartnerAddress">
+      <wsdl:input wsaw:Action="http://WSSAP/WSSAP/AddBusinessPartnerAddress" message="tns:WSSAP_AddBusinessPartnerAddress_InputMessage" />
+      <wsdl:output wsaw:Action="http://WSSAP/WSSAP/AddBusinessPartnerAddressResponse" message="tns:WSSAP_AddBusinessPartnerAddress_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://WSSAP/WSSAP/AddBusinessPartnerAddressDataAccessFaultFault" name="DataAccessFaultFault" message="tns:WSSAP_AddBusinessPartnerAddress_DataAccessFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDunninTermList">
+      <wsdl:input wsaw:Action="http://WSSAP/WSSAP/GetDunninTermList" message="tns:WSSAP_GetDunninTermList_InputMessage" />
+      <wsdl:output wsaw:Action="http://WSSAP/WSSAP/GetDunninTermListResponse" message="tns:WSSAP_GetDunninTermList_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://WSSAP/WSSAP/GetDunninTermListDataAccessFaultFault" name="DataAccessFaultFault" message="tns:WSSAP_GetDunninTermList_DataAccessFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBusinessPartnerWithholdingTaxList">
+      <wsdl:input wsaw:Action="http://WSSAP/WSSAP/GetBusinessPartnerWithholdingTaxList" message="tns:WSSAP_GetBusinessPartnerWithholdingTaxList_InputMessage" />
+      <wsdl:output wsaw:Action="http://WSSAP/WSSAP/GetBusinessPartnerWithholdingTaxListResponse" message="tns:WSSAP_GetBusinessPartnerWithholdingTaxList_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://WSSAP/WSSAP/GetBusinessPartnerWithholdingTaxListDataAccessFaultFault" name="DataAccessFaultFault" message="tns:WSSAP_GetBusinessPartnerWithholdingTaxList_DataAccessFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddBusinessPartnerWithholdingTax">
+      <wsdl:input wsaw:Action="http://WSSAP/WSSAP/AddBusinessPartnerWithholdingTax" message="tns:WSSAP_AddBusinessPartnerWithholdingTax_InputMessage" />
+      <wsdl:output wsaw:Action="http://WSSAP/WSSAP/AddBusinessPartnerWithholdingTaxResponse" message="tns:WSSAP_AddBusinessPartnerWithholdingTax_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://WSSAP/WSSAP/AddBusinessPartnerWithholdingTaxDataAccessFaultFault" name="DataAccessFaultFault" message="tns:WSSAP_AddBusinessPartnerWithholdingTax_DataAccessFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddSalesOrder">
+      <wsdl:input wsaw:Action="http://WSSAP/WSSAP/AddSalesOrder" message="tns:WSSAP_AddSalesOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://WSSAP/WSSAP/AddSalesOrderResponse" message="tns:WSSAP_AddSalesOrder_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://WSSAP/WSSAP/AddSalesOrderDataAccessFaultFault" name="DataAccessFaultFault" message="tns:WSSAP_AddSalesOrder_DataAccessFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetItems">
+      <wsdl:input wsaw:Action="http://WSSAP/WSSAP/GetItems" message="tns:WSSAP_GetItems_InputMessage" />
+      <wsdl:output wsaw:Action="http://WSSAP/WSSAP/GetItemsResponse" message="tns:WSSAP_GetItems_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://WSSAP/WSSAP/GetItemsDataAccessFaultFault" name="DataAccessFaultFault" message="tns:WSSAP_GetItems_DataAccessFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetItemList">
+      <wsdl:input wsaw:Action="http://WSSAP/WSSAP/GetItemList" message="tns:WSSAP_GetItemList_InputMessage" />
+      <wsdl:output wsaw:Action="http://WSSAP/WSSAP/GetItemListResponse" message="tns:WSSAP_GetItemList_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://WSSAP/WSSAP/GetItemListDataAccessFaultFault" name="DataAccessFaultFault" message="tns:WSSAP_GetItemList_DataAccessFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetItemStockLevel">
+      <wsdl:input wsaw:Action="http://WSSAP/WSSAP/GetItemStockLevel" message="tns:WSSAP_GetItemStockLevel_InputMessage" />
+      <wsdl:output wsaw:Action="http://WSSAP/WSSAP/GetItemStockLevelResponse" message="tns:WSSAP_GetItemStockLevel_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://WSSAP/WSSAP/GetItemStockLevelDataAccessFaultFault" name="DataAccessFaultFault" message="tns:WSSAP_GetItemStockLevel_DataAccessFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetItemPrice">
+      <wsdl:input wsaw:Action="http://WSSAP/WSSAP/GetItemPrice" message="tns:WSSAP_GetItemPrice_InputMessage" />
+      <wsdl:output wsaw:Action="http://WSSAP/WSSAP/GetItemPriceResponse" message="tns:WSSAP_GetItemPrice_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://WSSAP/WSSAP/GetItemPriceDataAccessFaultFault" name="DataAccessFaultFault" message="tns:WSSAP_GetItemPrice_DataAccessFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSalesTaxCodeList">
+      <wsdl:input wsaw:Action="http://WSSAP/WSSAP/GetSalesTaxCodeList" message="tns:WSSAP_GetSalesTaxCodeList_InputMessage" />
+      <wsdl:output wsaw:Action="http://WSSAP/WSSAP/GetSalesTaxCodeListResponse" message="tns:WSSAP_GetSalesTaxCodeList_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://WSSAP/WSSAP/GetSalesTaxCodeListDataAccessFaultFault" name="DataAccessFaultFault" message="tns:WSSAP_GetSalesTaxCodeList_DataAccessFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetWithholdingTax">
+      <wsdl:input wsaw:Action="http://WSSAP/WSSAP/GetWithholdingTax" message="tns:WSSAP_GetWithholdingTax_InputMessage" />
+      <wsdl:output wsaw:Action="http://WSSAP/WSSAP/GetWithholdingTaxResponse" message="tns:WSSAP_GetWithholdingTax_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://WSSAP/WSSAP/GetWithholdingTaxDataAccessFaultFault" name="DataAccessFaultFault" message="tns:WSSAP_GetWithholdingTax_DataAccessFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCurrencyList">
+      <wsdl:input wsaw:Action="http://WSSAP/WSSAP/GetCurrencyList" message="tns:WSSAP_GetCurrencyList_InputMessage" />
+      <wsdl:output wsaw:Action="http://WSSAP/WSSAP/GetCurrencyListResponse" message="tns:WSSAP_GetCurrencyList_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://WSSAP/WSSAP/GetCurrencyListDataAccessFaultFault" name="DataAccessFaultFault" message="tns:WSSAP_GetCurrencyList_DataAccessFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDocumentSeriesList">
+      <wsdl:input wsaw:Action="http://WSSAP/WSSAP/GetDocumentSeriesList" message="tns:WSSAP_GetDocumentSeriesList_InputMessage" />
+      <wsdl:output wsaw:Action="http://WSSAP/WSSAP/GetDocumentSeriesListResponse" message="tns:WSSAP_GetDocumentSeriesList_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://WSSAP/WSSAP/GetDocumentSeriesListDataAccessFaultFault" name="DataAccessFaultFault" message="tns:WSSAP_GetDocumentSeriesList_DataAccessFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDocumentSeriesSingle">
+      <wsdl:input wsaw:Action="http://WSSAP/WSSAP/GetDocumentSeriesSingle" message="tns:WSSAP_GetDocumentSeriesSingle_InputMessage" />
+      <wsdl:output wsaw:Action="http://WSSAP/WSSAP/GetDocumentSeriesSingleResponse" message="tns:WSSAP_GetDocumentSeriesSingle_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://WSSAP/WSSAP/GetDocumentSeriesSingleDataAccessFaultFault" name="DataAccessFaultFault" message="tns:WSSAP_GetDocumentSeriesSingle_DataAccessFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSalesPersonList">
+      <wsdl:input wsaw:Action="http://WSSAP/WSSAP/GetSalesPersonList" message="tns:WSSAP_GetSalesPersonList_InputMessage" />
+      <wsdl:output wsaw:Action="http://WSSAP/WSSAP/GetSalesPersonListResponse" message="tns:WSSAP_GetSalesPersonList_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://WSSAP/WSSAP/GetSalesPersonListDataAccessFaultFault" name="DataAccessFaultFault" message="tns:WSSAP_GetSalesPersonList_DataAccessFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPaymentTermList">
+      <wsdl:input wsaw:Action="http://WSSAP/WSSAP/GetPaymentTermList" message="tns:WSSAP_GetPaymentTermList_InputMessage" />
+      <wsdl:output wsaw:Action="http://WSSAP/WSSAP/GetPaymentTermListResponse" message="tns:WSSAP_GetPaymentTermList_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://WSSAP/WSSAP/GetPaymentTermListDataAccessFaultFault" name="DataAccessFaultFault" message="tns:WSSAP_GetPaymentTermList_DataAccessFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCountryList">
+      <wsdl:input wsaw:Action="http://WSSAP/WSSAP/GetCountryList" message="tns:WSSAP_GetCountryList_InputMessage" />
+      <wsdl:output wsaw:Action="http://WSSAP/WSSAP/GetCountryListResponse" message="tns:WSSAP_GetCountryList_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://WSSAP/WSSAP/GetCountryListDataAccessFaultFault" name="DataAccessFaultFault" message="tns:WSSAP_GetCountryList_DataAccessFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStateList">
+      <wsdl:input wsaw:Action="http://WSSAP/WSSAP/GetStateList" message="tns:WSSAP_GetStateList_InputMessage" />
+      <wsdl:output wsaw:Action="http://WSSAP/WSSAP/GetStateListResponse" message="tns:WSSAP_GetStateList_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://WSSAP/WSSAP/GetStateListDataAccessFaultFault" name="DataAccessFaultFault" message="tns:WSSAP_GetStateList_DataAccessFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDistributionRulesList">
+      <wsdl:input wsaw:Action="http://WSSAP/WSSAP/GetDistributionRulesList" message="tns:WSSAP_GetDistributionRulesList_InputMessage" />
+      <wsdl:output wsaw:Action="http://WSSAP/WSSAP/GetDistributionRulesListResponse" message="tns:WSSAP_GetDistributionRulesList_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://WSSAP/WSSAP/GetDistributionRulesListDataAccessFaultFault" name="DataAccessFaultFault" message="tns:WSSAP_GetDistributionRulesList_DataAccessFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserDefinedFieldValuesList">
+      <wsdl:input wsaw:Action="http://WSSAP/WSSAP/GetUserDefinedFieldValuesList" message="tns:WSSAP_GetUserDefinedFieldValuesList_InputMessage" />
+      <wsdl:output wsaw:Action="http://WSSAP/WSSAP/GetUserDefinedFieldValuesListResponse" message="tns:WSSAP_GetUserDefinedFieldValuesList_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://WSSAP/WSSAP/GetUserDefinedFieldValuesListDataAccessFaultFault" name="DataAccessFaultFault" message="tns:WSSAP_GetUserDefinedFieldValuesList_DataAccessFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUdoGenericKeyValueList">
+      <wsdl:input wsaw:Action="http://WSSAP/WSSAP/GetUdoGenericKeyValueList" message="tns:WSSAP_GetUdoGenericKeyValueList_InputMessage" />
+      <wsdl:output wsaw:Action="http://WSSAP/WSSAP/GetUdoGenericKeyValueListResponse" message="tns:WSSAP_GetUdoGenericKeyValueList_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://WSSAP/WSSAP/GetUdoGenericKeyValueListDataAccessFaultFault" name="DataAccessFaultFault" message="tns:WSSAP_GetUdoGenericKeyValueList_DataAccessFaultFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="c21c1e37-7ccb-4964-b464-5df9a023fdfa" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://190.216.129.83:8085/wssap/wssap.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="WSSAP1.disco" MetadataType="Disco" ID="0ac96cb8-070e-4aea-954d-0a4734715e76" SourceId="1" SourceUrl="http://190.216.129.83:8085/wssap/WSSAP.svc?disco" />
+    <MetadataFile FileName="WSSAP6.xsd" MetadataType="Schema" ID="10bd95ee-346f-41ef-9f7c-77a139f183c7" SourceId="1" SourceUrl="http://190.216.129.83:8085/wssap/WSSAP.svc?xsd=xsd3" />
+    <MetadataFile FileName="WSSAP2.wsdl" MetadataType="Wsdl" ID="338580fe-5a26-4db8-8838-62d2d92fba63" SourceId="1" SourceUrl="http://190.216.129.83:8085/wssap/WSSAP.svc?wsdl=wsdl0" />
+    <MetadataFile FileName="WSSAP61.xsd" MetadataType="Schema" ID="28873867-aa50-40df-a479-b53d145b2a7a" SourceId="1" SourceUrl="http://190.216.129.83:8085/wssap/WSSAP.svc?xsd=xsd2" />
+    <MetadataFile FileName="WSSAP62.xsd" MetadataType="Schema" ID="d2228074-5957-4ec2-b98d-287934833556" SourceId="1" SourceUrl="http://190.216.129.83:8085/wssap/WSSAP.svc?xsd=xsd0" />
+    <MetadataFile FileName="WSSAP63.xsd" MetadataType="Schema" ID="cd9e7f81-3731-431b-9823-83621725f5a4" SourceId="1" SourceUrl="http://190.216.129.83:8085/wssap/WSSAP.svc?xsd=xsd5" />
+    <MetadataFile FileName="WSSAP64.xsd" MetadataType="Schema" ID="3b4c2253-e41d-4624-9cd0-6fd8b7e0410d" SourceId="1" SourceUrl="http://190.216.129.83:8085/wssap/WSSAP.svc?xsd=xsd1" />
+    <MetadataFile FileName="WSSAP21.wsdl" MetadataType="Wsdl" ID="b9e3ae10-6e81-4b9a-82cc-ef5b2a2a2f53" SourceId="1" SourceUrl="http://190.216.129.83:8085/wssap/WSSAP.svc?wsdl" />
+    <MetadataFile FileName="WSSAP65.xsd" MetadataType="Schema" ID="1fc54185-9c53-40f3-8696-3778bfd77c00" SourceId="1" SourceUrl="http://190.216.129.83:8085/wssap/WSSAP.svc?xsd=xsd4" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

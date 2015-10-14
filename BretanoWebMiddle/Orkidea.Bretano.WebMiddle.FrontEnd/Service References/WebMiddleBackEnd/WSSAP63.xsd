@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.Global.Administration" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.Global.Administration" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="SapDocumentType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="SalesInvoice" />
+      <xs:enumeration value="SalesCreditNote" />
+      <xs:enumeration value="SalesDelivery" />
+      <xs:enumeration value="SalesReturn" />
+      <xs:enumeration value="SalesOrder" />
+      <xs:enumeration value="PurchaseInvoice" />
+      <xs:enumeration value="PurchaseCreditNote" />
+      <xs:enumeration value="PurchaseDelivery" />
+      <xs:enumeration value="PurchaseReturn" />
+      <xs:enumeration value="PurchaseOrder" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="SapDocumentType" nillable="true" type="tns:SapDocumentType" />
+</xs:schema>

@@ -1,0 +1,135 @@
+﻿h1 {
+    font-family: 'Russo One', sans-serif;
+}
+
+h2 {
+    font-family: 'Exo', sans-serif;
+}
+
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    font-family: 'Exo', sans-serif;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    /*padding-left: 15px;
+    padding-right: 15px;*/
+    MARGIN-TOP: 25PX;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+/*input,
+select,
+textarea {
+    max-width: 280px;
+}*/
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+/*----------------------------------------------------------------------*/
+/*Custom styles*/
+/*----------------------------------------------------------------------*/
+
+/*navbar*/
+.logo {
+    MARGIN-TOP: 5PX;
+    margin-right: 50px;
+}
+
+.navbar {
+    min-height: 65PX;
+    color: red;
+    border: 1px transparent;
+}
+
+.navbar-inverse {
+    /*background-color: #eff0f0*/ /*#222222*/
+    ;
+    /*border-color: #8d060c ;
+    border-bottom-width:3px;*/
+    background: #f0eee9 url('../Images/header-bg-low.png') 100% 0 no-repeat;
+    background-size: 400px;
+    /*position: relative;*/
+    -webkit-box-shadow: 0px 2px 8px 0px rgba(0,0,0,1);
+    -moz-box-shadow: 0px 2px 8px 0px rgba(0,0,0,1);
+    box-shadow: 0px 2px 8px 0px rgba(0,0,0,1);
+}
+
+.navbar-inverse .navbar-nav > li > a {
+        color: black /*#999999*/;
+    }
+
+        .navbar-inverse .navbar-nav > li > a:hover,
+        .navbar-inverse .navbar-nav > li > a:focus {
+            color: #428bca; /*#ffffff*/;
+            background-color: transparent;
+            /*text-shadow: 0 0 21px #fbfbfb;*/
+        }
+
+@media (min-width: 768px) {
+    .navbar-nav {
+        float: left;
+        margin: 0;
+    }
+
+        .navbar-nav > li {
+            float: left;
+        }
+
+            .navbar-nav > li > a {
+                padding-top: 25px /*15px*/;
+                padding-bottom: 15px;
+            }
+}
+
+/*Body*/
+.body-content {
+    /*padding-left: 15px;
+    padding-right: 15px;*/
+    MARGIN-TOP: 22PX;
+}
+
+.footer {
+    position: fixed;
+    height: 25px;
+    bottom: 0;
+    width: 100%;
+    background-color: black;
+    opacity: 0.7;
+    text-align: center;
+    color: white;
+}
+
+
+#myTab
+        {
+            border-color:white;
+        }
+/*.my-tab .tab-pane{ border:solid 1px white;  border-top: 0;    }*/
+#myTab li a { border-color: #4aafcd;background-color:#4aafcd; color:white; }
+#myTab li.active a {border-bottom-color: transparent;background-color:#016ecd; border-color: #016ecd}
