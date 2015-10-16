@@ -401,14 +401,14 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
                 {
                     outEx.Data.Add("1", "3");
                     outEx.Data.Add("2", "NA");
-                    outEx.Data.Add("3", outEx.Message);
+                    outEx.Data.Add("3", outEx.Message + " Descripción: " + ex.Message);
                     throw outEx;
                 }
                 else
                 {
                     throw;
                 }
-                return false;
+                //return false;
             }
             catch (DbException ex)
             {
@@ -443,7 +443,7 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
                     {
                         outEx.Data.Add("1", "3");
                         outEx.Data.Add("2", "NA");
-                        outEx.Data.Add("3", outEx.Message);
+                        outEx.Data.Add("3", outEx.Message + " Descripción: " + ex.Message);
                         throw outEx;
 
                     }
@@ -479,7 +479,7 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
                 if (DataConnection.ConnectCompany(oAppConnData.dataBaseName, oAppConnData.sapUser, oAppConnData.sapUserPassword))
                 {
                     DataConnection.BeginTran();
-                    BusinessPartnerAccess = new BusinessPartnerData();
+                    BusinessPartnerAccess = new BusinessPartnerData(oAppConnData.adoConnString);
                     BusinessPartnerAccess.AddContact(contact, DataConnection.Conn);
                     DataConnection.EndTran(BoWfTransOpt.wf_Commit);
                     return true;
@@ -496,18 +496,25 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
             {
                 DataConnection.EndTran(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
                 Exception outEx;
-                if (ExceptionPolicy.HandleException(ex, "Politica_Excepcion_Com", out outEx))
+                try
                 {
-                    outEx.Data.Add("1", "3");
-                    outEx.Data.Add("2", "NA");
-                    outEx.Data.Add("3", outEx.Message);
-                    throw outEx;
+                    if (ExceptionPolicy.HandleException(ex, "Politica_Excepcion_Com", out outEx))
+                    {
+                        outEx.Data.Add("1", "3");
+                        outEx.Data.Add("2", "NA");
+                        outEx.Data.Add("3", outEx.Message);
+                        throw outEx;
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
-                else
-                {
-                    throw;
+                catch (Exception)
+                {                                       
                 }
-                return false;
+
+                throw new Exception(ex.Message + "::" + ex.StackTrace);
             }
             catch (DbException ex)
             {
@@ -578,7 +585,7 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
                 if (DataConnection.ConnectCompany(oAppConnData.dataBaseName, oAppConnData.sapUser, oAppConnData.sapUserPassword))
                 {
                     DataConnection.BeginTran();
-                    BusinessPartnerAccess = new BusinessPartnerData();
+                    BusinessPartnerAccess = new BusinessPartnerData(oAppConnData.adoConnString);
                     BusinessPartnerAccess.AddAddress(address, DataConnection.Conn);
                     DataConnection.EndTran(BoWfTransOpt.wf_Commit);
                     return true;
@@ -836,7 +843,7 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
                 if (DataConnection.ConnectCompany(oAppConnData.dataBaseName, oAppConnData.sapUser, oAppConnData.sapUserPassword))
                 {
                     DataConnection.BeginTran();
-                    BusinessPartnerAccess = new BusinessPartnerData();
+                    BusinessPartnerAccess = new BusinessPartnerData(oAppConnData.adoConnString);
                     BusinessPartnerAccess.AddBusinessPartnerWithholdingTax(withholdingTax, DataConnection.Conn);
                     DataConnection.EndTran(BoWfTransOpt.wf_Commit);
                     return true;

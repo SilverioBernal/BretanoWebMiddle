@@ -68,7 +68,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
                     #region data
                     cardType = customer.bpType == "C" ? CardType.Customer : CardType.Lead,
                     cardCode = customer.cardCode,
-                    cardName = customer.cardFName,
+                    cardName = customer.cardName,
                     cardFName = customer.cardFName,
                     groupCode = customer.groupCode,
                     licTradNum = customer.licTradNum,
@@ -77,6 +77,8 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
                     e_Mail = customer.e_Mail,
                     phone1 = customer.phone1,
                     phone2 = customer.phone2,
+                    slpCode = customer.slpCode,
+                    dunTerm = customer.dunTerm,
                     groupNum = customer.groupNum,
                     qryGroup1 = customer.qryGroup1,
                     qryGroup2 = customer.qryGroup2,
@@ -195,13 +197,13 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
                 {
                     name = "U_CSS_aceptacion_fac",
                     value = customer.uCssAcceptInvoice,
-                    type = UdfType.Numeric
+                    type = UdfType.Integer
                 });
 
                 bp.userDefinedFields.Add(new UserDefinedField()
                 {
                     name = "U_QCA_SEGMENTACION",
-                    value = customer.uCssAcceptInvoice,
+                    value = customer.uQcaSegment,
                     type = UdfType.Alphanumeric
                 }); 
                 #endregion
@@ -426,7 +428,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
         }
 
         [Authorize]
-        [OutputCache(Duration = 3600, VaryByParam = "none")]
+        //[OutputCache(Duration = 3600, VaryByParam = "none")]
         public JsonResult AsyncCustomersList()
         {
             #region User identification
@@ -461,7 +463,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
         }
 
         [Authorize]
-        [OutputCache(Duration = int.MaxValue, VaryByParam = "none")]
+        //[OutputCache(Duration = 3600, VaryByParam = "none")]
         public JsonResult AsyncCustomerGroupList()
         {
             #region User identification
@@ -492,7 +494,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
         }
 
         [Authorize]
-        [OutputCache(Duration = int.MaxValue, VaryByParam = "none")]
+        //[OutputCache(Duration = 3600, VaryByParam = "none")]
         public JsonResult AsyncCurrencieList()
         {
             #region User identification
@@ -523,7 +525,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
         }
 
         [Authorize]
-        [OutputCache(Duration = int.MaxValue, VaryByParam = "none")]
+        //[OutputCache(Duration = 3600, VaryByParam = "none")]
         public JsonResult AsyncSalesPersonList()
         {
             #region User identification
@@ -554,7 +556,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
         }
 
         [Authorize]
-        [OutputCache(Duration = int.MaxValue, VaryByParam = "none")]
+        //[OutputCache(Duration = 3600, VaryByParam = "none")]
         public JsonResult AsyncPaymentTermList()
         {
             #region User identification
@@ -585,7 +587,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
         }
 
         [Authorize]
-        [OutputCache(Duration = int.MaxValue, VaryByParam = "none")]
+        //[OutputCache(Duration = 3600, VaryByParam = "none")]
         public JsonResult AsyncContactList(string id)
         {
             #region User identification
@@ -621,7 +623,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
         }
 
         [Authorize]
-        [OutputCache(Duration = int.MaxValue, VaryByParam = "none")]
+        //[OutputCache(Duration = 3600, VaryByParam = "none")]
         public JsonResult AsyncCountryList()
         {
             #region User identification
@@ -653,7 +655,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
         }
 
         [Authorize]
-        //[OutputCache(Duration = int.MaxValue, VaryByParam = "none")]
+        ////[OutputCache(Duration = 3600, VaryByParam = "none")]
         public JsonResult AsyncSalesTaxCodeList()
         {
             #region User identification
@@ -685,7 +687,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
         }
 
         [Authorize]
-        [OutputCache(Duration = int.MaxValue, VaryByParam = "none")]
+        //[OutputCache(Duration = 3600, VaryByParam = "none")]
         public JsonResult AsyncDunningTermsList()
         {
             #region User identification
@@ -716,7 +718,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
         }
 
         [Authorize]
-        [OutputCache(Duration = int.MaxValue, VaryByParam = "none")]
+        //[OutputCache(Duration = 3600, VaryByParam = "none")]
         public JsonResult AsyncStateList(string id)
         {
             #region User identification
@@ -747,7 +749,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
         }
 
         [Authorize]
-        [OutputCache(Duration = int.MaxValue, VaryByParam = "none")]
+        //[OutputCache(Duration = 3600, VaryByParam = "none")]
         public JsonResult AsyncAddressList(string id)
         {
             #region User identification
@@ -786,7 +788,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
         }
 
         [Authorize]
-        [OutputCache(Duration = int.MaxValue, VaryByParam = "none")]
+        //[OutputCache(Duration = 3600, VaryByParam = "none")]
         public JsonResult AsyncWithholdingTaxList(string id)
         {
             #region User identification
@@ -828,7 +830,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
         }
 
         [Authorize]
-        [OutputCache(Duration = int.MaxValue, VaryByParam = "none")]
+        //[OutputCache(Duration = 3600, VaryByParam = "none")]
         public JsonResult AsyncBusinessPartnerWithholdingTaxList(string id)
         {
             #region User identification
@@ -875,7 +877,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
         }
 
         [Authorize]
-        [OutputCache(Duration = int.MaxValue, VaryByParam = "none")]
+        //[OutputCache(Duration = 3600, VaryByParam = "none")]
         public JsonResult AsyncGetPaymentAgeList(string id)
         {
             #region User identification
@@ -918,7 +920,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
         }
 
         [Authorize]
-        //[OutputCache(Duration = int.MaxValue, VaryByParam = "none")]
+        ////[OutputCache(Duration = 3600, VaryByParam = "none")]
         public JsonResult AsyncGetAddressIvaClassList()
         {
             #region User identification
@@ -951,7 +953,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
         }
 
         [Authorize]
-        [OutputCache(Duration = int.MaxValue, VaryByParam = "none")]
+        //[OutputCache(Duration = 3600, VaryByParam = "none")]
         public JsonResult AsyncGetBusinessPartnerIvaClassList()
         {
             #region User identification
@@ -984,7 +986,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
         }
 
         [Authorize]
-        [OutputCache(Duration = int.MaxValue, VaryByParam = "none")]
+        //[OutputCache(Duration = 3600, VaryByParam = "none")]
         public JsonResult AsyncGetBusinessPartnerSegmentList()
         {
             #region User identification
@@ -1017,7 +1019,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
         }
 
         [Authorize]
-        [OutputCache(Duration = int.MaxValue, VaryByParam = "none")]
+        //[OutputCache(Duration = 3600, VaryByParam = "none")]
         public JsonResult AsyncGetPersonTypeList()
         {
             #region User identification
@@ -1050,7 +1052,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
         }
 
         [Authorize]
-        [OutputCache(Duration = int.MaxValue, VaryByParam = "none")]
+        //[OutputCache(Duration = 3600, VaryByParam = "none")]
         public JsonResult AsyncGetTributaryRegList()
         {
             #region User identification
@@ -1083,7 +1085,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
         }
 
         [Authorize]
-        [OutputCache(Duration = int.MaxValue, VaryByParam = "none")]
+        //[OutputCache(Duration = 3600, VaryByParam = "none")]
         public JsonResult AsyncGetDocumentTypeList()
         {
             #region User identification
@@ -1116,7 +1118,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
         }
 
         [Authorize]
-        [OutputCache(Duration = int.MaxValue, VaryByParam = "none")]
+        //[OutputCache(Duration = 3600, VaryByParam = "none")]
         public JsonResult AsyncGetCityMagneticMediaList()
         {
             #region User identification
@@ -1149,7 +1151,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
         }
 
         [Authorize]
-        [OutputCache(Duration = int.MaxValue, VaryByParam = "none")]
+        //[OutputCache(Duration = 3600, VaryByParam = "none")]
         public JsonResult AsyncGetZipCodeList()
         {
             #region User identification

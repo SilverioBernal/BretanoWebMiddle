@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
     $('#ordrLines').DataTable({
-        "ajax": '/SalesOrder/AsyncOrderLinesList/' + $('#orderId').val(),
+        "ajax": '../../SalesOrder/AsyncOrderLinesList/' + $('#orderId').val(),
         "language": {
             "lengthMenu": "Mostrar _MENU_ registros por pagina",
             //"zeroRecords": "Ningun resultado encontrado",
@@ -65,7 +65,7 @@
     });
 
     var itemsTable = $('#itemsTable').DataTable({
-        "ajax": '../SalesOrder/AsyncItemsList',
+        "ajax": '../../SalesOrder/AsyncItemsList',
         "columnDefs": [{
             "targets": -1,
             "data": null,
@@ -117,7 +117,7 @@
                 }).html('NO')
             );
 
-    $.getJSON('../Customer/AsyncSalesTaxCodeList', function (result) {
+    $.getJSON('../../Customer/AsyncSalesTaxCodeList', function (result) {
         $(result).each(function () {
             taxCode.append(
                 $('<option/>', {
@@ -129,7 +129,7 @@
 
 
 
-    $.getJSON('../SalesOrder/AsyncGetDistributionRulesList', function (result) {
+    $.getJSON('../../SalesOrder/AsyncGetDistributionRulesList', function (result) {
         $(result).each(function () {
             ocrCode.append(
                 $('<option/>', {
@@ -146,13 +146,13 @@
 
         var item = data[0] + '|' + $('#listNum').val();
 
-        $.getJSON('../SalesOrder/AsyncGetItemPrice/' + item, function (result) {
+        $.getJSON('../../SalesOrder/AsyncGetItemPrice/' + item, function (result) {
             $('#price').val(result);
         });
     });
 
     $('#whsLink').click(function () {
-        var url = '../SalesOrder/itemIndex/' + $('#itemCode').val();
+        var url = '../../SalesOrder/itemIndex/' + $('#itemCode').val();
 
         $(".stockBody").load(url);
         $('#whsModal').modal('show')

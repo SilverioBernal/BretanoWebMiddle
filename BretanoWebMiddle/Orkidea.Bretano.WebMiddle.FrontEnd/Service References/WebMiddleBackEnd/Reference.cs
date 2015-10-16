@@ -2537,16 +2537,19 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd {
         Alphanumeric = 0,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        Numeric = 1,
+        Integer = 1,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        Datetime = 2,
+        Double = 2,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        Price = 3,
+        Datetime = 3,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        Text = 4,
+        Price = 4,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Text = 5,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]

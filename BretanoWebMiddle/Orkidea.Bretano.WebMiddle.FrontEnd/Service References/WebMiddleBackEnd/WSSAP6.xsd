@@ -3,7 +3,8 @@
   <xs:simpleType name="UdfType">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Alphanumeric" />
-      <xs:enumeration value="Numeric" />
+      <xs:enumeration value="Integer" />
+      <xs:enumeration value="Double" />
       <xs:enumeration value="Datetime" />
       <xs:enumeration value="Price" />
       <xs:enumeration value="Text" />

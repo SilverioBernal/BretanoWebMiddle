@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Common;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -55,13 +56,44 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
                 if (DataConnection.ConnectCompany(oAppConnData.dataBaseName, oAppConnData.sapUser, oAppConnData.sapUserPassword))
                 {
                     DataConnection.BeginTran();
-                    SaleOrderAccess = new MarketingDocumentData();
+                    SaleOrderAccess = new MarketingDocumentData(oAppConnData.adoConnString);
                     document = SaleOrderAccess.Add(SapDocumentType.SalesOrder, document, DataConnection.Conn);
                     DataConnection.EndTran(BoWfTransOpt.wf_Commit);
                     return document;
                 }
 
 
+            }
+            #region Catch
+            catch (SAPException ex)
+            {
+                DataConnection.EndTran(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
+                BizUtilities.ProcessSapException(ex, "Gestión de Pagos");
+                
+            }
+            catch (COMException ex)
+            {
+                DataConnection.EndTran(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
+                Exception outEx;
+                try
+                {
+                    if (ExceptionPolicy.HandleException(ex, "Politica_Excepcion_Com", out outEx))
+                    {
+                        outEx.Data.Add("1", "3");
+                        outEx.Data.Add("2", "NA");
+                        outEx.Data.Add("3", outEx.Message);
+                        throw outEx;
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                catch (Exception)
+                {
+                }
+
+                throw new Exception(ex.Message + "::" + ex.StackTrace);
             }
             catch (DbException ex)
             {
@@ -70,6 +102,7 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
                 {
                     outEx.Data.Add("1", "14");
                     outEx.Data.Add("2", "NA");
+                    //outEx.Data.Add("3", outEx.Message);
                     outEx.Data.Add("3", outEx.Message + " Descripción: " + ex.Message);
                     throw outEx;
                 }
@@ -80,23 +113,34 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
             }
             catch (BusinessException ex)
             {
-                BizUtilities.ProcessBusinessException(ex);
+                ex.Data.Add("1", ex.ErrorId);
+                ex.Data.Add("2", "NA");
+                ex.Data.Add("3", ex.Message);
+                throw ex;
             }
             catch (Exception ex)
             {
+                DataConnection.EndTran(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
                 Exception outEx;
-                if (ExceptionPolicy.HandleException(ex, "Politica_ExcepcionGenerica", out outEx))
+                if (ex.Data["1"] == null)
                 {
-                    outEx.Data.Add("1", "3");
-                    outEx.Data.Add("2", "NA");
-                    outEx.Data.Add("3", outEx.Message);
-                    throw outEx;
+                    if (ExceptionPolicy.HandleException(ex, "Politica_ExcepcionGenerica", out outEx))
+                    {
+                        outEx.Data.Add("1", "3");
+                        outEx.Data.Add("2", "NA");
+                        outEx.Data.Add("3", outEx.Message);
+                        throw outEx;
+
+                    }
                 }
                 else
                 {
                     throw ex;
+                    //return 0;
                 }
+                throw;
             }
+            #endregion
             return document;
         }
         #endregion

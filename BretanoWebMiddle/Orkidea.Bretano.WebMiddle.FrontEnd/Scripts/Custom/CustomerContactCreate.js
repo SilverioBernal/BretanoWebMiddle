@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
     var cardCode = $("#cardCode").val();
-    var url = "/Customer/AsyncContactList/" + cardCode;
+    var url = "../../Customer/AsyncContactList/" + cardCode;
     $('#contacts').DataTable({
         "ajax": url,
         "language": {

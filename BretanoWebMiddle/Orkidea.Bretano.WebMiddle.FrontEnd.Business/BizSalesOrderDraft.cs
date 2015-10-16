@@ -50,6 +50,20 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Business
             }
         }
 
+        public static void Update(ORDR order)
+        {
+            EntityCRUD<ORDR> ec = new EntityCRUD<ORDR>();
+
+            try
+            {
+                ec.Update(order);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public static void AddLine(RDR1 line)
         {
             EntityCRUD<RDR1> ec = new EntityCRUD<RDR1>();

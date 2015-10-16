@@ -132,6 +132,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
             {
                 #region User identification
                 IIdentity context = HttpContext.User.Identity;
+                int user = 0;
                 bool admin = false;
                 bool customerCreator = false;
                 bool purchaseOrderCreator = false;
@@ -144,7 +145,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
 
                     System.Web.Security.FormsIdentity ci = (System.Web.Security.FormsIdentity)HttpContext.User.Identity;
                     string[] userRole = ci.Ticket.UserData.Split('|');
-
+                    user = int.Parse(userRole[0]);
                     admin = int.Parse(userRole[1]) == 1 ? true : false;
                     customerCreator = int.Parse(userRole[2]) == 1 ? true : false;
                     purchaseOrderCreator = int.Parse(userRole[3]) == 1 ? true : false;
@@ -202,10 +203,21 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
                     document.lines.Add(line);
                 }
 
+                if (userName.ToLower() != "root")
+                {
+                    WebUserCompany wuc = BizWebUserCompany.GetSingle(user, companyId);
+                    if (wuc.slpCode != 0)
+                        document.slpCode = wuc.slpCode;
+                }
+
+
                 document = backEnd.AddSalesOrder(document, appConnData);
                 ViewBag.colorMensaje = "success";
                 ViewBag.mensaje = "Orden de venta creada con éxito";
                 ViewBag.docEntry = string.Format("Se creó la orden no {0}", document.docEntry);
+
+                ordr.docEntry = document.docEntry;
+                BizSalesOrderDraft.Update(ordr);
             }
             catch (FaultException<DataAccessFault> ex)
             {
