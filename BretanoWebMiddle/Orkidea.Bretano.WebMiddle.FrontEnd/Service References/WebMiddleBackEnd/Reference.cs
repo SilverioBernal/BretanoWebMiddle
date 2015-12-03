@@ -2836,6 +2836,144 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="BusinessPartnerProp", Namespace="http://WSSAP")]
+    [System.SerializableAttribute()]
+    public partial class BusinessPartnerProp : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int groupCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string groupNameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int groupCode {
+            get {
+                return this.groupCodeField;
+            }
+            set {
+                if ((this.groupCodeField.Equals(value) != true)) {
+                    this.groupCodeField = value;
+                    this.RaisePropertyChanged("groupCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string groupName {
+            get {
+                return this.groupNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.groupNameField, value) != true)) {
+                    this.groupNameField = value;
+                    this.RaisePropertyChanged("groupName");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ItemPrice", Namespace="http://WSSAP")]
+    [System.SerializableAttribute()]
+    public partial class ItemPrice : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string itemCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string itemNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double priceField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string itemCode {
+            get {
+                return this.itemCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.itemCodeField, value) != true)) {
+                    this.itemCodeField = value;
+                    this.RaisePropertyChanged("itemCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string itemName {
+            get {
+                return this.itemNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.itemNameField, value) != true)) {
+                    this.itemNameField = value;
+                    this.RaisePropertyChanged("itemName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double price {
+            get {
+                return this.priceField;
+            }
+            set {
+                if ((this.priceField.Equals(value) != true)) {
+                    this.priceField = value;
+                    this.RaisePropertyChanged("price");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="BusinessPartnerDunninTerm", Namespace="http://WSSAP")]
     [System.SerializableAttribute()]
     public partial class BusinessPartnerDunninTerm : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -3893,6 +4031,272 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="LightMarketingDocument", Namespace="http://WSSAP")]
+    [System.SerializableAttribute()]
+    public partial class LightMarketingDocument : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string cardCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string cardNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime docDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime docDueDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int docEntryField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int docNumField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string docStatusField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.List<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.LightMarketingDocumentLine> linesField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string cardCode {
+            get {
+                return this.cardCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.cardCodeField, value) != true)) {
+                    this.cardCodeField = value;
+                    this.RaisePropertyChanged("cardCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string cardName {
+            get {
+                return this.cardNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.cardNameField, value) != true)) {
+                    this.cardNameField = value;
+                    this.RaisePropertyChanged("cardName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime docDate {
+            get {
+                return this.docDateField;
+            }
+            set {
+                if ((this.docDateField.Equals(value) != true)) {
+                    this.docDateField = value;
+                    this.RaisePropertyChanged("docDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime docDueDate {
+            get {
+                return this.docDueDateField;
+            }
+            set {
+                if ((this.docDueDateField.Equals(value) != true)) {
+                    this.docDueDateField = value;
+                    this.RaisePropertyChanged("docDueDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int docEntry {
+            get {
+                return this.docEntryField;
+            }
+            set {
+                if ((this.docEntryField.Equals(value) != true)) {
+                    this.docEntryField = value;
+                    this.RaisePropertyChanged("docEntry");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int docNum {
+            get {
+                return this.docNumField;
+            }
+            set {
+                if ((this.docNumField.Equals(value) != true)) {
+                    this.docNumField = value;
+                    this.RaisePropertyChanged("docNum");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string docStatus {
+            get {
+                return this.docStatusField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.docStatusField, value) != true)) {
+                    this.docStatusField = value;
+                    this.RaisePropertyChanged("docStatus");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.LightMarketingDocumentLine> lines {
+            get {
+                return this.linesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.linesField, value) != true)) {
+                    this.linesField = value;
+                    this.RaisePropertyChanged("lines");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="LightMarketingDocumentLine", Namespace="http://WSSAP")]
+    [System.SerializableAttribute()]
+    public partial class LightMarketingDocumentLine : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string itemCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string itemNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double priceField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double quantityField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double totalField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string itemCode {
+            get {
+                return this.itemCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.itemCodeField, value) != true)) {
+                    this.itemCodeField = value;
+                    this.RaisePropertyChanged("itemCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string itemName {
+            get {
+                return this.itemNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.itemNameField, value) != true)) {
+                    this.itemNameField = value;
+                    this.RaisePropertyChanged("itemName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double price {
+            get {
+                return this.priceField;
+            }
+            set {
+                if ((this.priceField.Equals(value) != true)) {
+                    this.priceField = value;
+                    this.RaisePropertyChanged("price");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double quantity {
+            get {
+                return this.quantityField;
+            }
+            set {
+                if ((this.quantityField.Equals(value) != true)) {
+                    this.quantityField = value;
+                    this.RaisePropertyChanged("quantity");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double total {
+            get {
+                return this.totalField;
+            }
+            set {
+                if ((this.totalField.Equals(value) != true)) {
+                    this.totalField = value;
+                    this.RaisePropertyChanged("total");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GenericItem", Namespace="http://WSSAP")]
     [System.SerializableAttribute()]
     public partial class GenericItem : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -4356,6 +4760,9 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         PurchaseOrder = 9,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Quotation = 10,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -4817,6 +5224,13 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd {
         [System.ServiceModel.OperationContractAttribute(Action="http://WSSAP/WSSAP/AddBusinessPartner", ReplyAction="http://WSSAP/WSSAP/AddBusinessPartnerResponse")]
         System.Threading.Tasks.Task AddBusinessPartnerAsync(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.BusinessPartner partner, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://WSSAP/WSSAP/UpdateBusinessPartner", ReplyAction="http://WSSAP/WSSAP/UpdateBusinessPartnerResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.DataAccessFault), Action="http://WSSAP/WSSAP/UpdateBusinessPartnerDataAccessFaultFault", Name="DataAccessFault")]
+        void UpdateBusinessPartner(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.BusinessPartner partner, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://WSSAP/WSSAP/UpdateBusinessPartner", ReplyAction="http://WSSAP/WSSAP/UpdateBusinessPartnerResponse")]
+        System.Threading.Tasks.Task UpdateBusinessPartnerAsync(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.BusinessPartner partner, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://WSSAP/WSSAP/AddBusinessPartnerContact", ReplyAction="http://WSSAP/WSSAP/AddBusinessPartnerContactResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.DataAccessFault), Action="http://WSSAP/WSSAP/AddBusinessPartnerContactDataAccessFaultFault", Name="DataAccessFault")]
         void AddBusinessPartnerContact(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.ContactEmployee contact, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData);
@@ -4844,6 +5258,20 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://WSSAP/WSSAP/GetPaymentAgeList", ReplyAction="http://WSSAP/WSSAP/GetPaymentAgeListResponse")]
         System.Threading.Tasks.Task<System.Collections.Generic.List<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.PaymentAge>> GetPaymentAgeListAsync(string cardCode, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://WSSAP/WSSAP/GetBusinessPartnerPropList", ReplyAction="http://WSSAP/WSSAP/GetBusinessPartnerPropListResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.DataAccessFault), Action="http://WSSAP/WSSAP/GetBusinessPartnerPropListDataAccessFaultFault", Name="DataAccessFault")]
+        System.Collections.Generic.List<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.BusinessPartnerProp> GetBusinessPartnerPropList(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://WSSAP/WSSAP/GetBusinessPartnerPropList", ReplyAction="http://WSSAP/WSSAP/GetBusinessPartnerPropListResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.BusinessPartnerProp>> GetBusinessPartnerPropListAsync(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://WSSAP/WSSAP/GetBusinessPartnerLastPricesList", ReplyAction="http://WSSAP/WSSAP/GetBusinessPartnerLastPricesListResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.DataAccessFault), Action="http://WSSAP/WSSAP/GetBusinessPartnerLastPricesListDataAccessFaultFault", Name="DataAccessFault")]
+        System.Collections.Generic.List<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.ItemPrice> GetBusinessPartnerLastPricesList(string cardCode, System.DateTime from, System.DateTime to, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://WSSAP/WSSAP/GetBusinessPartnerLastPricesList", ReplyAction="http://WSSAP/WSSAP/GetBusinessPartnerLastPricesListResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.ItemPrice>> GetBusinessPartnerLastPricesListAsync(string cardCode, System.DateTime from, System.DateTime to, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://WSSAP/WSSAP/AddBusinessPartnerAddress", ReplyAction="http://WSSAP/WSSAP/AddBusinessPartnerAddressResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.DataAccessFault), Action="http://WSSAP/WSSAP/AddBusinessPartnerAddressDataAccessFaultFault", Name="DataAccessFault")]
@@ -4879,6 +5307,34 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://WSSAP/WSSAP/AddSalesOrder", ReplyAction="http://WSSAP/WSSAP/AddSalesOrderResponse")]
         System.Threading.Tasks.Task<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.MarketingDocument> AddSalesOrderAsync(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.MarketingDocument document, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://WSSAP/WSSAP/ListSaleOrders", ReplyAction="http://WSSAP/WSSAP/ListSaleOrdersResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.DataAccessFault), Action="http://WSSAP/WSSAP/ListSaleOrdersDataAccessFaultFault", Name="DataAccessFault")]
+        System.Collections.Generic.List<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.LightMarketingDocument> ListSaleOrders(System.DateTime startDate, System.DateTime endDate, string cardCode, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://WSSAP/WSSAP/ListSaleOrders", ReplyAction="http://WSSAP/WSSAP/ListSaleOrdersResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.LightMarketingDocument>> ListSaleOrdersAsync(System.DateTime startDate, System.DateTime endDate, string cardCode, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://WSSAP/WSSAP/GetSingleOrder", ReplyAction="http://WSSAP/WSSAP/GetSingleOrderResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.DataAccessFault), Action="http://WSSAP/WSSAP/GetSingleOrderDataAccessFaultFault", Name="DataAccessFault")]
+        Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.LightMarketingDocument GetSingleOrder(string docNum, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://WSSAP/WSSAP/GetSingleOrder", ReplyAction="http://WSSAP/WSSAP/GetSingleOrderResponse")]
+        System.Threading.Tasks.Task<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.LightMarketingDocument> GetSingleOrderAsync(string docNum, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://WSSAP/WSSAP/CancelOrder", ReplyAction="http://WSSAP/WSSAP/CancelOrderResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.DataAccessFault), Action="http://WSSAP/WSSAP/CancelOrderDataAccessFaultFault", Name="DataAccessFault")]
+        void CancelOrder(int docEntry, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://WSSAP/WSSAP/CancelOrder", ReplyAction="http://WSSAP/WSSAP/CancelOrderResponse")]
+        System.Threading.Tasks.Task CancelOrderAsync(int docEntry, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://WSSAP/WSSAP/AddQuotation", ReplyAction="http://WSSAP/WSSAP/AddQuotationResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.DataAccessFault), Action="http://WSSAP/WSSAP/AddQuotationDataAccessFaultFault", Name="DataAccessFault")]
+        Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.MarketingDocument AddQuotation(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.MarketingDocument document, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://WSSAP/WSSAP/AddQuotation", ReplyAction="http://WSSAP/WSSAP/AddQuotationResponse")]
+        System.Threading.Tasks.Task<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.MarketingDocument> AddQuotationAsync(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.MarketingDocument document, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://WSSAP/WSSAP/GetItems", ReplyAction="http://WSSAP/WSSAP/GetItemsResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.DataAccessFault), Action="http://WSSAP/WSSAP/GetItemsDataAccessFaultFault", Name="DataAccessFault")]
@@ -5052,6 +5508,14 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd {
             return base.Channel.AddBusinessPartnerAsync(partner, oAppConnData);
         }
         
+        public void UpdateBusinessPartner(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.BusinessPartner partner, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData) {
+            base.Channel.UpdateBusinessPartner(partner, oAppConnData);
+        }
+        
+        public System.Threading.Tasks.Task UpdateBusinessPartnerAsync(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.BusinessPartner partner, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData) {
+            return base.Channel.UpdateBusinessPartnerAsync(partner, oAppConnData);
+        }
+        
         public void AddBusinessPartnerContact(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.ContactEmployee contact, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData) {
             base.Channel.AddBusinessPartnerContact(contact, oAppConnData);
         }
@@ -5082,6 +5546,22 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd {
         
         public System.Threading.Tasks.Task<System.Collections.Generic.List<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.PaymentAge>> GetPaymentAgeListAsync(string cardCode, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData) {
             return base.Channel.GetPaymentAgeListAsync(cardCode, oAppConnData);
+        }
+        
+        public System.Collections.Generic.List<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.BusinessPartnerProp> GetBusinessPartnerPropList(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData) {
+            return base.Channel.GetBusinessPartnerPropList(oAppConnData);
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.BusinessPartnerProp>> GetBusinessPartnerPropListAsync(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData) {
+            return base.Channel.GetBusinessPartnerPropListAsync(oAppConnData);
+        }
+        
+        public System.Collections.Generic.List<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.ItemPrice> GetBusinessPartnerLastPricesList(string cardCode, System.DateTime from, System.DateTime to, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData) {
+            return base.Channel.GetBusinessPartnerLastPricesList(cardCode, from, to, oAppConnData);
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.ItemPrice>> GetBusinessPartnerLastPricesListAsync(string cardCode, System.DateTime from, System.DateTime to, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData) {
+            return base.Channel.GetBusinessPartnerLastPricesListAsync(cardCode, from, to, oAppConnData);
         }
         
         public void AddBusinessPartnerAddress(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.BusinessPartnerAddress address, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData) {
@@ -5122,6 +5602,38 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd {
         
         public System.Threading.Tasks.Task<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.MarketingDocument> AddSalesOrderAsync(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.MarketingDocument document, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData) {
             return base.Channel.AddSalesOrderAsync(document, oAppConnData);
+        }
+        
+        public System.Collections.Generic.List<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.LightMarketingDocument> ListSaleOrders(System.DateTime startDate, System.DateTime endDate, string cardCode, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData) {
+            return base.Channel.ListSaleOrders(startDate, endDate, cardCode, oAppConnData);
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.LightMarketingDocument>> ListSaleOrdersAsync(System.DateTime startDate, System.DateTime endDate, string cardCode, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData) {
+            return base.Channel.ListSaleOrdersAsync(startDate, endDate, cardCode, oAppConnData);
+        }
+        
+        public Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.LightMarketingDocument GetSingleOrder(string docNum, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData) {
+            return base.Channel.GetSingleOrder(docNum, oAppConnData);
+        }
+        
+        public System.Threading.Tasks.Task<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.LightMarketingDocument> GetSingleOrderAsync(string docNum, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData) {
+            return base.Channel.GetSingleOrderAsync(docNum, oAppConnData);
+        }
+        
+        public void CancelOrder(int docEntry, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData) {
+            base.Channel.CancelOrder(docEntry, oAppConnData);
+        }
+        
+        public System.Threading.Tasks.Task CancelOrderAsync(int docEntry, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData) {
+            return base.Channel.CancelOrderAsync(docEntry, oAppConnData);
+        }
+        
+        public Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.MarketingDocument AddQuotation(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.MarketingDocument document, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData) {
+            return base.Channel.AddQuotation(document, oAppConnData);
+        }
+        
+        public System.Threading.Tasks.Task<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.MarketingDocument> AddQuotationAsync(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.MarketingDocument document, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData) {
+            return base.Channel.AddQuotationAsync(document, oAppConnData);
         }
         
         public System.Collections.Generic.List<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.GenericItem> GetItems(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData) {

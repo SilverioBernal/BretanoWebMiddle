@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "paymentAge";
+    ViewBag.Title = "Edades de cartera";
     Layout = null;
 }
 
@@ -26,8 +26,10 @@
         var whsTable = $('#payTable').DataTable({
             "ajax": '@Url.Action("AsyncGetPaymentAgeList", new { id = ViewBag.id })',            
             "language": {
+                //"processing": "Hang on. Waiting for response...",
                 "lengthMenu": "Mostrar _MENU_ registros por pagina",
-                "zeroRecords": "Ningun resultado encontrado",
+                //"zeroRecords": "Ningun resultado encontrado",
+                "sLoadingRecords": "Obteniendo la información del cliente, espere un momento...",
                 "info": "Página _PAGE_ de _PAGES_",
                 "infoEmpty": "Sin registros",
                 "infoFiltered": "(filtered from _MAX_ total records)",

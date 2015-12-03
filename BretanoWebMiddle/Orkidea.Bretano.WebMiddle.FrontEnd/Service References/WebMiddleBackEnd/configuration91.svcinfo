@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="76uiVCyZB1gMAjxEFCkS2awX5G4=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="JvWQQm0ABDcdiNzBtDqkJpKtfu0=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="basicHttpBinding" name="BasicHttpBinding_WSSAP">
       <properties>
@@ -112,10 +112,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="BasicHttpBinding_WSSAP" contract="WebMiddleBackEnd.WSSAP" bindingType="basicHttpBinding" address="http://190.216.129.83:8085/wssap/WSSAP.svc" bindingConfiguration="BasicHttpBinding_WSSAP">
+    <endpoint name="BasicHttpBinding_WSSAP" contract="WebMiddleBackEnd.WSSAP" bindingType="basicHttpBinding" address="http://localhost:60593/WSSAP.svc" bindingConfiguration="BasicHttpBinding_WSSAP">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://190.216.129.83:8085/wssap/WSSAP.svc</serializedValue>
+          <serializedValue>http://localhost:60593/WSSAP.svc</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

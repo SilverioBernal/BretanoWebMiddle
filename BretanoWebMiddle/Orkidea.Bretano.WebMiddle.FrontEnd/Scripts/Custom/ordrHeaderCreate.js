@@ -21,7 +21,7 @@
         format: "yyyy-mm-dd",
         todayBtn: "linked",
         language: "es",
-        orientation: "top auto",
+        orientation: "botom auto",
         autoclose: true,
         todayHighlight: true,
         toggleActive: true
@@ -115,7 +115,7 @@
                     shipToCode.append(
                         $('<option/>', {
                             value: this.address
-                        }).html(this.address)
+                        }).html(this.address + '.::.' + this.street)
                     );
                 });
             });
@@ -125,7 +125,7 @@
                     payToCode.append(
                         $('<option/>', {
                             value: this.address
-                        }).html(this.address)
+                        }).html(this.address + '.::.' + this.street)
                     );
                 });
             });

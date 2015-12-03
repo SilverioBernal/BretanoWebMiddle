@@ -44,6 +44,16 @@
                                 @Html.TextBoxFor(m => m.sapPassword, new { @class = "form-control required", type = "Password", title = "Nombre de la base de datos" })
                                 @Html.ValidationMessageFor(m => m.sapPassword, "Requerido", new { @class = "text-danger" })
                             </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <label>
+                                @Html.CheckBoxFor(model => model.editaPrecio) Permite edición de precios en pedidos
+                            </label>
                         </div>
                     </div>
                 </div>

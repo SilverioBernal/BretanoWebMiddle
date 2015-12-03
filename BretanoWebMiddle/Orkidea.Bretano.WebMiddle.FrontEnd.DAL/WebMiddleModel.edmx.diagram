@@ -8,11 +8,14 @@
         <EntityTypeShape EntityType="QcaWebMiddleModel.WebUser" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
         <EntityTypeShape EntityType="QcaWebMiddleModel.WebUserCompany" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <AssociationConnector Association="QcaWebMiddleModel.FK_WebUserCompany_WebUser" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="QcaWebMiddleModel.ORDR" Width="1.5" PointX="3.375" PointY="5" />
+        <EntityTypeShape EntityType="QcaWebMiddleModel.RDR1" Width="1.5" PointX="5.625" PointY="5.75" />
+        <EntityTypeShape EntityType="QcaWebMiddleModel.ORDR" Width="1.5" PointX="3.375" PointY="4.875" />
+        <AssociationConnector Association="QcaWebMiddleModel.FK_RDR1_ORDR" />
+        <EntityTypeShape EntityType="QcaWebMiddleModel.OQUT" Width="1.5" PointX="8.375" PointY="1" />
+        <EntityTypeShape EntityType="QcaWebMiddleModel.QUT1" Width="1.5" PointX="10.625" PointY="1.75" />
+        <AssociationConnector Association="QcaWebMiddleModel.FK_QUT1_OQUT" />
         <EntityTypeShape EntityType="QcaWebMiddleModel.Company" Width="1.5" PointX="0.75" PointY="0.875" />
         <AssociationConnector Association="QcaWebMiddleModel.FK_WebUserCompany_Company" />
-        <EntityTypeShape EntityType="QcaWebMiddleModel.RDR1" Width="1.5" PointX="5.625" PointY="5.75" />
-        <AssociationConnector Association="QcaWebMiddleModel.FK_RDR1_ORDR" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

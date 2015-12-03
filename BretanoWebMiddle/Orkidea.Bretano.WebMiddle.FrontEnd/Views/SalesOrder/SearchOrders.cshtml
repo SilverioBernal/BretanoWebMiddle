@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "itemIndex";
+    Layout = null;
+}
+<table id="orders" class="display" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Pedido</th>
+            <th>Fecha pedido</th>
+            <th>Fecha entrega</th>
+            <th>Estatus</th>
+            <th></th>
+        </tr>
+    </thead>
+</table>
+
+<script>
+    $(document).ready(function () {
+        
+        var id = '';
+
+        var itemsTable = $('#orders').DataTable({
+            //processing: true,
+            "ajax": '@Url.Action("AsyncSearchOrders", new { id = ViewBag.data })',
+            "columnDefs": [{
+                "targets": -1,
+                "data": null,
+                "defaultContent": "<button data-dismiss='modal'>Ver</button>"
+            }],
+            "language": {
+                //"processing": "Hang on. Waiting for response...",
+                "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                //"zeroRecords": "Ningun resultado encontrado",
+                "sLoadingRecords": "Obteniendo los clientes, espere un momento...",
+                "info": "Página _PAGE_ de _PAGES_",
+                "infoEmpty": "Sin registros",
+                "infoFiltered": "(filtered from _MAX_ total records)",
+                "search": "Buscar:",
+                "paginate": {
+                    "first": "Primera",
+                    "last": "Ultima",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                },
+            }
+        });
+
+        $('#orders tbody').on('click', 'button', function () {
+            var data = itemsTable.row($(this).parents('tr')).data();
+            var docNum = data[0];
+
+            window.location = "@Url.Action("Details")" + "/" + docNum;
+        });
+
+    });
+</script>

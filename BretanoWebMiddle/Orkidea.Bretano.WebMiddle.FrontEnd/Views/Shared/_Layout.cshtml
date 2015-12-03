@@ -18,6 +18,7 @@
     <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.5/js/jquery.dataTables.js"></script>
     <script type="text/javascript" charset="utf8" src="http://eternicode.github.io/bootstrap-datepicker/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
     <script src="http://eternicode.github.io/bootstrap-datepicker/bootstrap-datepicker/js/locales/bootstrap-datepicker.es.js" charset="UTF-8"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
     <!-- font icons -->
     @{
         System.Security.Principal.IIdentity context = Context.User.Identity;
@@ -57,12 +58,32 @@
                     {
                         if (purchaseOrderCreator)
                         {
-                            <li>@Html.ActionLink("Pedidos", "create", "salesorder")</li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pedidos<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("Nuevo pedido", "create", "salesorder")</li>
+                                    <li>@Html.ActionLink("Cancelar pedido", "search", "salesorder")</li>
+                                    <li>@Html.ActionLink("Inventario por producto", "itemstock", "salesorder")</li>    
+                                    <li>@Html.ActionLink("Nueva cotización", "create", "Quotation")</li>                                    
+                                </ul>
+                            </li>
+
+
                         }
-                        
+
                         if (customerCreator)
                         {
-                            <li>@Html.ActionLink("Clientes", "create", "customer")</li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Gestíon clientes<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("Clientes", "index", "customer")</li>                                   
+                                    <li><a href="@Url.Action("CustomerPaymentAges", "Customer")">Edades de cartera por cliente</a></li>      
+                                    <li><a href="@Url.Action("lastPrices", "Customer")">Reporte últimos precios</a></li>                                   
+                                </ul>
+                            </li>
+
+
+                            
                         }
                         
                         if (admin)
@@ -72,6 +93,7 @@
                                 <ul class="dropdown-menu">
                                     <li><a href="@Url.Action("Index", "Company")">Compañias</a></li>
                                     <li><a href="@Url.Action("Index", "WebUser")">Usuarios</a></li>                                    
+                                    <li><a href="@Url.Action("georeport", "salesorder")">Reporte geográfico</a></li>      
                                 </ul>
                             </li>
                         }

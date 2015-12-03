@@ -14,20 +14,32 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.DAL
     {
         public virtual IList<T> GetAll(params Expression<Func<T, object>>[] navigationProperties)
         {
-            IList<T> list;
-            using (var context = new QcaWebMiddleEntities())
+            IList<T> list = null;
+            try
             {
-                //context.Configuration.ProxyCreationEnabled = false;
-                context.Configuration.LazyLoadingEnabled = false; 
-                IQueryable<T> dbQuery = context.Set<T>();
+                using (var context = new QcaWebMiddleEntities())
+                {
+                    //context.Configuration.ProxyCreationEnabled = false;
+                    context.Configuration.LazyLoadingEnabled = false;
+                    IQueryable<T> dbQuery = context.Set<T>();
 
-                //Apply eager loading
-                foreach (Expression<Func<T, object>> navigationProperty in navigationProperties)
-                    dbQuery = dbQuery.Include<T, object>(navigationProperty);
+                    //Apply eager loading
+                    foreach (Expression<Func<T, object>> navigationProperty in navigationProperties)
+                        dbQuery = dbQuery.Include<T, object>(navigationProperty);
 
-                list = dbQuery
-                    .AsNoTracking()
-                    .ToList<T>();
+                    list = dbQuery
+                        .AsNoTracking()
+                        .ToList<T>();
+                }
+            }
+            catch (ArgumentException ex) 
+            {
+                string lola = ex.Message;
+            }
+            catch (Exception ex)
+            {
+                string lola = ex.Message;
+                throw;
             }
             return list;
         }
@@ -38,7 +50,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.DAL
             using (var context = new QcaWebMiddleEntities())
             {
                 //context.Configuration.ProxyCreationEnabled = false;
-                context.Configuration.LazyLoadingEnabled = true; 
+                context.Configuration.LazyLoadingEnabled = false; 
                 IQueryable<T> dbQuery = context.Set<T>();
 
                 //Apply eager loading

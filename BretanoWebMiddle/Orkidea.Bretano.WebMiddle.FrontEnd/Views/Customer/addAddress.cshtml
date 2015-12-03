@@ -86,8 +86,7 @@
                         <div class="form-group">
                             <div class="col-md-6">
                                 @Html.LabelFor(model => model.streetNo, "Localidad", new { @class = "control-label" })
-                                @Html.TextBoxFor(m => m.streetNo, new { @class = "form-control required", title = "Localidad" })
-                                @Html.ValidationMessageFor(m => m.streetNo, "Requierido", new { @class = "text-danger" })
+                                @Html.TextBoxFor(m => m.streetNo, new { @class = "form-control", title = "Localidad" })                                
                             </div>
                             <div class="col-md-6">
                                 @Html.LabelFor(model => model.taxCode, "Indicador impuesto", new { @class = "control-label" })

@@ -26,6 +26,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Entities
         public string sapUser { get; set; }
         public string sapPassword { get; set; }
         public string logo { get; set; }
+        public bool editaPrecio { get; set; }
     
         public virtual ICollection<WebUserCompany> WebUserCompany { get; set; }
     }

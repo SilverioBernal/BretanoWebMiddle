@@ -36,7 +36,8 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="Orkidea.Framework.Data">
+    <Reference Include="Orkidea.Framework.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Libraries\Orkidea.Framework.Data.dll</HintPath>
     </Reference>
     <Reference Include="System" />

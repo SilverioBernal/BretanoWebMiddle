@@ -1,4 +1,9 @@
 ﻿$(document).ready(function () {
+
+    if ($('#editaPrecio').val() == "False") {
+        document.getElementById("price").readOnly = true;
+    }
+
     $('#ordrLines').DataTable({
         "ajax": '../../SalesOrder/AsyncOrderLinesList/' + $('#orderId').val(),
         "language": {

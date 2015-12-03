@@ -28,8 +28,10 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.DAL
     
         public virtual DbSet<WebUser> WebUser { get; set; }
         public virtual DbSet<WebUserCompany> WebUserCompany { get; set; }
-        public virtual DbSet<ORDR> ORDR { get; set; }
-        public virtual DbSet<Company> Company { get; set; }
         public virtual DbSet<RDR1> RDR1 { get; set; }
+        public virtual DbSet<ORDR> ORDR { get; set; }
+        public virtual DbSet<OQUT> OQUT { get; set; }
+        public virtual DbSet<QUT1> QUT1 { get; set; }
+        public virtual DbSet<Company> Company { get; set; }
     }
 }

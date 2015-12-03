@@ -1,0 +1,560 @@
+﻿@model Orkidea.Bretano.WebMiddle.FrontEnd.Models.CustomerViewModel
+@{
+    ViewBag.Title = "Editar Cliente";
+}
+
+<script src="@Url.Content("~/Scripts/Custom/CustomerEdit.js")"></script>
+
+<div class="container-fluid">
+    @using (Html.BeginForm("Edit", "Customer", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <h2>Edición de clientes</h2>
+
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="well">
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.bpType, "Tipo", new { @class = "control-label" })                        
+                        @Html.TextBoxFor(m => m.cardType, new { @class = "form-control required", title = "Código de cliente sin digito de verificación" })
+                        @Html.ValidationMessageFor(m => m.bpType, "Requierido", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.cardCode, "Código", new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.cardCode, new { @class = "form-control required", title = "Código de cliente sin digito de verificación" })
+                        @Html.ValidationMessageFor(m => m.cardCode, "Requierido", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.cardName, "Razón social", new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.cardName, new { @class = "form-control required", title = "Razón social", style = "max-width:100%" })
+                        @Html.ValidationMessageFor(m => m.cardName, "Requerido", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.cardFName, "Sigla", new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.cardFName, new { @class = "form-control", title = "Sigla" })
+                        @Html.ValidationMessageFor(m => m.cardFName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.groupCode, "Grupo", new { @class = "control-label" })
+                        @Html.DropDownListFor(model => model.groupCode, new SelectList(Model.bpGroups, "groupCode", "groupName"), " ", new { @class = "form-control", style = "max-width:100%" })                        
+                        @Html.ValidationMessageFor(m => m.groupCode, "Requerido", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.licTradNum, "NIT", new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.licTradNum, new { @class = "form-control required", title = "NIT" })
+                        @Html.ValidationMessageFor(m => m.licTradNum, "Requerido", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.currency, "Moneda", new { @class = "control-label" })
+                        @Html.DropDownListFor(model => model.currency, new SelectList(Model.currencies, "currCode", "currName"), " ", new { @class = "form-control", style = "max-width:100%" })                        
+                        @Html.ValidationMessageFor(m => m.currency, "Requerido", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.password, "NIT sin dígito", new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.password, new { @class = "form-control", title = "NIT sin digito de verificacion" })
+                        @Html.ValidationMessageFor(m => m.password, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.e_Mail, "e-mail", new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.e_Mail, new { @class = "form-control", title = "e_Mail", style = "max-width:100%" })
+                        @Html.ValidationMessageFor(m => m.e_Mail, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.phone1, "Teléfono 1", new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.phone1, new { @class = "form-control required", title = "Teléfono 1" })
+                        @Html.ValidationMessageFor(m => m.phone1, "Requerido", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.phone2, "Teléfono 2", new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.phone2, new { @class = "form-control", title = "Teléfono 2" })
+                        @Html.ValidationMessageFor(m => m.phone2, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.slpCode, "Vendedor", new { @class = "control-label" })
+                        @Html.DropDownListFor(model => model.slpCode, new SelectList(Model.salesPersons, "slpCode", "slpName"), " ", new { @class = "form-control", style = "max-width:100%" })                        
+                        @Html.ValidationMessageFor(m => m.slpCode, "Requerido", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*<br />*@
+        <div class="row">
+            <div class="col-md-12">
+                <div>
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist" id="myTab">
+                        <li role="presentation" class="active"><a href="#finanzas" aria-controls="home" role="tab" data-toggle="tab">Condiciones de pago</a></li>
+                        <li role="presentation"><a href="#propiedades" aria-controls="profile" role="tab" data-toggle="tab">Propiedades</a></li>
+                        <li role="presentation"><a href="#notas" aria-controls="messages" role="tab" data-toggle="tab">Comentarios</a></li>
+                        <li role="presentation"><a href="#udf" aria-controls="settings" role="tab" data-toggle="tab">Información adicional</a></li>
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content my-tab">
+                        <div role="tabpanel" class="tab-pane active" id="finanzas">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div class="col-md-6">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">Condiciones de pago</div>
+                                            <div class="panel-body">
+                                                <div class="col-md-12">
+                                                    @Html.LabelFor(model => model.groupNum, "Condiciones de pago", new { @class = "control-label" })
+                                                    @Html.DropDownListFor(model => model.groupNum, new SelectList(Model.paymentTerms, "groupNum", "pymntGroup"), " ", new { @class = "form-control", style = "max-width:100%" })                        
+                                                    @Html.ValidationMessageFor(m => m.groupNum, "Requerido", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">Reclamaciones</div>
+                                            <div class="panel-body">
+                                                <div class="col-md-12">
+                                                    @Html.LabelFor(model => model.dunTerm, "Reclamaciones", new { @class = "control-label" })
+                                                    @Html.DropDownListFor(model => model.dunTerm, new SelectList(Model.dunningTerms, "termCode", "termName"), " ", new { @class = "form-control", style = "max-width:100%" })                        
+                                                    @Html.ValidationMessageFor(m => m.dunTerm, "Requerido", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div role="tabpanel" class="tab-pane" id="propiedades">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div class="col-md-12">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">Propiedades</div>
+                                            <div class="panel-body">
+                                                <div class="col-md-3">
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup1) qryGroup1
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup2) qryGroup2
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup3) qryGroup3
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup4) qryGroup4
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup5) qryGroup5
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup6) qryGroup6
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup7) qryGroup7
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup8) qryGroup8
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup9) qryGroup9
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup10) qryGroup10
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup11) qryGroup11
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup12) qryGroup12
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup13) qryGroup13
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup14) qryGroup14
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup15) qryGroup15
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup16) qryGroup16
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup17) qryGroup17
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup18) qryGroup18
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup19) qryGroup19
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup20) qryGroup20
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup21) qryGroup21
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup22) qryGroup22
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup23) qryGroup23
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup24) qryGroup24
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup25) qryGroup25
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup26) qryGroup26
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup27) qryGroup27
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup28) qryGroup28
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup29) qryGroup29
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup30) qryGroup30
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup31) qryGroup31
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup32) qryGroup32
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup33) qryGroup33
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup34) qryGroup34
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup35) qryGroup35
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup36) qryGroup36
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup37) qryGroup37
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup38) qryGroup38
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup39) qryGroup39
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup40) qryGroup40
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup41) qryGroup41
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup42) qryGroup42
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup43) qryGroup43
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup44) qryGroup44
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup45) qryGroup45
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup46) qryGroup46
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup47) qryGroup47
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup48) qryGroup48
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup49) qryGroup49
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup50) qryGroup50
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup51) qryGroup51
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup52) qryGroup52
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup53) qryGroup53
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup54) qryGroup54
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup55) qryGroup55
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup56) qryGroup56
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup57) qryGroup57
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup58) qryGroup58
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup59) qryGroup59
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup60) qryGroup60
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup61) qryGroup61
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup62) qryGroup62
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup63) qryGroup63
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            @Html.CheckBoxFor(model => model.qryGroup64) qryGroup64
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="notas">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div class="col-md-12">
+                                        @Html.LabelFor(model => model.freeText, "Comentarios", new { @class = "control-label" })
+                                        @Html.TextAreaFor(model => model.freeText, new { @class = "form-control col-md-12", style = "max-width:100%" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="udf">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            @Html.LabelFor(model => model.uBpcoRt, "Régimen tributario", new { @class = "control-label" })
+                                            @Html.DropDownListFor(model => model.uBpcoRt, new SelectList(Model.tributaryRegs, "fldValue", "descr"), " ", new { @class = "form-control", style = "max-width:100%" })                        
+                                            @Html.ValidationMessageFor(m => m.uBpcoRt, "Requerido", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="col-md-3">
+                                            @Html.LabelFor(model => model.uBpcoTdc, "Tipo de documento", new { @class = "control-label" })
+                                            @Html.DropDownListFor(model => model.uBpcoTdc, new SelectList(Model.docTypes, "fldValue", "descr"), " ", new { @class = "form-control", style = "max-width:100%" })                        
+                                            @Html.ValidationMessageFor(m => m.uBpcoTdc, "Requerido", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="col-md-3">
+                                            @Html.LabelFor(model => model.uBpcoCs, "Municipio medios magnéticos", new { @class = "control-label" })
+                                            @Html.DropDownListFor(model => model.uBpcoCs, new SelectList(Model.magneticMediaCities, "fldValue", "descr"), " ", new { @class = "form-control", style = "max-width:100%" })                        
+                                            @Html.ValidationMessageFor(m => m.uBpcoCs, "Requerido", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="col-md-3">
+                                            @Html.LabelFor(model => model.uBpcoCity, "Ciudad", new { @class = "control-label" })
+                                            @Html.TextBoxFor(m => m.uBpcoCity, new { @class = "form-control required", title = "Ciudad" })
+                                            @Html.ValidationMessageFor(m => m.uBpcoCity, "Requerido", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            @Html.LabelFor(model => model.uBpcoTp, "Tipo de persona", new { @class = "control-label" })
+                                            @Html.DropDownListFor(model => model.uBpcoTp, new SelectList(Model.personTypes, "fldValue", "descr"), " ", new { @class = "form-control", style = "max-width:100%" })                        
+                                            @Html.ValidationMessageFor(m => m.uBpcoTp, "Requerido", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="col-md-3">
+                                            @Html.LabelFor(model => model.uCssIva, "Clasificación IVA", new { @class = "control-label" })
+                                            @Html.DropDownListFor(model => model.uCssIva, new SelectList(Model.ivaClasses, "fldValue", "descr"), " ", new { @class = "form-control", style = "max-width:100%" })                        
+                                            @Html.ValidationMessageFor(m => m.uCssIva, "Requerido", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="col-md-3">
+                                            @Html.LabelFor(model => model.uCssAcceptInvoice, "Dia cierre facturación", new { @class = "control-label" })
+                                            @Html.DropDownListFor(model => model.uCssAcceptInvoice, new SelectList(Model.invoiceDays, "key", "value"), " ", new { @class = "form-control", style = "max-width:100%" })
+                                            
+                                        </div>
+                                        <div class="col-md-3">
+                                            @Html.LabelFor(model => model.uQcaSegment, "Segmentación cliente", new { @class = "control-label" })
+                                            @Html.DropDownListFor(model => model.uQcaSegment, new SelectList(Model.partnerSegments, "fldValue", "descr"), " ", new { @class = "form-control", style = "max-width:100%" })                        
+                                            @Html.ValidationMessageFor(m => m.uQcaSegment, "Requerido", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type='submit' id='upload-files' value=' Guardar ' class="btn btn-primary" /><span> | </span>
+                    <a href="@Url.Action("addContact", new { id = ViewBag.code})" class="btn btn-info">Agregar direcciones y contacto</a><span> | </span>
+                    @*<input type='button' id='addAddresses' value=' Agregar direcciones y contactos ' class="btn btn-info" />*@
+                    @Html.ActionLink("Volver al inicio", "Index", "Home")
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            @ViewBag.mensaje
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

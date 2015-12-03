@@ -5,6 +5,7 @@ using Orkidea.Framework.SAP.BusinessOne.Entities.Finance;
 using Orkidea.Framework.SAP.BusinessOne.Entities.Global.Administration;
 using Orkidea.Framework.SAP.BusinessOne.Entities.Global.ExceptionManagement;
 using Orkidea.Framework.SAP.BusinessOne.Entities.Global.Misc;
+using Orkidea.Framework.SAP.BusinessOne.Entities.Global.Reports;
 using Orkidea.Framework.SAP.BusinessOne.Entities.Global.UserDefinedFileds;
 using Orkidea.Framework.SAP.BusinessOne.Entities.Inventory;
 using Orkidea.Framework.SAP.BusinessOne.Entities.MarketingDocuments;
@@ -223,6 +224,34 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Core
             }
         }
 
+        public void UpdateBusinessPartner(BusinessPartner partner, AppConnData oAppConnData)
+        {
+            try
+            {
+                facade = new BizFacade(BusinessClass.BizBusinessPartner);
+                facade.UpdateBusinessPartner(partner, oAppConnData);
+            }
+            catch (Exception ex)
+            {
+                DataAccessFault detalleError = new DataAccessFault();
+                foreach (string valores in ex.Data.Keys)
+                {
+                    switch (valores)
+                    {
+                        case "1": detalleError.ErrorID = ex.Data[valores].ToString();
+                            break;
+                        case "2": detalleError.ErrorSAP = ex.Data[valores].ToString();
+                            break;
+                        case "3": detalleError.Description = ex.Data[valores].ToString();
+                            break;
+                        default: detalleError.ErrorID = ex.Data[valores].ToString();
+                            break;
+                    }
+                }
+                throw new FaultException<DataAccessFault>(detalleError, "Error al Procesar la solicitud");
+            }
+        }
+
         public void AddBusinessPartnerContact(ContactEmployee contact, AppConnData oAppConnData)
         {
             try
@@ -285,6 +314,62 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Core
             {
                 facade = new BizFacade(BusinessClass.BizBusinessPartner);
                 return facade.GetPaymentAgeList(cardCode, oAppConnData);
+            }
+            catch (Exception ex)
+            {
+                DataAccessFault detalleError = new DataAccessFault();
+                foreach (string valores in ex.Data.Keys)
+                {
+                    switch (valores)
+                    {
+                        case "1": detalleError.ErrorID = ex.Data[valores].ToString();
+                            break;
+                        case "2": detalleError.ErrorSAP = ex.Data[valores].ToString();
+                            break;
+                        case "3": detalleError.Description = ex.Data[valores].ToString();
+                            break;
+                        default: detalleError.ErrorID = ex.Data[valores].ToString();
+                            break;
+                    }
+                }
+                throw new FaultException<DataAccessFault>(detalleError, "Error al Procesar la solicitud");
+            }
+        }
+
+        public List<BusinessPartnerProp> GetBusinessPartnerPropList(AppConnData oAppConnData)
+        {
+            try
+            {
+                facade = new BizFacade(BusinessClass.BizBusinessPartner);
+                return facade.GetBusinessPartnerPropList(oAppConnData);
+            }
+            catch (Exception ex)
+            {
+                DataAccessFault detalleError = new DataAccessFault();
+                foreach (string valores in ex.Data.Keys)
+                {
+                    switch (valores)
+                    {
+                        case "1": detalleError.ErrorID = ex.Data[valores].ToString();
+                            break;
+                        case "2": detalleError.ErrorSAP = ex.Data[valores].ToString();
+                            break;
+                        case "3": detalleError.Description = ex.Data[valores].ToString();
+                            break;
+                        default: detalleError.ErrorID = ex.Data[valores].ToString();
+                            break;
+                    }
+                }
+                throw new FaultException<DataAccessFault>(detalleError, "Error al Procesar la solicitud");
+            }
+        }
+
+        public List<ItemPrice> GetBusinessPartnerLastPricesList(string cardCode, DateTime from, DateTime to, AppConnData oAppConnData)
+        {
+            try
+            {
+                facade = new BizFacade(BusinessClass.BizBusinessPartner);
+                return facade.GetBusinessPartnerLastPricesList(cardCode, from, to, oAppConnData);
             }
             catch (Exception ex)
             {
@@ -389,7 +474,7 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Core
                 }
                 throw new FaultException<DataAccessFault>(detalleError, "Error al Procesar la solicitud");
             }
-        }
+        }        
         #endregion
 
         #region Sales Order
@@ -399,6 +484,120 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Core
             {
                 facade = new BizFacade(BusinessClass.BizSalesOrder);
                 return facade.AddSalesOrder(document, oAppConnData);
+            }
+            catch (Exception ex)
+            {
+                DataAccessFault detalleError = new DataAccessFault();
+                foreach (string valores in ex.Data.Keys)
+                {
+                    switch (valores)
+                    {
+                        case "1": detalleError.ErrorID = ex.Data[valores].ToString();
+                            break;
+                        case "2": detalleError.ErrorSAP = ex.Data[valores].ToString();
+                            break;
+                        case "3": detalleError.Description = ex.Data[valores].ToString();
+                            break;
+                        default: detalleError.ErrorID = ex.Data[valores].ToString();
+                            break;
+                    }
+                }
+                throw new FaultException<DataAccessFault>(detalleError, "Error al Procesar la solicitud");
+            }
+        }
+
+        public List<LightMarketingDocument> ListSaleOrders(DateTime startDate, DateTime endDate, string cardCode, AppConnData oAppConnData)
+        {
+            try
+            {
+                facade = new BizFacade(BusinessClass.BizSalesOrder);
+                return facade.ListSaleOrders(startDate, endDate, cardCode, oAppConnData);
+            }
+            catch (Exception ex)
+            {
+                DataAccessFault detalleError = new DataAccessFault();
+                foreach (string valores in ex.Data.Keys)
+                {
+                    switch (valores)
+                    {
+                        case "1": detalleError.ErrorID = ex.Data[valores].ToString();
+                            break;
+                        case "2": detalleError.ErrorSAP = ex.Data[valores].ToString();
+                            break;
+                        case "3": detalleError.Description = ex.Data[valores].ToString();
+                            break;
+                        default: detalleError.ErrorID = ex.Data[valores].ToString();
+                            break;
+                    }
+                }
+                throw new FaultException<DataAccessFault>(detalleError, "Error al Procesar la solicitud");
+            }
+        }
+
+        public LightMarketingDocument GetSingleOrder(string docNum, AppConnData oAppConnData)
+        {
+            try
+            {
+                facade = new BizFacade(BusinessClass.BizSalesOrder);
+                return facade.GetSingleOrder(docNum, oAppConnData);
+            }
+            catch (Exception ex)
+            {
+                DataAccessFault detalleError = new DataAccessFault();
+                foreach (string valores in ex.Data.Keys)
+                {
+                    switch (valores)
+                    {
+                        case "1": detalleError.ErrorID = ex.Data[valores].ToString();
+                            break;
+                        case "2": detalleError.ErrorSAP = ex.Data[valores].ToString();
+                            break;
+                        case "3": detalleError.Description = ex.Data[valores].ToString();
+                            break;
+                        default: detalleError.ErrorID = ex.Data[valores].ToString();
+                            break;
+                    }
+                }
+                throw new FaultException<DataAccessFault>(detalleError, "Error al Procesar la solicitud");
+            }
+        }
+
+        public void CancelOrder(int docEntry, AppConnData oAppConnData)
+        {
+            try
+            {
+                facade = new BizFacade(BusinessClass.BizSalesOrder);
+                facade.CancelOrder(docEntry, oAppConnData);
+            }
+            catch (Exception ex)
+            {
+                DataAccessFault detalleError = new DataAccessFault();
+                foreach (string valores in ex.Data.Keys)
+                {
+                    switch (valores)
+                    {
+                        case "1": detalleError.ErrorID = ex.Data[valores].ToString();
+                            break;
+                        case "2": detalleError.ErrorSAP = ex.Data[valores].ToString();
+                            break;
+                        case "3": detalleError.Description = ex.Data[valores].ToString();
+                            break;
+                        default: detalleError.ErrorID = ex.Data[valores].ToString();
+                            break;
+                    }
+                }
+                throw new FaultException<DataAccessFault>(detalleError, "Error al Procesar la solicitud");
+            }
+        }
+        #endregion
+
+        #region Quotation        
+        public MarketingDocument AddQuotation(MarketingDocument document, AppConnData oAppConnData)
+        {
+            try
+            {
+                facade = new BizFacade(BusinessClass.BizQuotation);
+                return facade.AddQuotation(document, oAppConnData);
             }
             catch (Exception ex)
             {

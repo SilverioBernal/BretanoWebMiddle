@@ -2,6 +2,7 @@
 using Orkidea.Framework.SAP.BusinessOne.Entities.Finance;
 using Orkidea.Framework.SAP.BusinessOne.Entities.Global.Administration;
 using Orkidea.Framework.SAP.BusinessOne.Entities.Global.Misc;
+using Orkidea.Framework.SAP.BusinessOne.Entities.Global.Reports;
 using Orkidea.Framework.SAP.BusinessOne.Entities.Global.UserDefinedFileds;
 using Orkidea.Framework.SAP.BusinessOne.Entities.Inventory;
 using Orkidea.Framework.SAP.BusinessOne.Entities.MarketingDocuments;
@@ -18,6 +19,7 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
         #region Atributos
         BizBusinessPartner bizBusinessPartner;
         BizSaleOrder bizSalesOrder;
+        BizQuotation bizQuotation;
         BizInventory bizInventory;
         BizCommon bizCommon;
         BizFinance bizFinance;
@@ -33,6 +35,9 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
                     break;
                 case BusinessClass.BizSalesOrder:
                     bizSalesOrder = new BizSaleOrder();
+                    break;
+                case BusinessClass.BizQuotation:
+                    bizQuotation = new BizQuotation();
                     break;
                 case BusinessClass.BizInventory:
                     bizInventory = new BizInventory();
@@ -82,9 +87,24 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
             return bizBusinessPartner.GetPaymentAgeList(cardCode, oAppConnData);
         }
 
+        public List<BusinessPartnerProp> GetBusinessPartnerPropList(AppConnData oAppConnData)
+        {
+            return bizBusinessPartner.GetBusinessPartnerPropList(oAppConnData);
+        }
+
+        public List<ItemPrice> GetBusinessPartnerLastPricesList(string cardCode, DateTime from, DateTime to, AppConnData oAppConnData)
+        {
+            return bizBusinessPartner.GetBusinessPartnerLastPricesList(cardCode, from, to, oAppConnData);
+        }
+
         public void AddBusinessPartner(BusinessPartner partner, AppConnData oAppConnData)
         {
             bizBusinessPartner.Add(partner, oAppConnData);
+        }
+
+        public void UpdateBusinessPartner(BusinessPartner partner, AppConnData oAppConnData)
+        {
+            bizBusinessPartner.Update(partner, oAppConnData);
         }
 
         public void AddBusinessPartnerContact(ContactEmployee contact, AppConnData oAppConnData)
@@ -110,7 +130,7 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
         public bool AddBusinessPartnerWithholdingTax(BusinessPartnerWithholdingTax withholdingTax, AppConnData oAppConnData)
         {
             return bizBusinessPartner.AddBusinessPartnerWithholdingTax(withholdingTax, oAppConnData);
-        }
+        }        
         #endregion
 
         #region Sales Order
@@ -118,6 +138,28 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
         {
             return bizSalesOrder.Add(document, oAppConnData);
         }
+
+        public List<LightMarketingDocument> ListSaleOrders(DateTime startDate, DateTime endDate, string cardCode, AppConnData oAppConnData)
+        {
+            return bizSalesOrder.List(startDate, endDate, cardCode, oAppConnData);
+        }
+
+        public LightMarketingDocument GetSingleOrder(string docNum, AppConnData oAppConnData) 
+        {
+            return bizSalesOrder.GetSingle(docNum, oAppConnData);
+        }
+
+        public void CancelOrder(int docEntry, AppConnData oAppConnData)
+        {
+            bizSalesOrder.Cancel(docEntry, oAppConnData);
+        }
+        #endregion
+
+        #region Quotation
+        public MarketingDocument AddQuotation(MarketingDocument document, AppConnData oAppConnData)
+        {
+            return bizQuotation.Add(document, oAppConnData);
+        }        
         #endregion
 
         #region Inventory

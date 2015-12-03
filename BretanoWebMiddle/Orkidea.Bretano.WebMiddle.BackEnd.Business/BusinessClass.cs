@@ -9,5 +9,5 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
     /// <summary>
     /// Enumeración para el tipo de clases de negocio
     /// </summary>
-    public enum BusinessClass { BizBusinessPartner, BizSalesOrder, BizInventory, BizFinance, BizCommon };
+    public enum BusinessClass { BizBusinessPartner, BizSalesOrder, BizInventory, BizFinance, BizCommon, BizQuotation };
 }

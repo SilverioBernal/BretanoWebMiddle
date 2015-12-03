@@ -3,6 +3,7 @@ using Orkidea.Framework.SAP.BusinessOne.Entities.Finance;
 using Orkidea.Framework.SAP.BusinessOne.Entities.Global.Administration;
 using Orkidea.Framework.SAP.BusinessOne.Entities.Global.ExceptionManagement;
 using Orkidea.Framework.SAP.BusinessOne.Entities.Global.Misc;
+using Orkidea.Framework.SAP.BusinessOne.Entities.Global.Reports;
 using Orkidea.Framework.SAP.BusinessOne.Entities.Global.UserDefinedFileds;
 using Orkidea.Framework.SAP.BusinessOne.Entities.Inventory;
 using Orkidea.Framework.SAP.BusinessOne.Entities.MarketingDocuments;
@@ -42,6 +43,10 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Contracts
 
         [OperationContract(IsOneWay = false)]
         [FaultContract(typeof(DataAccessFault))]
+        void UpdateBusinessPartner(BusinessPartner partner, AppConnData oAppConnData);
+
+        [OperationContract(IsOneWay = false)]
+        [FaultContract(typeof(DataAccessFault))]
         void AddBusinessPartnerContact(ContactEmployee contact, AppConnData oAppConnData);
 
         [OperationContract(IsOneWay = false)]
@@ -58,6 +63,14 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Contracts
 
         [OperationContract(IsOneWay = false)]
         [FaultContract(typeof(DataAccessFault))]
+        List<BusinessPartnerProp> GetBusinessPartnerPropList(AppConnData oAppConnData);
+
+        [OperationContract(IsOneWay = false)]
+        [FaultContract(typeof(DataAccessFault))]
+        List<ItemPrice> GetBusinessPartnerLastPricesList(string cardCode, DateTime from, DateTime to, AppConnData oAppConnData);
+
+        [OperationContract(IsOneWay = false)]
+        [FaultContract(typeof(DataAccessFault))]
         void AddBusinessPartnerAddress(BusinessPartnerAddress address, AppConnData oAppConnData);
 
         [OperationContract(IsOneWay = false)]
@@ -70,15 +83,33 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Contracts
 
         [OperationContract(IsOneWay = false)]
         [FaultContract(typeof(DataAccessFault))]
-        void AddBusinessPartnerWithholdingTax(BusinessPartnerWithholdingTax withholdingTax, AppConnData oAppConnData);
+        void AddBusinessPartnerWithholdingTax(BusinessPartnerWithholdingTax withholdingTax, AppConnData oAppConnData);        
         #endregion
 
         #region Sales Order
         [OperationContract(IsOneWay = false)]
         [FaultContract(typeof(DataAccessFault))]
         MarketingDocument AddSalesOrder(MarketingDocument document, AppConnData oAppConnData);
+
+        [OperationContract(IsOneWay = false)]
+        [FaultContract(typeof(DataAccessFault))]
+        List<LightMarketingDocument> ListSaleOrders(DateTime startDate, DateTime endDate, string cardCode, AppConnData oAppConnData);
+
+        [OperationContract(IsOneWay = false)]
+        [FaultContract(typeof(DataAccessFault))]
+        LightMarketingDocument GetSingleOrder(string docNum, AppConnData oAppConnData);
+
+        [OperationContract(IsOneWay = false)]
+        [FaultContract(typeof(DataAccessFault))]
+        void CancelOrder(int docEntry, AppConnData oAppConnData);
         #endregion
 
+        #region Quotation
+        [OperationContract(IsOneWay = false)]
+        [FaultContract(typeof(DataAccessFault))]
+        MarketingDocument AddQuotation(MarketingDocument document, AppConnData oAppConnData);
+        #endregion
+        
         #region Inventory
         [OperationContract(IsOneWay = false)]
         [FaultContract(typeof(DataAccessFault))]

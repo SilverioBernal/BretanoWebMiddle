@@ -49,10 +49,16 @@
     <Compile Include="Company.cs">
       <DependentUpon>WebMiddleDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="OQUT.cs">
+      <DependentUpon>WebMiddleDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ORDR.cs">
       <DependentUpon>WebMiddleDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QUT1.cs">
+      <DependentUpon>WebMiddleDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="RDR1.cs">
       <DependentUpon>WebMiddleDataModel.tt</DependentUpon>
     </Compile>

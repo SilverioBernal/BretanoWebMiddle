@@ -1,0 +1,75 @@
+﻿@model Orkidea.Bretano.WebMiddle.FrontEnd.Models.SearchFormViewModel
+@{
+    ViewBag.Title = "Search";
+}
+<script src="~/Scripts/Custom/ordrSearch.js"></script>
+
+<h2>Buscar ordenes</h2>
+
+@using (Ajax.BeginForm("QueryExecute", null, null, new AjaxOptions { UpdateTargetId = "divQueryData" }, new { id = "formQueryIssues" }))
+{
+    <div class="row">
+        <div class="form-group">
+            <div class="col-md-2">
+                @Html.Label("Desde", new { @for = "desde", @class = "control-label" })
+                <div class="input-group date dtPicker" id="datetimepicker1">
+                    @Html.TextBoxFor(model => model.start, new { type = "text", @class = "form-control" })
+                    <span class="input-group-addon">
+                        <span class="fa fa-calendar"></span>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-2">
+                @Html.Label("Hasta", new { @for = "hasta", @class = "control-label" })
+                <div class="input-group date dtPicker" id="datetimepicker2">
+                    @Html.TextBoxFor(model => model.end, new { type = "text", @class = "form-control" })
+                    <span class="input-group-addon">
+                        <span class="fa fa-calendar"></span>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <a href="javascript:void(0)" id="customerCode" data-toggle="modal" data-target="#customerModal">@Html.LabelFor(model => model.cardCode, "Cliente", new { @class = "control-label" })</a>
+                @Html.TextBoxFor(m => m.cardCode, new { @class = "form-control required", title = "id del socio de negocio", readOnly = true })
+                @Html.ValidationMessageFor(m => m.cardCode, "Requierido", new { @class = "text-danger" })               
+            </div>
+            <div class="col-md-5">
+                <label class="control-label">Nombre</label>
+                <input type="text" class="form-control" value="@ViewBag.cardName" id="cardName" style="max-width:100%" disabled />
+            </div>
+            <div class="col-md-1">
+                <label class="control-label" style="color:white">.</label>
+                <input type="button" value="Buscar" id="btnSearch" class="btn btn-info" />
+            </div>
+        </div>
+    </div>
+}
+<hr />
+<div class="row ordersTable">
+    
+</div>
+
+<div class="modal fade" id="customerModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Clientes</h4>
+            </div>
+            <div class="modal-body" style="overflow-y:scroll; max-height:500px;">
+                <table id="customers" class="display" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Nombre</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="modal-footer">
+                @*<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>*@
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

@@ -16,9 +16,18 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Business
             return ec.GetAll();
         }
 
+        public static IList<ORDR> GetList(DateTime from, DateTime to, int slpCode, int idCompany)
+        {
+            to = to.AddDays(1);
+
+            EntityCRUD<ORDR> ec = new EntityCRUD<ORDR>();
+            return ec.GetList(x => x.docDate >= from && x.docDate < to && x.slpCode.Equals(slpCode) && x.idCompania.Equals(idCompany) && x.docEntry!= null);
+        }
+
         public static IList<RDR1> GetLinesList(int orderId)
         {
             EntityCRUD<RDR1> ec = new EntityCRUD<RDR1>();
+
             return ec.GetList(c => c.orderId.Equals(orderId));
         }
 

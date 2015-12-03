@@ -167,6 +167,7 @@
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\QuotationController.cs" />
     <Compile Include="Controllers\SalesOrderController.cs" />
     <Compile Include="Controllers\SecurityController.cs" />
     <Compile Include="Controllers\WebUserController.cs" />
@@ -175,10 +176,10 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BusinessPartnerAddressViewModel.cs" />
-    <Compile Include="Models\cust.cs" />
     <Compile Include="Models\CustomerViewModel.cs" />
     <Compile Include="Models\CustomIdentity.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\SearchFormViewModel.cs" />
     <Compile Include="Models\WebUserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\WebMiddleBackEnd\Reference.cs">
@@ -306,9 +307,19 @@
     <Content Include="Scripts\Custom\CustomerAddressCreate.js" />
     <Content Include="Scripts\Custom\CustomerContactCreate.js" />
     <Content Include="Scripts\Custom\CustomerCreate.js" />
+    <Content Include="Scripts\Custom\CustomerEdit.js" />
+    <Content Include="Scripts\Custom\CustomerIndex.js" />
+    <Content Include="Scripts\Custom\CustomerLastPrices.js" />
+    <Content Include="Scripts\Custom\CustomerPaymentAges.js" />
     <Content Include="Scripts\Custom\CustomerTaxesCreate.js" />
+    <Content Include="Scripts\Custom\ItemStock.js" />
+    <Content Include="Scripts\Custom\ordrDetails.js" />
+    <Content Include="Scripts\Custom\ordrGeoreport.js" />
     <Content Include="Scripts\Custom\ordrHeaderCreate.js" />
     <Content Include="Scripts\Custom\ordrLineCreate.js" />
+    <Content Include="Scripts\Custom\ordrSearch.js" />
+    <Content Include="Scripts\Custom\QuotationHeaderCreate.js" />
+    <Content Include="Scripts\Custom\QuotationLineCreate.js" />
     <Content Include="Scripts\Custom\WebUserAsociate.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.min.js" />
@@ -434,11 +445,20 @@
     <Content Include="Service References\WebMiddleBackEnd\Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.GenericItem.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <Content Include="Service References\WebMiddleBackEnd\Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.LightMarketingDocument.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\WebMiddleBackEnd\Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.BusinessPartnerProp.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\WebMiddleBackEnd\Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.ItemPrice.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="Service References\WebMiddleBackEnd\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <None Include="Service References\WebMiddleBackEnd\WSSAP1.disco" />
+    <None Include="Service References\WebMiddleBackEnd\WSSAP.disco" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -484,26 +504,40 @@
     <Content Include="Views\WebUser\Index.cshtml" />
     <Content Include="Views\WebUser\Create.cshtml" />
     <Content Include="Views\WebUser\Asociate.cshtml" />
-    <None Include="Service References\WebMiddleBackEnd\WSSAP2.wsdl" />
-    <None Include="Service References\WebMiddleBackEnd\WSSAP21.wsdl" />
-    <None Include="Service References\WebMiddleBackEnd\WSSAP6.xsd">
+    <None Include="Service References\WebMiddleBackEnd\WSSAP.wsdl" />
+    <None Include="Service References\WebMiddleBackEnd\WSSAP.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\WebMiddleBackEnd\WSSAP61.xsd">
+    <None Include="Service References\WebMiddleBackEnd\WSSAP1.wsdl" />
+    <None Include="Service References\WebMiddleBackEnd\WSSAP1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\WebMiddleBackEnd\WSSAP62.xsd">
+    <None Include="Service References\WebMiddleBackEnd\WSSAP2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\WebMiddleBackEnd\WSSAP63.xsd">
+    <None Include="Service References\WebMiddleBackEnd\WSSAP3.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\WebMiddleBackEnd\WSSAP64.xsd">
+    <None Include="Service References\WebMiddleBackEnd\WSSAP4.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\WebMiddleBackEnd\WSSAP65.xsd">
+    <None Include="Service References\WebMiddleBackEnd\WSSAP5.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Views\Customer\edit.cshtml" />
+    <Content Include="Views\SalesOrder\Search.cshtml" />
+    <Content Include="Views\SalesOrder\SearchOrders.cshtml" />
+    <Content Include="Views\SalesOrder\Details.cshtml" />
+    <Content Include="Views\SalesOrder\Delete.cshtml" />
+    <Content Include="Views\SalesOrder\Georeport.cshtml" />
+    <Content Include="Views\SalesOrder\ShowGeoReport.cshtml" />
+    <Content Include="Views\Customer\lastPrices.cshtml" />
+    <Content Include="Views\Customer\searchLastPrices.cshtml" />
+    <Content Include="Views\Customer\CustomerPaymentAges.cshtml" />
+    <Content Include="Views\SalesOrder\ItemStock.cshtml" />
+    <Content Include="Views\Quotation\Create.cshtml" />
+    <Content Include="Views\Quotation\AddLine.cshtml" />
+    <Content Include="Views\Quotation\Finish.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

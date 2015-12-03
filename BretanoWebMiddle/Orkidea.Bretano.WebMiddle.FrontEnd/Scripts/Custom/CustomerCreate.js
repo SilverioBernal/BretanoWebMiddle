@@ -10,7 +10,8 @@
     var uBpcoTp = $('#uBpcoTp');
     var uCssIva = $('#uCssIva');
     var uCssAcceptInvoice = $('#uCssAcceptInvoice');
-    var uQcaSegment = $('#uQcaSegment');    
+    var uQcaSegment = $('#uQcaSegment');
+    var props = $('input[type=checkbox]');
 
     bpGroupCode.empty();
     currency.empty();
@@ -192,6 +193,17 @@
                 }).html(this.descr)
             );
         });
+    });
+
+    $.getJSON('/Customer/AsyncGetBusinessPartnerPropList', function (result) {
+        for (var i = 0; i < result.length; i++) {
+            var groupCode = result[i].groupCode;
+            var groupName = result[i].groupName;
+            var propCtrl = $('#qryGroup' + groupCode);
+
+            var text = $(propCtrl)[0];
+            text.parentElement.childNodes[3].nodeValue = groupName;                   
+        }
     });
 
     for (var i = 1; i < 31; i++) {

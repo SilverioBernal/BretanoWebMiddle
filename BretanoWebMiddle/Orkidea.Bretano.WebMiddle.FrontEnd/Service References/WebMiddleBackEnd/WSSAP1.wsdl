@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:i0="http://WSSAP" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="WSSAP" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
-  <wsdl:import namespace="http://WSSAP" location="http://190.216.129.83:8085/wssap/WSSAP.svc?wsdl=wsdl0" />
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:i0="http://WSSAP" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="WSSAP" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:import namespace="http://WSSAP" location="http://localhost:60593/WSSAP.svc?wsdl=wsdl0" />
   <wsdl:types />
   <wsdl:binding name="BasicHttpBinding_WSSAP" type="i0:WSSAP">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -52,6 +52,18 @@
         <soap:fault use="literal" name="DataAccessFaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
+    <wsdl:operation name="UpdateBusinessPartner">
+      <soap:operation soapAction="http://WSSAP/WSSAP/UpdateBusinessPartner" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DataAccessFaultFault">
+        <soap:fault use="literal" name="DataAccessFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
     <wsdl:operation name="AddBusinessPartnerContact">
       <soap:operation soapAction="http://WSSAP/WSSAP/AddBusinessPartnerContact" style="document" />
       <wsdl:input>
@@ -90,6 +102,30 @@
     </wsdl:operation>
     <wsdl:operation name="GetPaymentAgeList">
       <soap:operation soapAction="http://WSSAP/WSSAP/GetPaymentAgeList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DataAccessFaultFault">
+        <soap:fault use="literal" name="DataAccessFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetBusinessPartnerPropList">
+      <soap:operation soapAction="http://WSSAP/WSSAP/GetBusinessPartnerPropList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DataAccessFaultFault">
+        <soap:fault use="literal" name="DataAccessFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetBusinessPartnerLastPricesList">
+      <soap:operation soapAction="http://WSSAP/WSSAP/GetBusinessPartnerLastPricesList" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -150,6 +186,54 @@
     </wsdl:operation>
     <wsdl:operation name="AddSalesOrder">
       <soap:operation soapAction="http://WSSAP/WSSAP/AddSalesOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DataAccessFaultFault">
+        <soap:fault use="literal" name="DataAccessFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ListSaleOrders">
+      <soap:operation soapAction="http://WSSAP/WSSAP/ListSaleOrders" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DataAccessFaultFault">
+        <soap:fault use="literal" name="DataAccessFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetSingleOrder">
+      <soap:operation soapAction="http://WSSAP/WSSAP/GetSingleOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DataAccessFaultFault">
+        <soap:fault use="literal" name="DataAccessFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CancelOrder">
+      <soap:operation soapAction="http://WSSAP/WSSAP/CancelOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DataAccessFaultFault">
+        <soap:fault use="literal" name="DataAccessFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AddQuotation">
+      <soap:operation soapAction="http://WSSAP/WSSAP/AddQuotation" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -355,7 +439,7 @@
   </wsdl:binding>
   <wsdl:service name="WSSAP">
     <wsdl:port name="BasicHttpBinding_WSSAP" binding="tns:BasicHttpBinding_WSSAP">
-      <soap:address location="http://190.216.129.83:8085/wssap/WSSAP.svc" />
+      <soap:address location="http://localhost:60593/WSSAP.svc" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

@@ -2,38 +2,17 @@
 @{
     ViewBag.Title = "Index";
 }
-
-<h2>Index</h2>
-
-<table id="example" class="display" cellspacing="0" width="100%">
+<script src="~/Scripts/Custom/CustomerIndex.js"></script>
+<h2>Registro de clientes SAP</h2>
+<p>
+    <a href="@Url.Action("create")" class="btn btn-primary">Crear Cliente</a>
+</p>
+<table id="customers" class="display" cellspacing="0" width="100%">
     <thead>
         <tr>
             <th>Codigo</th>
             <th>Nombre Socio de negocio</th>
+            <th></th>
         </tr>
-    </thead>    
+    </thead>
 </table>
-<script>
-    $(document).ready(function () {
-
-
-
-        $('#example').DataTable({            
-            "ajax": "@Url.Action("AsyncCustomersList")",
-            "language": {
-                "lengthMenu": "Mostrar _MENU_ registros por pagina",
-                "zeroRecords": "Ningun resultado encontrado",
-                "info": "Página _PAGE_ de _PAGES_",
-                "infoEmpty": "Sin registros",
-                "infoFiltered": "(filtered from _MAX_ total records)",
-                "search": "Buscar:",
-                "paginate": {
-                    "first": "Primera",
-                    "last": "Ultima",
-                    "next": "Siguiente",
-                    "previous": "Anterior"
-                },
-            }            
-        });
-    });
-</script>

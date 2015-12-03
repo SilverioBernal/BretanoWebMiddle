@@ -26,15 +26,16 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Entities
         public System.DateTime docDate { get; set; }
         public System.DateTime docDueDate { get; set; }
         public System.DateTime taxDate { get; set; }
-        public string uCssComentarios { get; set; }
-        public string uOrkUsuarioWeb { get; set; }
-        public string uLatitud { get; set; }
-        public string uLongitud { get; set; }
         public string shipToCode { get; set; }
         public string payToCode { get; set; }
         public int groupNum { get; set; }
         public string comments { get; set; }
         public Nullable<int> slpCode { get; set; }
+        public string uCssComentarios { get; set; }
+        public string uOrkUsuarioWeb { get; set; }
+        public string uLatitud { get; set; }
+        public string uLongitud { get; set; }
+        public Nullable<int> idCompania { get; set; }
     
         public virtual ICollection<RDR1> RDR1 { get; set; }
     }

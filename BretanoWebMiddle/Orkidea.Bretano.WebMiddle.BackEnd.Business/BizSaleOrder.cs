@@ -81,7 +81,7 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
                     {
                         outEx.Data.Add("1", "3");
                         outEx.Data.Add("2", "NA");
-                        outEx.Data.Add("3", outEx.Message);
+                        outEx.Data.Add("3", outEx.Message + " Descripción: " + ex.Message);
                         throw outEx;
                     }
                     else
@@ -142,6 +142,227 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
             }
             #endregion
             return document;
+        }
+
+        public List<LightMarketingDocument> List(DateTime startDate, DateTime endDate, string cardCode, AppConnData oAppConnData)
+        {
+            try
+            {
+                if (!BizUtilities.ValidateServiceConnection(oAppConnData))
+                    throw new BusinessException(15, "Nombre de Usuario o Contraseña incorrecta para el Servicio");
+
+                oAppConnData = BizUtilities.GetDataConnection(oAppConnData);
+                SaleOrderAccess = new MarketingDocumentData(oAppConnData.adoConnString);
+
+                List<LightMarketingDocument> orders = SaleOrderAccess.GetList(SapDocumentType.SalesOrder,startDate, endDate, cardCode);
+
+                foreach (LightMarketingDocument item in orders)
+                {
+                    if (item.docStatus == "O")
+                        item.docStatus = "Abierto";
+                    else
+                        item.docStatus = "Cerrado";
+                }
+
+                return orders;
+            }
+            catch (DbException ex)
+            {
+                Exception outEx;
+                if (ExceptionPolicy.HandleException(ex, "Politica_SQLServer", out outEx))
+                {
+                    outEx.Data.Add("1", "14");
+                    outEx.Data.Add("2", "NA");
+                    //outEx.Data.Add("3", outEx.Message);
+                    outEx.Data.Add("3", outEx.Message + " Descripción: " + ex.Message);
+                    throw outEx;
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
+            catch (BusinessException ex)
+            {
+                BizUtilities.ProcessBusinessException(ex);
+            }
+            catch (Exception ex)
+            {
+                Exception outEx;
+                if (ExceptionPolicy.HandleException(ex, "Politica_ExcepcionGenerica", out outEx))
+                {
+                    outEx.Data.Add("1", "3");
+                    outEx.Data.Add("2", "NA");
+                    outEx.Data.Add("3", outEx.Message);
+                    throw outEx;
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
+            return null;
+        }
+
+        public LightMarketingDocument GetSingle(string docNum, AppConnData oAppConnData)
+        {
+            try
+            {
+                if (!BizUtilities.ValidateServiceConnection(oAppConnData))
+                    throw new BusinessException(15, "Nombre de Usuario o Contraseña incorrecta para el Servicio");
+
+                oAppConnData = BizUtilities.GetDataConnection(oAppConnData);
+                SaleOrderAccess = new MarketingDocumentData(oAppConnData.adoConnString);
+
+                LightMarketingDocument order = SaleOrderAccess.GetSingle(SapDocumentType.SalesOrder, docNum);
+
+                if (order.docStatus == "O")
+                    order.docStatus = "Abierto";
+                else
+                    order.docStatus = "Cerrado";
+
+                return order;
+            }
+            catch (DbException ex)
+            {
+                Exception outEx;
+                if (ExceptionPolicy.HandleException(ex, "Politica_SQLServer", out outEx))
+                {
+                    outEx.Data.Add("1", "14");
+                    outEx.Data.Add("2", "NA");
+                    //outEx.Data.Add("3", outEx.Message);
+                    outEx.Data.Add("3", outEx.Message + " Descripción: " + ex.Message);
+                    throw outEx;
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
+            catch (BusinessException ex)
+            {
+                BizUtilities.ProcessBusinessException(ex);
+            }
+            catch (Exception ex)
+            {
+                Exception outEx;
+                if (ExceptionPolicy.HandleException(ex, "Politica_ExcepcionGenerica", out outEx))
+                {
+                    outEx.Data.Add("1", "3");
+                    outEx.Data.Add("2", "NA");
+                    outEx.Data.Add("3", outEx.Message);
+                    throw outEx;
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
+            return null;
+        }
+
+        public void Cancel(int docEntry, AppConnData oAppConnData)
+        {
+            try
+            {
+                if (!BizUtilities.ValidateServiceConnection(oAppConnData))
+                    throw new BusinessException(15, "Nombre de Usuario o Contraseña incorrecta para el Servicio");
+
+                oAppConnData = BizUtilities.GetDataConnection(oAppConnData);
+
+                string licenseServer = Cryptography.Decrypt(HexSerialization.HexToString(ConfigurationManager.AppSettings["licenseServer"]));
+                string dbServer = Cryptography.Decrypt(HexSerialization.HexToString(ConfigurationManager.AppSettings["dbServer"]));
+                string dbUser = Cryptography.Decrypt(HexSerialization.HexToString(ConfigurationManager.AppSettings["dbUser"]));
+                string dbUserPassword = Cryptography.Decrypt(HexSerialization.HexToString(ConfigurationManager.AppSettings["dbUserPassword"]));
+                string serverType = ConfigurationManager.AppSettings["serverType"];
+
+                DataConnection = new SAPConnectionData(oAppConnData.dataBaseName, licenseServer, dbServer, oAppConnData.sapUser, oAppConnData.sapUserPassword, dbUser, dbUserPassword, serverType);
+
+                if (DataConnection.ConnectCompany(oAppConnData.dataBaseName, oAppConnData.sapUser, oAppConnData.sapUserPassword))
+                {
+                    DataConnection.BeginTran();
+                    SaleOrderAccess = new MarketingDocumentData(oAppConnData.adoConnString);
+                    SaleOrderAccess.Cancel(SapDocumentType.SalesOrder, docEntry, DataConnection.Conn);
+                    DataConnection.EndTran(BoWfTransOpt.wf_Commit);                    
+                }
+            }
+            #region Catch
+            catch (SAPException ex)
+            {
+                DataConnection.EndTran(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
+                BizUtilities.ProcessSapException(ex, "Gestión de Pagos");
+
+            }
+            catch (COMException ex)
+            {
+                DataConnection.EndTran(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
+                Exception outEx;
+                try
+                {
+                    if (ExceptionPolicy.HandleException(ex, "Politica_Excepcion_Com", out outEx))
+                    {
+                        outEx.Data.Add("1", "3");
+                        outEx.Data.Add("2", "NA");
+                        outEx.Data.Add("3", outEx.Message + " Descripción: " + ex.Message);
+                        throw outEx;
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                catch (Exception)
+                {
+                }
+
+                throw new Exception(ex.Message + "::" + ex.StackTrace);
+            }
+            catch (DbException ex)
+            {
+                Exception outEx;
+                if (ExceptionPolicy.HandleException(ex, "Politica_SQLServer", out outEx))
+                {
+                    outEx.Data.Add("1", "14");
+                    outEx.Data.Add("2", "NA");
+                    //outEx.Data.Add("3", outEx.Message);
+                    outEx.Data.Add("3", outEx.Message + " Descripción: " + ex.Message);
+                    throw outEx;
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
+            catch (BusinessException ex)
+            {
+                ex.Data.Add("1", ex.ErrorId);
+                ex.Data.Add("2", "NA");
+                ex.Data.Add("3", ex.Message);
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                DataConnection.EndTran(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
+                Exception outEx;
+                if (ex.Data["1"] == null)
+                {
+                    if (ExceptionPolicy.HandleException(ex, "Politica_ExcepcionGenerica", out outEx))
+                    {
+                        outEx.Data.Add("1", "3");
+                        outEx.Data.Add("2", "NA");
+                        outEx.Data.Add("3", outEx.Message);
+                        throw outEx;
+
+                    }
+                }
+                else
+                {
+                    throw ex;
+                    //return 0;
+                }
+                throw;
+            }
+            #endregion            
         }
         #endregion
     }

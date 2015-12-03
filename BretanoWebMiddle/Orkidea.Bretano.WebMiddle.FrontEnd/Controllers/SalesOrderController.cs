@@ -6,6 +6,7 @@ using Orkidea.Framework.Security;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
 using System.Linq;
 using System.Security.Principal;
 using System.ServiceModel;
@@ -45,6 +46,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
             bool purchaseOrderCreator = false;
             int companyId = 0;
             string userName = "";
+            int slpCode = 0;
             AppConnData appConnData = new AppConnData();
 
             if (context.IsAuthenticated)
@@ -58,13 +60,15 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
                 customerCreator = int.Parse(userRole[2]) == 1 ? true : false;
                 purchaseOrderCreator = int.Parse(userRole[3]) == 1 ? true : false;
                 companyId = int.Parse(userRole[4]);
+                slpCode = int.Parse(userRole[5]);
                 userName = ci.Name;
                 appConnData = GetAppConnData(companyId);
             }
             #endregion
 
             order.uOrkUsuarioWeb = userId;
-
+            order.idCompania = companyId;
+            order.slpCode = slpCode;
             int orderNum = BizSalesOrderDraft.Add(order);
             return RedirectToAction("AddLine", new { id = HexSerialization.StringToHex(orderNum.ToString()) });
         }
@@ -96,6 +100,8 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
             }
             #endregion
 
+            Company company = BizCompany.GetSingle(companyId);
+
             string realId = HexSerialization.HexToString(id);
             ORDR ordr = BizSalesOrderDraft.GetSingle(int.Parse(realId));
 
@@ -112,6 +118,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
             ViewBag.listNum = customer.listNum;
             ViewBag.orderId = realId;
             ViewBag.id = id;
+            ViewBag.editaPrecio = company.editaPrecio;
             return View();
         }
 
@@ -138,6 +145,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
                 bool purchaseOrderCreator = false;
                 int companyId = 0;
                 string userName = "";
+                int slpCode = 0;
                 AppConnData appConnData = new AppConnData();
 
                 if (context.IsAuthenticated)
@@ -150,6 +158,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
                     customerCreator = int.Parse(userRole[2]) == 1 ? true : false;
                     purchaseOrderCreator = int.Parse(userRole[3]) == 1 ? true : false;
                     companyId = int.Parse(userRole[4]);
+                    slpCode = int.Parse(userRole[5]);
                     userName = ci.Name;
                     appConnData = GetAppConnData(companyId);
                 }
@@ -166,9 +175,14 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
                     docDate = ordr.docDate,
                     docDueDate = ordr.docDueDate,
                     taxDate = ordr.taxDate,
+                    shipToCode = ordr.shipToCode,
+                    payToCode = ordr.payToCode,
                     lines = new List<MarketingDocumentLine>(),
                     userDefinedFields = new List<UserDefinedField>()
                 };
+
+                if (slpCode > 0)
+                    document.slpCode = slpCode;
 
                 document.userDefinedFields.Add(new UserDefinedField()
                 {
@@ -225,6 +239,124 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
                 ViewBag.mensaje = "No se pudo crear la Orden de venta";
                 ViewBag.docEntry = string.Format("Codigo {0} error:{1} {2}", ex.Code, ex.Detail.Description, ex.Message);
             }
+            return View();
+        }
+
+        [Authorize]
+        public ActionResult Search()
+        {
+            return View();
+        }
+
+        [Authorize]
+        public ActionResult SearchOrders(string id)
+        {
+            ViewBag.data = id;
+
+            return View();
+        }
+
+        [Authorize]
+        public ActionResult Details(string id)
+        {
+            #region User identification
+            IIdentity context = HttpContext.User.Identity;
+            int user = 0;
+            bool admin = false;
+            bool customerCreator = false;
+            bool purchaseOrderCreator = false;
+            int companyId = 0;
+            string userName = "";
+            AppConnData appConnData = new AppConnData();
+
+            if (context.IsAuthenticated)
+            {
+
+                System.Web.Security.FormsIdentity ci = (System.Web.Security.FormsIdentity)HttpContext.User.Identity;
+                string[] userRole = ci.Ticket.UserData.Split('|');
+                user = int.Parse(userRole[0]);
+                admin = int.Parse(userRole[1]) == 1 ? true : false;
+                customerCreator = int.Parse(userRole[2]) == 1 ? true : false;
+                purchaseOrderCreator = int.Parse(userRole[3]) == 1 ? true : false;
+                companyId = int.Parse(userRole[4]);
+                userName = ci.Name;
+                appConnData = GetAppConnData(companyId);
+            }
+            #endregion
+
+            LightMarketingDocument order = backEnd.GetSingleOrder(id, appConnData);
+
+            double total = 0;
+            foreach (LightMarketingDocumentLine item in order.lines)
+                total += item.quantity * item.price;
+
+            CultureInfo culture = new CultureInfo("es-co");
+            ViewBag.total = total.ToString("N", culture);
+            return View(order);
+        }
+
+        [Authorize]
+        public ActionResult Delete(int id)
+        {
+            #region User identification
+            IIdentity context = HttpContext.User.Identity;
+            int user = 0;
+            bool admin = false;
+            bool customerCreator = false;
+            bool purchaseOrderCreator = false;
+            int companyId = 0;
+            string userName = "";
+            AppConnData appConnData = new AppConnData();
+
+            if (context.IsAuthenticated)
+            {
+
+                System.Web.Security.FormsIdentity ci = (System.Web.Security.FormsIdentity)HttpContext.User.Identity;
+                string[] userRole = ci.Ticket.UserData.Split('|');
+                user = int.Parse(userRole[0]);
+                admin = int.Parse(userRole[1]) == 1 ? true : false;
+                customerCreator = int.Parse(userRole[2]) == 1 ? true : false;
+                purchaseOrderCreator = int.Parse(userRole[3]) == 1 ? true : false;
+                companyId = int.Parse(userRole[4]);
+                userName = ci.Name;
+                appConnData = GetAppConnData(companyId);
+            }
+            #endregion
+
+            try
+            {
+                backEnd.CancelOrder(id, appConnData);
+                ViewBag.colorMensaje = "success";
+                ViewBag.mensaje = "Cancelación de pedidos";
+                ViewBag.docEntry = string.Format("el pedido fue cancelado");
+            }
+            catch (FaultException<DataAccessFault> ex)
+            {
+                ViewBag.colorMensaje = "danger";
+                ViewBag.mensaje = "Cancelación de pedidos";
+                ViewBag.docEntry = string.Format(" No se pudo cancelar el pedido. Codigo {0} error:{1} {2}", ex.Code, ex.Detail.Description, ex.Message);
+            }
+
+            return View();
+        }
+
+        [Authorize]
+        public ActionResult Georeport()
+        {
+            return View();
+        }
+
+        [Authorize]
+        public ActionResult ShowGeoReport(string id)
+        {
+            ViewBag.str = id;
+
+            return View();
+        }
+
+        [Authorize]
+        public ActionResult ItemStock()
+        {
             return View();
         }
 
@@ -497,6 +629,87 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
                 wsAppKey = ConfigurationManager.AppSettings["WSAppKey"].ToString(),
                 wsSecret = ConfigurationManager.AppSettings["WSSecret"].ToString()
             };
+        }
+
+        [Authorize]
+        public JsonResult AsyncSearchOrders(string id)
+        {
+            #region User identification
+            IIdentity context = HttpContext.User.Identity;
+            int user = 0;
+            bool admin = false;
+            bool customerCreator = false;
+            bool purchaseOrderCreator = false;
+            int companyId = 0;
+            string userName = "";
+            AppConnData appConnData = new AppConnData();
+
+            if (context.IsAuthenticated)
+            {
+
+                System.Web.Security.FormsIdentity ci = (System.Web.Security.FormsIdentity)HttpContext.User.Identity;
+                string[] userRole = ci.Ticket.UserData.Split('|');
+                user = int.Parse(userRole[0]);
+                admin = int.Parse(userRole[1]) == 1 ? true : false;
+                customerCreator = int.Parse(userRole[2]) == 1 ? true : false;
+                purchaseOrderCreator = int.Parse(userRole[3]) == 1 ? true : false;
+                companyId = int.Parse(userRole[4]);
+                userName = ci.Name;
+                appConnData = GetAppConnData(companyId);
+            }
+            #endregion
+
+            string[] parameters = id.Split('|');
+
+            DateTime from = DateTime.Parse(parameters[0]), to = DateTime.Parse(parameters[1]);
+            string cardCode = parameters[2];
+
+            List<LightMarketingDocument> ordrs = backEnd.ListSaleOrders(from, to, cardCode, appConnData);
+
+            var data = from c in ordrs select new[] { c.docNum.ToString(), c.docDate.ToString("yyyy-MM-dd"), c.docDueDate.ToString("yyyy-MM-dd"), c.docStatus };
+
+            return Json(new
+            {
+                data = data
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        [Authorize]
+        public JsonResult AsyncGeoReport(string id)
+        {
+            #region User identification
+            IIdentity context = HttpContext.User.Identity;
+            int user = 0;
+            bool admin = false;
+            bool customerCreator = false;
+            bool purchaseOrderCreator = false;
+            int companyId = 0;
+            string userName = "";
+            AppConnData appConnData = new AppConnData();
+
+            if (context.IsAuthenticated)
+            {
+
+                System.Web.Security.FormsIdentity ci = (System.Web.Security.FormsIdentity)HttpContext.User.Identity;
+                string[] userRole = ci.Ticket.UserData.Split('|');
+                user = int.Parse(userRole[0]);
+                admin = int.Parse(userRole[1]) == 1 ? true : false;
+                customerCreator = int.Parse(userRole[2]) == 1 ? true : false;
+                purchaseOrderCreator = int.Parse(userRole[3]) == 1 ? true : false;
+                companyId = int.Parse(userRole[4]);
+                userName = ci.Name;
+                appConnData = GetAppConnData(companyId);
+            }
+            #endregion
+
+            string[] parameters = id.Split('|');
+
+            DateTime from = DateTime.Parse(parameters[0]), to = DateTime.Parse(parameters[1]);
+            int slpCode = int.Parse(parameters[2]);
+
+            List<ORDR> ordrs = BizSalesOrderDraft.GetList(from, to, slpCode, companyId).ToList();
+
+            return Json(ordrs, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "ShowGeoReport";
+    Layout = null;
+}
+@*<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>*@
+@*<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDh2iam6TpK1V74xYZxV6g70ewUt4OGa8&signed_in=true&callback=initMap"></script>*@
+<br />
+<div class="well" id="map" style="height:500px;">
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        initMap();
+    })
+
+    function initMap() {
+        var id = '@ViewBag.str';
+        var url = '../../SalesOrder/AsyncGeoReport/' + id;
+
+        $.getJSON(url, function (result) {
+
+            var len = result.length;
+
+            var myLatLng = { lat: parseFloat(result[0].uLatitud), lng: parseFloat(result[0].uLongitud) };
+
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 12,
+                center: { lat: parseFloat(result[0].uLatitud), lng: parseFloat(result[0].uLongitud) }
+            });
+
+            for (var i = 0; i < len; i++) {
+                myLatLng = { lat: parseFloat(result[i].uLatitud), lng: parseFloat(result[i].uLongitud) };
+
+                var marker = new google.maps.Marker({
+                    position: myLatLng,
+                    map: map,
+                    title: 'DocEntry='+ result[i].docEntry
+                });
+            }
+        });
+    }    
+</script>
