@@ -27,6 +27,36 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Core
         private BizFacade facade;
         #endregion
 
+        #region Management
+        public List<AuthorizationStatus> GetAuthorizationStatusList(DateTime startDate, DateTime endDate, AppConnData oAppConnData)
+        {
+            try
+            {
+                facade = new BizFacade(BusinessClass.BizManagement);
+                return facade.GetAuthorizationStatusList(startDate, endDate, oAppConnData);
+            }
+            catch (Exception ex)
+            {
+                DataAccessFault detalleError = new DataAccessFault();
+                foreach (string valores in ex.Data.Keys)
+                {
+                    switch (valores)
+                    {
+                        case "1": detalleError.ErrorID = ex.Data[valores].ToString();
+                            break;
+                        case "2": detalleError.ErrorSAP = ex.Data[valores].ToString();
+                            break;
+                        case "3": detalleError.Description = ex.Data[valores].ToString();
+                            break;
+                        default: detalleError.ErrorID = ex.Data[valores].ToString();
+                            break;
+                    }
+                }
+                throw new FaultException<DataAccessFault>(detalleError, "Error al Procesar la solicitud");
+            }
+        }
+        #endregion
+
         #region Business Partners
         public List<GenericBusinessPartner> GetBusinessPartners(CardType cardType, AppConnData oAppConnData)
         {

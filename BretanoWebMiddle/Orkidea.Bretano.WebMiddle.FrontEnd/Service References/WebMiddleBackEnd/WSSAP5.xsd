@@ -4,10 +4,11 @@
   <xs:import schemaLocation="http://localhost:60593/WSSAP.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.Global.UserDefinedFileds" />
   <xs:import schemaLocation="http://localhost:60593/WSSAP.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.Inventory" />
   <xs:import schemaLocation="http://localhost:60593/WSSAP.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.Global.Administration" />
-  <xs:element name="GetBusinessPartners">
+  <xs:element name="GetAuthorizationStatusList">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.BusinessPartners" minOccurs="0" name="cardType" type="q1:CardType" />
+        <xs:element minOccurs="0" name="startDate" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="endDate" type="xs:dateTime" />
         <xs:element minOccurs="0" name="oAppConnData" nillable="true" type="tns:AppConnData" />
       </xs:sequence>
     </xs:complexType>
@@ -23,6 +24,58 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="AppConnData" nillable="true" type="tns:AppConnData" />
+  <xs:element name="GetAuthorizationStatusListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetAuthorizationStatusListResult" nillable="true" type="tns:ArrayOfAuthorizationStatus" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ArrayOfAuthorizationStatus">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="AuthorizationStatus" nillable="true" type="tns:AuthorizationStatus" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAuthorizationStatus" nillable="true" type="tns:ArrayOfAuthorizationStatus" />
+  <xs:complexType name="AuthorizationStatus">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="createDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="createTime" type="xs:int" />
+      <xs:element minOccurs="0" name="currStep" type="xs:int" />
+      <xs:element minOccurs="0" name="currStepName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="docDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="docEntry" type="xs:int" />
+      <xs:element minOccurs="0" name="docNum" type="xs:int" />
+      <xs:element minOccurs="0" name="isDraft" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="maxRejReqr" type="xs:int" />
+      <xs:element minOccurs="0" name="maxReqr" type="xs:int" />
+      <xs:element minOccurs="0" name="objType" type="xs:int" />
+      <xs:element minOccurs="0" name="ownerId" type="xs:int" />
+      <xs:element minOccurs="0" name="ownerName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="remarks" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="status" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="userSing" type="xs:int" />
+      <xs:element minOccurs="0" name="wddCode" type="xs:int" />
+      <xs:element minOccurs="0" name="wtmCode" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AuthorizationStatus" nillable="true" type="tns:AuthorizationStatus" />
+  <xs:complexType name="DataAccessFault">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ErrorID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ErrorSAP" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DataAccessFault" nillable="true" type="tns:DataAccessFault" />
+  <xs:element name="GetBusinessPartners">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.BusinessPartners" minOccurs="0" name="cardType" type="q1:CardType" />
+        <xs:element minOccurs="0" name="oAppConnData" nillable="true" type="tns:AppConnData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="GetBusinessPartnersResponse">
     <xs:complexType>
       <xs:sequence>
@@ -44,14 +97,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="GenericBusinessPartner" nillable="true" type="tns:GenericBusinessPartner" />
-  <xs:complexType name="DataAccessFault">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="ErrorID" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="ErrorSAP" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="DataAccessFault" nillable="true" type="tns:DataAccessFault" />
   <xs:element name="GetBusinessPartner">
     <xs:complexType>
       <xs:sequence>

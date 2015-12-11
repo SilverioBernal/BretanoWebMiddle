@@ -13,6 +13,7 @@
       <xs:enumeration value="PurchaseReturn" />
       <xs:enumeration value="PurchaseOrder" />
       <xs:enumeration value="Quotation" />
+      <xs:enumeration value="Draft" />
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="SapDocumentType" nillable="true" type="tns:SapDocumentType" />

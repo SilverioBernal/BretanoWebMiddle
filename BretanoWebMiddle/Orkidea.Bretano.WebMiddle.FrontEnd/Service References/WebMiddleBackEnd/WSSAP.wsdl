@@ -10,6 +10,15 @@
       <xsd:import schemaLocation="http://localhost:60593/WSSAP.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.Global.Administration" />
     </xsd:schema>
   </wsdl:types>
+  <wsdl:message name="WSSAP_GetAuthorizationStatusList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAuthorizationStatusList" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetAuthorizationStatusList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAuthorizationStatusListResponse" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetAuthorizationStatusList_DataAccessFaultFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:DataAccessFault" />
+  </wsdl:message>
   <wsdl:message name="WSSAP_GetBusinessPartners_InputMessage">
     <wsdl:part name="parameters" element="tns:GetBusinessPartners" />
   </wsdl:message>
@@ -335,6 +344,11 @@
     <wsdl:part name="detail" element="tns:DataAccessFault" />
   </wsdl:message>
   <wsdl:portType name="WSSAP">
+    <wsdl:operation name="GetAuthorizationStatusList">
+      <wsdl:input wsaw:Action="http://WSSAP/WSSAP/GetAuthorizationStatusList" message="tns:WSSAP_GetAuthorizationStatusList_InputMessage" />
+      <wsdl:output wsaw:Action="http://WSSAP/WSSAP/GetAuthorizationStatusListResponse" message="tns:WSSAP_GetAuthorizationStatusList_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://WSSAP/WSSAP/GetAuthorizationStatusListDataAccessFaultFault" name="DataAccessFaultFault" message="tns:WSSAP_GetAuthorizationStatusList_DataAccessFaultFault_FaultMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetBusinessPartners">
       <wsdl:input wsaw:Action="http://WSSAP/WSSAP/GetBusinessPartners" message="tns:WSSAP_GetBusinessPartners_InputMessage" />
       <wsdl:output wsaw:Action="http://WSSAP/WSSAP/GetBusinessPartnersResponse" message="tns:WSSAP_GetBusinessPartners_OutputMessage" />

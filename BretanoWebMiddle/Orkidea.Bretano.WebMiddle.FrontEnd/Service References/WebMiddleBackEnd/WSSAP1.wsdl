@@ -4,6 +4,18 @@
   <wsdl:types />
   <wsdl:binding name="BasicHttpBinding_WSSAP" type="i0:WSSAP">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetAuthorizationStatusList">
+      <soap:operation soapAction="http://WSSAP/WSSAP/GetAuthorizationStatusList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DataAccessFaultFault">
+        <soap:fault use="literal" name="DataAccessFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
     <wsdl:operation name="GetBusinessPartners">
       <soap:operation soapAction="http://WSSAP/WSSAP/GetBusinessPartners" style="document" />
       <wsdl:input>

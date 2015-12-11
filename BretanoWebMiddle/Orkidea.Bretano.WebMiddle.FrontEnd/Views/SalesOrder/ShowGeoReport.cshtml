@@ -3,8 +3,8 @@
     ViewBag.Title = "ShowGeoReport";
     Layout = null;
 }
-@*<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>*@
-@*<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDh2iam6TpK1V74xYZxV6g70ewUt4OGa8&signed_in=true&callback=initMap"></script>*@
+@*<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDh2iam6TpK1V74xYZxV6g70ewUt4OGa8&signed_in=true&callback=initMap"></script>*@
 <br />
 <div class="well" id="map" style="height:500px;">
 
@@ -26,9 +26,12 @@
             var myLatLng = { lat: parseFloat(result[0].uLatitud), lng: parseFloat(result[0].uLongitud) };
 
             var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 12,
+                zoom: 15,
                 center: { lat: parseFloat(result[0].uLatitud), lng: parseFloat(result[0].uLongitud) }
             });
+
+
+            var myArray = [];
 
             for (var i = 0; i < len; i++) {
                 myLatLng = { lat: parseFloat(result[i].uLatitud), lng: parseFloat(result[i].uLongitud) };
@@ -36,9 +39,23 @@
                 var marker = new google.maps.Marker({
                     position: myLatLng,
                     map: map,
-                    title: 'DocEntry='+ result[i].docEntry
-                });
+                    title: 'DocEntry=' + result[i].docEntry + " Cliente=" + result[i].cardCode
+                });                
+                
+                myArray.push(myLatLng);
             }
+
+            var flightPath = new google.maps.Polyline({
+                path: myArray,
+                geodesic: true,
+                strokeColor: '#FF0000',
+                strokeOpacity: 1.0,
+                strokeWeight: 2
+            });
+
+            flightPath.setMap(map);
+
+
         });
     }    
 </script>

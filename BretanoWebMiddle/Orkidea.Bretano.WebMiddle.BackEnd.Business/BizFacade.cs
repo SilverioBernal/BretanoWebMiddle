@@ -17,12 +17,15 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
     public class BizFacade
     {
         #region Atributos
+
+        BizManagement bizManagement;
         BizBusinessPartner bizBusinessPartner;
         BizSaleOrder bizSalesOrder;
         BizQuotation bizQuotation;
         BizInventory bizInventory;
         BizCommon bizCommon;
         BizFinance bizFinance;
+
         #endregion
 
         #region Constructor
@@ -30,6 +33,9 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
         {
             switch (businessClass)
             {
+                case BusinessClass.BizManagement:
+                    bizManagement = new BizManagement();
+                    break;
                 case BusinessClass.BizBusinessPartner:
                     bizBusinessPartner = new BizBusinessPartner();
                     break;
@@ -55,6 +61,12 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
         #endregion
 
         #region Métodos
+        #region Management
+        public List<AuthorizationStatus> GetAuthorizationStatusList(DateTime startDate, DateTime endDate, AppConnData oAppConnData)
+        {
+            return bizManagement.List(startDate, endDate, oAppConnData);
+        }
+        #endregion
 
         #region Business Partners
         public List<GenericBusinessPartner> GetBusinessPartners(CardType cardType, AppConnData oAppConnData)

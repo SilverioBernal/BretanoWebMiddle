@@ -83,6 +83,7 @@
     <Compile Include="BizCommon.cs" />
     <Compile Include="BizFinance.cs" />
     <Compile Include="BizInventory.cs" />
+    <Compile Include="BizManagement.cs" />
     <Compile Include="BizQuotation.cs" />
     <Compile Include="BizSaleOrder.cs" />
     <Compile Include="BizUtilities.cs" />

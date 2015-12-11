@@ -13,21 +13,6 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd {
     using System;
     
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CardType", Namespace="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entitie" +
-        "s.BusinessPartners")]
-    public enum CardType : int {
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Customer = 0,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Supplier = 1,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Lead = 2,
-    }
-    
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AppConnData", Namespace="http://WSSAP")]
@@ -155,21 +140,66 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="GenericBusinessPartner", Namespace="http://WSSAP")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AuthorizationStatus", Namespace="http://WSSAP")]
     [System.SerializableAttribute()]
-    public partial class GenericBusinessPartner : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class AuthorizationStatus : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string cardCodeField;
+        private System.DateTime createDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string cardNameField;
+        private int createTimeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int listNumField;
+        private int currStepField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string currStepNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime docDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int docEntryField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int docNumField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string isDraftField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int maxRejReqrField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int maxReqrField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int objTypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int ownerIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ownerNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string remarksField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string statusField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int userSingField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int wddCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int wtmCodeField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -182,40 +212,235 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string cardCode {
+        public System.DateTime createDate {
             get {
-                return this.cardCodeField;
+                return this.createDateField;
             }
             set {
-                if ((object.ReferenceEquals(this.cardCodeField, value) != true)) {
-                    this.cardCodeField = value;
-                    this.RaisePropertyChanged("cardCode");
+                if ((this.createDateField.Equals(value) != true)) {
+                    this.createDateField = value;
+                    this.RaisePropertyChanged("createDate");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string cardName {
+        public int createTime {
             get {
-                return this.cardNameField;
+                return this.createTimeField;
             }
             set {
-                if ((object.ReferenceEquals(this.cardNameField, value) != true)) {
-                    this.cardNameField = value;
-                    this.RaisePropertyChanged("cardName");
+                if ((this.createTimeField.Equals(value) != true)) {
+                    this.createTimeField = value;
+                    this.RaisePropertyChanged("createTime");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int listNum {
+        public int currStep {
             get {
-                return this.listNumField;
+                return this.currStepField;
             }
             set {
-                if ((this.listNumField.Equals(value) != true)) {
-                    this.listNumField = value;
-                    this.RaisePropertyChanged("listNum");
+                if ((this.currStepField.Equals(value) != true)) {
+                    this.currStepField = value;
+                    this.RaisePropertyChanged("currStep");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string currStepName {
+            get {
+                return this.currStepNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.currStepNameField, value) != true)) {
+                    this.currStepNameField = value;
+                    this.RaisePropertyChanged("currStepName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime docDate {
+            get {
+                return this.docDateField;
+            }
+            set {
+                if ((this.docDateField.Equals(value) != true)) {
+                    this.docDateField = value;
+                    this.RaisePropertyChanged("docDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int docEntry {
+            get {
+                return this.docEntryField;
+            }
+            set {
+                if ((this.docEntryField.Equals(value) != true)) {
+                    this.docEntryField = value;
+                    this.RaisePropertyChanged("docEntry");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int docNum {
+            get {
+                return this.docNumField;
+            }
+            set {
+                if ((this.docNumField.Equals(value) != true)) {
+                    this.docNumField = value;
+                    this.RaisePropertyChanged("docNum");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string isDraft {
+            get {
+                return this.isDraftField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.isDraftField, value) != true)) {
+                    this.isDraftField = value;
+                    this.RaisePropertyChanged("isDraft");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int maxRejReqr {
+            get {
+                return this.maxRejReqrField;
+            }
+            set {
+                if ((this.maxRejReqrField.Equals(value) != true)) {
+                    this.maxRejReqrField = value;
+                    this.RaisePropertyChanged("maxRejReqr");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int maxReqr {
+            get {
+                return this.maxReqrField;
+            }
+            set {
+                if ((this.maxReqrField.Equals(value) != true)) {
+                    this.maxReqrField = value;
+                    this.RaisePropertyChanged("maxReqr");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int objType {
+            get {
+                return this.objTypeField;
+            }
+            set {
+                if ((this.objTypeField.Equals(value) != true)) {
+                    this.objTypeField = value;
+                    this.RaisePropertyChanged("objType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int ownerId {
+            get {
+                return this.ownerIdField;
+            }
+            set {
+                if ((this.ownerIdField.Equals(value) != true)) {
+                    this.ownerIdField = value;
+                    this.RaisePropertyChanged("ownerId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ownerName {
+            get {
+                return this.ownerNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ownerNameField, value) != true)) {
+                    this.ownerNameField = value;
+                    this.RaisePropertyChanged("ownerName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string remarks {
+            get {
+                return this.remarksField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.remarksField, value) != true)) {
+                    this.remarksField = value;
+                    this.RaisePropertyChanged("remarks");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string status {
+            get {
+                return this.statusField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.statusField, value) != true)) {
+                    this.statusField = value;
+                    this.RaisePropertyChanged("status");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int userSing {
+            get {
+                return this.userSingField;
+            }
+            set {
+                if ((this.userSingField.Equals(value) != true)) {
+                    this.userSingField = value;
+                    this.RaisePropertyChanged("userSing");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int wddCode {
+            get {
+                return this.wddCodeField;
+            }
+            set {
+                if ((this.wddCodeField.Equals(value) != true)) {
+                    this.wddCodeField = value;
+                    this.RaisePropertyChanged("wddCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int wtmCode {
+            get {
+                return this.wtmCodeField;
+            }
+            set {
+                if ((this.wtmCodeField.Equals(value) != true)) {
+                    this.wtmCodeField = value;
+                    this.RaisePropertyChanged("wtmCode");
                 }
             }
         }
@@ -293,6 +518,98 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd {
                 if ((object.ReferenceEquals(this.ErrorSAPField, value) != true)) {
                     this.ErrorSAPField = value;
                     this.RaisePropertyChanged("ErrorSAP");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CardType", Namespace="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entitie" +
+        "s.BusinessPartners")]
+    public enum CardType : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Customer = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Supplier = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Lead = 2,
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GenericBusinessPartner", Namespace="http://WSSAP")]
+    [System.SerializableAttribute()]
+    public partial class GenericBusinessPartner : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string cardCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string cardNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int listNumField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string cardCode {
+            get {
+                return this.cardCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.cardCodeField, value) != true)) {
+                    this.cardCodeField = value;
+                    this.RaisePropertyChanged("cardCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string cardName {
+            get {
+                return this.cardNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.cardNameField, value) != true)) {
+                    this.cardNameField = value;
+                    this.RaisePropertyChanged("cardName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int listNum {
+            get {
+                return this.listNumField;
+            }
+            set {
+                if ((this.listNumField.Equals(value) != true)) {
+                    this.listNumField = value;
+                    this.RaisePropertyChanged("listNum");
                 }
             }
         }
@@ -4763,6 +5080,9 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         Quotation = 10,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Draft = 11,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -5196,6 +5516,13 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd {
     [System.ServiceModel.ServiceContractAttribute(Namespace="http://WSSAP", ConfigurationName="WebMiddleBackEnd.WSSAP")]
     public interface WSSAP {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://WSSAP/WSSAP/GetAuthorizationStatusList", ReplyAction="http://WSSAP/WSSAP/GetAuthorizationStatusListResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.DataAccessFault), Action="http://WSSAP/WSSAP/GetAuthorizationStatusListDataAccessFaultFault", Name="DataAccessFault")]
+        System.Collections.Generic.List<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AuthorizationStatus> GetAuthorizationStatusList(System.DateTime startDate, System.DateTime endDate, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://WSSAP/WSSAP/GetAuthorizationStatusList", ReplyAction="http://WSSAP/WSSAP/GetAuthorizationStatusListResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AuthorizationStatus>> GetAuthorizationStatusListAsync(System.DateTime startDate, System.DateTime endDate, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://WSSAP/WSSAP/GetBusinessPartners", ReplyAction="http://WSSAP/WSSAP/GetBusinessPartnersResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.DataAccessFault), Action="http://WSSAP/WSSAP/GetBusinessPartnersDataAccessFaultFault", Name="DataAccessFault")]
         System.Collections.Generic.List<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.GenericBusinessPartner> GetBusinessPartners(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.CardType cardType, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData);
@@ -5474,6 +5801,14 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd {
         
         public WSSAPClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
+        }
+        
+        public System.Collections.Generic.List<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AuthorizationStatus> GetAuthorizationStatusList(System.DateTime startDate, System.DateTime endDate, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData) {
+            return base.Channel.GetAuthorizationStatusList(startDate, endDate, oAppConnData);
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AuthorizationStatus>> GetAuthorizationStatusListAsync(System.DateTime startDate, System.DateTime endDate, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData) {
+            return base.Channel.GetAuthorizationStatusListAsync(startDate, endDate, oAppConnData);
         }
         
         public System.Collections.Generic.List<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.GenericBusinessPartner> GetBusinessPartners(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.CardType cardType, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData) {

@@ -1,8 +1,10 @@
 ﻿@{
-    ViewBag.Title = "Georeport";
+    ViewBag.Title = "AuthorizationReport";
 }
-<script src="~/Scripts/Custom/ordrGeoreport.js"></script>
-<h2>Reporte geográfico</h2>
+<script src="~/Scripts/Custom/ordrAuthorizacionReport.js"></script>
+
+<h2>Reporte de autorizaciones</h2>
+
 <div class="row">
     <div class="form-group">
         <div class="col-md-2">
@@ -23,20 +25,14 @@
                 </span>
             </div>
         </div>
-        <div class="col-md-7">
-            @Html.Label("Vendedor", new { @for = "slpCode", @class = "control-label" })
-            <select class="form-control required" id="slpCode" name="slpCode" style="max-width:100%">
-                <option value="" disabled selected></option>
-            </select>
-        </div>
         <div class="col-md-1">
             <label class="control-label" style="color:white">.</label>
             <input type="button" value="Buscar" id="btnSearch" class="btn btn-info" />
         </div>
     </div>
 </div>
-
-<div class="row ordersMap">
+<hr />
+<div class="row ordersTable">
 
 </div>
 

@@ -19,7 +19,13 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Contracts
 {
     [ServiceContract(Namespace = "http://WSSAP", Name = "WSSAP")]
     public interface iWSSAP
-    {        
+    {
+        #region Management
+        [OperationContract(IsOneWay = false)]
+        [FaultContract(typeof(DataAccessFault))]
+        List<AuthorizationStatus> GetAuthorizationStatusList(DateTime startDate, DateTime endDate, AppConnData oAppConnData);
+        #endregion
+
         #region Business Partners
         [OperationContract(IsOneWay = false)]
         [FaultContract(typeof(DataAccessFault))]

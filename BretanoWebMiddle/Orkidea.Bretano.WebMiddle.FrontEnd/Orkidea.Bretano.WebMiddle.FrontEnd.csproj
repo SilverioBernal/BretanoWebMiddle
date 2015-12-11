@@ -313,6 +313,7 @@
     <Content Include="Scripts\Custom\CustomerPaymentAges.js" />
     <Content Include="Scripts\Custom\CustomerTaxesCreate.js" />
     <Content Include="Scripts\Custom\ItemStock.js" />
+    <Content Include="Scripts\Custom\ordrAuthorizacionReport.js" />
     <Content Include="Scripts\Custom\ordrDetails.js" />
     <Content Include="Scripts\Custom\ordrGeoreport.js" />
     <Content Include="Scripts\Custom\ordrHeaderCreate.js" />
@@ -454,6 +455,9 @@
     <Content Include="Service References\WebMiddleBackEnd\Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.ItemPrice.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <Content Include="Service References\WebMiddleBackEnd\Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AuthorizationStatus.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="Service References\WebMiddleBackEnd\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -538,6 +542,8 @@
     <Content Include="Views\Quotation\Create.cshtml" />
     <Content Include="Views\Quotation\AddLine.cshtml" />
     <Content Include="Views\Quotation\Finish.cshtml" />
+    <Content Include="Views\SalesOrder\AuthorizationReport.cshtml" />
+    <Content Include="Views\SalesOrder\ShowAuthorizationReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

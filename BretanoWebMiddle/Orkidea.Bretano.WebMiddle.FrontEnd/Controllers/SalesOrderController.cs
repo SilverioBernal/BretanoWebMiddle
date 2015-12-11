@@ -177,6 +177,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
                     taxDate = ordr.taxDate,
                     shipToCode = ordr.shipToCode,
                     payToCode = ordr.payToCode,
+                    groupNum = ordr.groupNum,
                     lines = new List<MarketingDocumentLine>(),
                     userDefinedFields = new List<UserDefinedField>()
                 };
@@ -357,6 +358,20 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
         [Authorize]
         public ActionResult ItemStock()
         {
+            return View();
+        }
+
+        [Authorize]
+        public ActionResult AuthorizationReport()
+        {
+            return View();
+        }
+
+        [Authorize]
+        public ActionResult ShowAuthorizationReport(string id)
+        {
+            ViewBag.str = id;
+
             return View();
         }
 
@@ -710,6 +725,50 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
             List<ORDR> ordrs = BizSalesOrderDraft.GetList(from, to, slpCode, companyId).ToList();
 
             return Json(ordrs, JsonRequestBehavior.AllowGet);
+        }
+
+        [Authorize]
+        public JsonResult AsyncAuthorizationList(string id)
+        {
+            #region User identification
+            IIdentity context = HttpContext.User.Identity;
+            int user = 0;
+            bool admin = false;
+            bool customerCreator = false;
+            bool purchaseOrderCreator = false;
+            int companyId = 0;
+            string userName = "";
+            AppConnData appConnData = new AppConnData();
+
+            if (context.IsAuthenticated)
+            {
+
+                System.Web.Security.FormsIdentity ci = (System.Web.Security.FormsIdentity)HttpContext.User.Identity;
+                string[] userRole = ci.Ticket.UserData.Split('|');
+                user = int.Parse(userRole[0]);
+                admin = int.Parse(userRole[1]) == 1 ? true : false;
+                customerCreator = int.Parse(userRole[2]) == 1 ? true : false;
+                purchaseOrderCreator = int.Parse(userRole[3]) == 1 ? true : false;
+                companyId = int.Parse(userRole[4]);
+                userName = ci.Name;
+                appConnData = GetAppConnData(companyId);
+            }
+            #endregion
+
+            string[] parms = id.Split('|');
+            DateTime from = DateTime.Parse(parms[0]);
+            DateTime to = DateTime.Parse(parms[1]);
+
+            List<AuthorizationStatus> items = backEnd.GetAuthorizationStatusList(from, to, appConnData);            
+
+            var data =
+                from c in items
+                select new[] {"Pedido", c.createDate.ToString("yyyy-MM-dd"), c.createTime.ToString(), c.currStepName, c.docNum.ToString(), c.isDraft, c.ownerName, c.remarks};
+
+            return Json(new
+            {
+                data = data
+            }, JsonRequestBehavior.AllowGet);
         }
     }
 }

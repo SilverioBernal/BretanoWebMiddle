@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "ShowAuthorizationReport";
+    Layout = null;
+}
+
+<table id="orders" class="display" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Tipo de documento</th>
+            <th>Fecha creación</th>
+            <th>Hora creación</th>
+            <th>Paso</th>
+            <th>Docnum</th>
+            <th>Preliminar</th>
+            <th>Dueño</th>            
+            <th>Comentarios</th>
+        </tr>
+    </thead>
+</table>
+
+<script>
+    $(document).ready(function () {
+        var whsTable = $('#orders').DataTable({
+            "ajax": '@Url.Action("AsyncAuthorizationList", new { id = ViewBag.str })',            
+            "language": {
+                "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                "zeroRecords": "Ningun resultado encontrado",
+                "info": "Página _PAGE_ de _PAGES_",
+                "infoEmpty": "Sin registros",
+                "infoFiltered": "(filtered from _MAX_ total records)",
+                "search": "Buscar:",
+                "paginate": {
+                    "first": "Primera",
+                    "last": "Ultima",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                },
+            }
+        });
+    });
+</script>
