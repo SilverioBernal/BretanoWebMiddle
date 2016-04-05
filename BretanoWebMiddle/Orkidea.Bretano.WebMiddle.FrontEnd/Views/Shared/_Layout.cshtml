@@ -19,13 +19,28 @@
     <script type="text/javascript" charset="utf8" src="http://eternicode.github.io/bootstrap-datepicker/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
     <script src="http://eternicode.github.io/bootstrap-datepicker/bootstrap-datepicker/js/locales/bootstrap-datepicker.es.js" charset="UTF-8"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-36281914-4', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
     <!-- font icons -->
     @{
         System.Security.Principal.IIdentity context = Context.User.Identity;
         bool admin = false;
         bool customerCreator = false;
         bool purchaseOrderCreator = false;
-        string userName = "";
+        bool orderApprover = false;
+        string userName = "", company = "";
 
         if (context.IsAuthenticated)
         {
@@ -34,9 +49,11 @@
             admin = int.Parse(userRole[1]) == 1 ? true : false;
             customerCreator = int.Parse(userRole[2]) == 1 ? true : false;
             purchaseOrderCreator = int.Parse(userRole[3]) == 1 ? true : false;
-
+            company = userRole[6];
             userName = ci.Name;
+            orderApprover = int.Parse(userRole[7]) == 1 ? true : false;
         }
+
     }
 
 </head>
@@ -53,59 +70,67 @@
                 <a href="@Url.Action("Index","Home")"><img alt="Logo" class="logo" src="@Url.Content("~/images/Logo.png")" /></a>
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    @if (context.IsAuthenticated)
-                    {
-                        if (purchaseOrderCreator)
-                        {
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pedidos<b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li>@Html.ActionLink("Nuevo pedido", "create", "salesorder")</li>
-                                    <li>@Html.ActionLink("Cancelar pedido", "search", "salesorder")</li>
-                                    <li>@Html.ActionLink("Inventario por producto", "itemstock", "salesorder")</li>    
-                                    <li>@Html.ActionLink("Nueva cotización", "create", "Quotation")</li>     
-                                    <li>@Html.ActionLink("Reporte de autorizaciones", "AuthorizationReport", "salesorder")</li>     
-                                                                   
-                                </ul>
-                            </li>
+                @if (context.IsAuthenticated)
+                {
+                    <ul class="nav navbar-nav">
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pedidos<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                @if (purchaseOrderCreator)
+                                {
+                                    <li>@Html.ActionLink("Gestionar pedidos", "index", "salesorder")</li>
+                                    <li>@Html.ActionLink("Cancelar pedido SAP", "search", "salesorder")</li>
+                                    <li>@Html.ActionLink("Inventario por producto", "itemstock", "salesorder")</li>
+                                    <li>@Html.ActionLink("Nueva cotización", "create", "Quotation")</li>
+                                }
+                                @if (purchaseOrderCreator || orderApprover)
+                                        {
+                                <li>@Html.ActionLink("Reporte de autorizaciones", "AuthorizationReport", "salesorder")</li>
+                                }
+
+                            </ul>
+                        </li>
 
 
-                        }
-
-                        if (customerCreator)
-                        {
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Gestíon clientes<b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li>@Html.ActionLink("Clientes", "index", "customer")</li>                                   
-                                    <li><a href="@Url.Action("CustomerPaymentAges", "Customer")">Edades de cartera por cliente</a></li>      
-                                    <li><a href="@Url.Action("lastPrices", "Customer")">Reporte últimos precios</a></li>                                   
-                                </ul>
-                            </li>
 
 
-                            
-                        }
-                        
-                        if (admin)
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Gestíon clientes<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                @if (customerCreator)
+                                {
+
+                                    <li>@Html.ActionLink("Clientes", "index", "customer")</li>
+
+                                }
+                                <li><a href="@Url.Action("CustomerPaymentAges", "Customer")">Edades de cartera por cliente</a></li>
+                                <li><a href="@Url.Action("lastPrices", "Customer")">Reporte últimos precios</a></li>
+                            </ul>
+                        </li>
+
+                        @if (admin)
                         {
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administración<b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="@Url.Action("Index", "Company")">Compañias</a></li>
-                                    <li><a href="@Url.Action("Index", "WebUser")">Usuarios</a></li>                                    
-                                    <li><a href="@Url.Action("georeport", "salesorder")">Reporte geográfico</a></li>      
+                                    <li><a href="@Url.Action("Index", "WebUser")">Usuarios</a></li>
+                                    <li><a href="@Url.Action("georeport", "salesorder")">Reporte geográfico</a></li>
                                 </ul>
                             </li>
                         }
-                        <li>
-                            <a href="javascript:void(0);">@User.Identity.GetUserName()</a> @*@Html.ActionLink(User.Identity.GetUserName(), "ChangePassword", "Security", routeValues: null, htmlAttributes: new { title = "Cambiar clave" })*@
-                        </li>
-                        <li><a href="@Url.Action("LogOut", "Security")">Cerrar sesión</a></li>
-                    }
+                        @*<li><a href="javascript:void(0);">@User.Identity.GetUserName()</a></li>*@
+                            @*<li><a href="@Url.Action("LogOut", "Security")">Cerrar sesión</a></li>*@
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="javascript:void(0);">@User.Identity.GetUserName() - @company</a></li>
+                            <li><a href="@Url.Action("LogOut", "Security")">Cerrar sesión</a></li>
+                        </ul>
+                }
 
-                </ul>
+
+
                 @*@Html.Partial("_LoginPartial")*@
             </div>
         </div>

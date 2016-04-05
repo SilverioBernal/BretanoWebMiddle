@@ -36,6 +36,9 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Entities
         public string uLatitud { get; set; }
         public string uLongitud { get; set; }
         public Nullable<int> idCompania { get; set; }
+        public string cardName { get; set; }
+        public Nullable<bool> draftLC { get; set; }
+        public Nullable<bool> draftDM { get; set; }
     
         public virtual ICollection<RDR1> RDR1 { get; set; }
     }

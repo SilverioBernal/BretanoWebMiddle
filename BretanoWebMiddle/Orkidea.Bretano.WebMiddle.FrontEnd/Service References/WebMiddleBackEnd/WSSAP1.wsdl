@@ -28,8 +28,44 @@
         <soap:fault use="literal" name="DataAccessFaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
+    <wsdl:operation name="GetBusinessPartnersBySalesPerson">
+      <soap:operation soapAction="http://WSSAP/WSSAP/GetBusinessPartnersBySalesPerson" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DataAccessFaultFault">
+        <soap:fault use="literal" name="DataAccessFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetBusinessPartnersByIds">
+      <soap:operation soapAction="http://WSSAP/WSSAP/GetBusinessPartnersByIds" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DataAccessFaultFault">
+        <soap:fault use="literal" name="DataAccessFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
     <wsdl:operation name="GetBusinessPartner">
       <soap:operation soapAction="http://WSSAP/WSSAP/GetBusinessPartner" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DataAccessFaultFault">
+        <soap:fault use="literal" name="DataAccessFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetBusinessPartnerCreditStatus">
+      <soap:operation soapAction="http://WSSAP/WSSAP/GetBusinessPartnerCreditStatus" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -232,6 +268,18 @@
         <soap:fault use="literal" name="DataAccessFaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
+    <wsdl:operation name="GetOrderNum">
+      <soap:operation soapAction="http://WSSAP/WSSAP/GetOrderNum" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DataAccessFaultFault">
+        <soap:fault use="literal" name="DataAccessFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
     <wsdl:operation name="CancelOrder">
       <soap:operation soapAction="http://WSSAP/WSSAP/CancelOrder" style="document" />
       <wsdl:input>
@@ -280,6 +328,18 @@
         <soap:fault use="literal" name="DataAccessFaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
+    <wsdl:operation name="GetItem">
+      <soap:operation soapAction="http://WSSAP/WSSAP/GetItem" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DataAccessFaultFault">
+        <soap:fault use="literal" name="DataAccessFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
     <wsdl:operation name="GetItemStockLevel">
       <soap:operation soapAction="http://WSSAP/WSSAP/GetItemStockLevel" style="document" />
       <wsdl:input>
@@ -318,6 +378,18 @@
     </wsdl:operation>
     <wsdl:operation name="GetWithholdingTax">
       <soap:operation soapAction="http://WSSAP/WSSAP/GetWithholdingTax" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DataAccessFaultFault">
+        <soap:fault use="literal" name="DataAccessFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetSingleTaxCode">
+      <soap:operation soapAction="http://WSSAP/WSSAP/GetSingleTaxCode" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

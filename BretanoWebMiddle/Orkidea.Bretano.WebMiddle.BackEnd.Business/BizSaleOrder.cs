@@ -1,9 +1,11 @@
 ﻿using Microsoft.Practices.EnterpriseLibrary.ExceptionHandling;
 using Orkidea.Framework.SAP.BusinessOne.DiApiClient;
+using Orkidea.Framework.SAP.BusinessOne.DiServer;
 using Orkidea.Framework.SAP.BusinessOne.DiApiClient.SecurityData;
 using Orkidea.Framework.SAP.BusinessOne.Entities.Global.Administration;
 using Orkidea.Framework.SAP.BusinessOne.Entities.Global.ExceptionManagement;
 using Orkidea.Framework.SAP.BusinessOne.Entities.Global.Misc;
+using Orkidea.Framework.SAP.BusinessOne.Entities.Global.UserDefinedFileds;
 using Orkidea.Framework.SAP.BusinessOne.Entities.MarketingDocuments;
 using Orkidea.Framework.Security;
 using SAPbobsCOM;
@@ -24,7 +26,8 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
         /// <summary>
         /// Permite el acceso módulo de socio de negocios
         /// </summary>
-        private MarketingDocumentData SaleOrderAccess;
+        private MarketingDocumentData SaleOrderAccess;        
+
         public SAPConnectionData DataConnection;
         #endregion
 
@@ -55,14 +58,28 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
 
                 if (DataConnection.ConnectCompany(oAppConnData.dataBaseName, oAppConnData.sapUser, oAppConnData.sapUserPassword))
                 {
-                    DataConnection.BeginTran();
                     SaleOrderAccess = new MarketingDocumentData(oAppConnData.adoConnString);
-                    document = SaleOrderAccess.Add(SapDocumentType.SalesOrder, document, DataConnection.Conn);
-                    DataConnection.EndTran(BoWfTransOpt.wf_Commit);
+
+                    UserDefinedField webDocument = document.userDefinedFields.Where(x => x.name == "U_orkWebDocument").FirstOrDefault();
+
+                    if (webDocument != null)
+                        if (!SaleOrderAccess.ExistWebDocument(SapDocumentType.SalesOrder, webDocument.value))
+                        {
+                            DataConnection.BeginTran();
+                            document = SaleOrderAccess.Add(SapDocumentType.SalesOrder, document, DataConnection.Conn);
+                            DataConnection.EndTran(BoWfTransOpt.wf_Commit);
+                        }
+                        else
+                        {
+                            int docEntry = SaleOrderAccess.GetDocEntry(SapDocumentType.SalesOrder, int.Parse(webDocument.value));                            
+                            document.docEntry = docEntry;                            
+                        }
                     return document;
                 }
 
-
+                //***** prueba DIServer *****//
+                //OrderAccess = new DocumentData(oAppConnData.dataBaseName, licenseServer, dbServer, oAppConnData.sapUser, oAppConnData.sapUserPassword, dbUser, dbUserPassword, serverType);
+                //OrderAccess.Add(SapDocumentType.SalesOrder, document);
             }
             #region Catch
             catch (SAPException ex)
@@ -73,10 +90,17 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
             }
             catch (COMException ex)
             {
+                string[] error = ex.Message.Split(' ');
+
+                if (error.Length == 2)
+                    if (error[0] == "(-7)")
+                    {
+                        document.docEntry = Convert.ToInt32(error[1]);
+                        return document;
+                    }
+
                 DataConnection.EndTran(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
                 Exception outEx;
-                try
-                {
                     if (ExceptionPolicy.HandleException(ex, "Politica_Excepcion_Com", out outEx))
                     {
                         outEx.Data.Add("1", "3");
@@ -88,11 +112,7 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
                     {
                         throw;
                     }
-                }
-                catch (Exception)
-                {
-                }
-
+                
                 throw new Exception(ex.Message + "::" + ex.StackTrace);
             }
             catch (DbException ex)
@@ -128,7 +148,7 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
                     {
                         outEx.Data.Add("1", "3");
                         outEx.Data.Add("2", "NA");
-                        outEx.Data.Add("3", outEx.Message);
+                        outEx.Data.Add("3", outEx.Message + " Descripción: " + ex.Message);
                         throw outEx;
 
                     }
@@ -261,6 +281,56 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
             return null;
         }
 
+        public int GetOrderNum(int docEntry, AppConnData oAppConnData)
+        {
+            try
+            {
+                if (!BizUtilities.ValidateServiceConnection(oAppConnData))
+                    throw new BusinessException(15, "Nombre de Usuario o Contraseña incorrecta para el Servicio");
+
+                oAppConnData = BizUtilities.GetDataConnection(oAppConnData);
+                SaleOrderAccess = new MarketingDocumentData(oAppConnData.adoConnString);
+
+                return SaleOrderAccess.GetDocNum(SapDocumentType.SalesOrder, docEntry); ;
+            }
+            catch (DbException ex)
+            {
+                Exception outEx;
+                if (ExceptionPolicy.HandleException(ex, "Politica_SQLServer", out outEx))
+                {
+                    outEx.Data.Add("1", "14");
+                    outEx.Data.Add("2", "NA");
+                    //outEx.Data.Add("3", outEx.Message);
+                    outEx.Data.Add("3", outEx.Message + " Descripción: " + ex.Message);
+                    throw outEx;
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
+            catch (BusinessException ex)
+            {
+                BizUtilities.ProcessBusinessException(ex);
+            }
+            catch (Exception ex)
+            {
+                Exception outEx;
+                if (ExceptionPolicy.HandleException(ex, "Politica_ExcepcionGenerica", out outEx))
+                {
+                    outEx.Data.Add("1", "3");
+                    outEx.Data.Add("2", "NA");
+                    outEx.Data.Add("3", outEx.Message);
+                    throw outEx;
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
+            return -1;
+        }
+
         public void Cancel(int docEntry, AppConnData oAppConnData)
         {
             try
@@ -297,8 +367,6 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
             {
                 DataConnection.EndTran(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
                 Exception outEx;
-                try
-                {
                     if (ExceptionPolicy.HandleException(ex, "Politica_Excepcion_Com", out outEx))
                     {
                         outEx.Data.Add("1", "3");
@@ -309,11 +377,7 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
                     else
                     {
                         throw;
-                    }
-                }
-                catch (Exception)
-                {
-                }
+                    }               
 
                 throw new Exception(ex.Message + "::" + ex.StackTrace);
             }

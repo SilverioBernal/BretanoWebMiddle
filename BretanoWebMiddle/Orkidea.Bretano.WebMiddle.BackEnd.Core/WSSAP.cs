@@ -86,33 +86,61 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Core
             }
         }
 
-        //public List<BusinessPartner> GetBusinessPartnersJson(CardType cardType, AppConnData oAppConnData)
-        //{
-        //    try
-        //    {
-        //        facade = new BizFacade(BusinessClass.BizBusinessPartner);
-        //        return facade.GetBusinessPartners(cardType, oAppConnData);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        DataAccessFault detalleError = new DataAccessFault();
-        //        foreach (string valores in ex.Data.Keys)
-        //        {
-        //            switch (valores)
-        //            {
-        //                case "1": detalleError.ErrorID = ex.Data[valores].ToString();
-        //                    break;
-        //                case "2": detalleError.ErrorSAP = ex.Data[valores].ToString();
-        //                    break;
-        //                case "3": detalleError.Description = ex.Data[valores].ToString();
-        //                    break;
-        //                default: detalleError.ErrorID = ex.Data[valores].ToString();
-        //                    break;
-        //            }
-        //        }
-        //        throw new FaultException<DataAccessFault>(detalleError, "Error al Procesar la solicitud");
-        //    }
-        //}
+        public List<GenericBusinessPartner> GetBusinessPartnersBySalesPerson(CardType cardType, string slpCode, AppConnData oAppConnData)
+        {
+            try
+            {
+                facade = new BizFacade(BusinessClass.BizBusinessPartner);
+                return facade.GetBusinessPartnersBySalesPerson(cardType, slpCode, oAppConnData);
+            }
+            catch (Exception ex)
+            {
+                DataAccessFault detalleError = new DataAccessFault();
+                foreach (string valores in ex.Data.Keys)
+                {
+                    switch (valores)
+                    {
+                        case "1": detalleError.ErrorID = ex.Data[valores].ToString();
+                            break;
+                        case "2": detalleError.ErrorSAP = ex.Data[valores].ToString();
+                            break;
+                        case "3": detalleError.Description = ex.Data[valores].ToString();
+                            break;
+                        default: detalleError.ErrorID = ex.Data[valores].ToString();
+                            break;
+                    }
+                }
+                throw new FaultException<DataAccessFault>(detalleError, "Error al Procesar la solicitud");
+            }
+        }
+
+        public List<GenericBusinessPartner> GetBusinessPartnersByIds(CardType cardType, string[] cardCodes, AppConnData oAppConnData)
+        {
+            try
+            {
+                facade = new BizFacade(BusinessClass.BizBusinessPartner);
+                return facade.GetBusinessPartnersByIds(cardType, cardCodes, oAppConnData);
+            }
+            catch (Exception ex)
+            {
+                DataAccessFault detalleError = new DataAccessFault();
+                foreach (string valores in ex.Data.Keys)
+                {
+                    switch (valores)
+                    {
+                        case "1": detalleError.ErrorID = ex.Data[valores].ToString();
+                            break;
+                        case "2": detalleError.ErrorSAP = ex.Data[valores].ToString();
+                            break;
+                        case "3": detalleError.Description = ex.Data[valores].ToString();
+                            break;
+                        default: detalleError.ErrorID = ex.Data[valores].ToString();
+                            break;
+                    }
+                }
+                throw new FaultException<DataAccessFault>(detalleError, "Error al Procesar la solicitud");
+            }
+        }
 
         public BusinessPartner GetBusinessPartner(string cardCode, AppConnData oAppConnData)
         {
@@ -120,6 +148,34 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Core
             {
                 facade = new BizFacade(BusinessClass.BizBusinessPartner);
                 return facade.GetBusinessPartner(cardCode, oAppConnData);
+            }
+            catch (Exception ex)
+            {
+                DataAccessFault detalleError = new DataAccessFault();
+                foreach (string valores in ex.Data.Keys)
+                {
+                    switch (valores)
+                    {
+                        case "1": detalleError.ErrorID = ex.Data[valores].ToString();
+                            break;
+                        case "2": detalleError.ErrorSAP = ex.Data[valores].ToString();
+                            break;
+                        case "3": detalleError.Description = ex.Data[valores].ToString();
+                            break;
+                        default: detalleError.ErrorID = ex.Data[valores].ToString();
+                            break;
+                    }
+                }
+                throw new FaultException<DataAccessFault>(detalleError, "Error al Procesar la solicitud");
+            }
+        }
+
+        public bool GetBusinessPartnerCreditStatus(string cardCode, AppConnData oAppConnData)
+        {
+            try
+            {
+                facade = new BizFacade(BusinessClass.BizBusinessPartner);
+                return facade.GetBusinessPartnerCreditStatus(cardCode, oAppConnData);
             }
             catch (Exception ex)
             {
@@ -592,6 +648,34 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Core
             }
         }
 
+        public int GetOrderNum(int docEntry, AppConnData oAppConnData)
+        {
+            try
+            {
+                facade = new BizFacade(BusinessClass.BizSalesOrder);
+                return facade.GetOrderNum(docEntry, oAppConnData);
+            }
+            catch (Exception ex)
+            {
+                DataAccessFault detalleError = new DataAccessFault();
+                foreach (string valores in ex.Data.Keys)
+                {
+                    switch (valores)
+                    {
+                        case "1": detalleError.ErrorID = ex.Data[valores].ToString();
+                            break;
+                        case "2": detalleError.ErrorSAP = ex.Data[valores].ToString();
+                            break;
+                        case "3": detalleError.Description = ex.Data[valores].ToString();
+                            break;
+                        default: detalleError.ErrorID = ex.Data[valores].ToString();
+                            break;
+                    }
+                }
+                throw new FaultException<DataAccessFault>(detalleError, "Error al Procesar la solicitud");
+            }
+        }
+
         public void CancelOrder(int docEntry, AppConnData oAppConnData)
         {
             try
@@ -708,6 +792,34 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Core
             }
         }
 
+        public Item GetItem(string itemCode, AppConnData oAppConnData)
+        {
+            try
+            {
+                facade = new BizFacade(BusinessClass.BizInventory);
+                return facade.GetItem(itemCode, oAppConnData);
+            }
+            catch (Exception ex)
+            {
+                DataAccessFault detalleError = new DataAccessFault();
+                foreach (string valores in ex.Data.Keys)
+                {
+                    switch (valores)
+                    {
+                        case "1": detalleError.ErrorID = ex.Data[valores].ToString();
+                            break;
+                        case "2": detalleError.ErrorSAP = ex.Data[valores].ToString();
+                            break;
+                        case "3": detalleError.Description = ex.Data[valores].ToString();
+                            break;
+                        default: detalleError.ErrorID = ex.Data[valores].ToString();
+                            break;
+                    }
+                }
+                throw new FaultException<DataAccessFault>(detalleError, "Error al Procesar la solicitud");
+            }
+        }
+
         public List<StockLevel> GetItemStockLevel(string itemCode, AppConnData oAppConnData)
         {
             try
@@ -800,6 +912,34 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Core
             {
                 facade = new BizFacade(BusinessClass.BizFinance);
                 return facade.GetWithholdingTax(oAppConnData);
+            }
+            catch (Exception ex)
+            {
+                DataAccessFault detalleError = new DataAccessFault();
+                foreach (string valores in ex.Data.Keys)
+                {
+                    switch (valores)
+                    {
+                        case "1": detalleError.ErrorID = ex.Data[valores].ToString();
+                            break;
+                        case "2": detalleError.ErrorSAP = ex.Data[valores].ToString();
+                            break;
+                        case "3": detalleError.Description = ex.Data[valores].ToString();
+                            break;
+                        default: detalleError.ErrorID = ex.Data[valores].ToString();
+                            break;
+                    }
+                }
+                throw new FaultException<DataAccessFault>(detalleError, "Error al Procesar la solicitud");
+            }
+        }
+
+        public SalesTaxCode GetSingleTaxCode(string taxCode, AppConnData oAppConnData)
+        {
+            try
+            {
+                facade = new BizFacade(BusinessClass.BizFinance);
+                return facade.GetSingleTaxCode(taxCode, oAppConnData);
             }
             catch (Exception ex)
             {

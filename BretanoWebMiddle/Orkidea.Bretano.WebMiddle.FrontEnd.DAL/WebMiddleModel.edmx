@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="QcaWebMiddleModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="QcaWebMiddleModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Company">
           <Key>
             <PropertyRef Name="id" />
@@ -17,6 +17,15 @@
           <Property Name="sapPassword" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="logo" Type="varchar" MaxLength="150" />
           <Property Name="editaPrecio" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CompanyParameter">
+          <Key>
+            <PropertyRef Name="idCompany" />
+            <PropertyRef Name="idParameter" />
+          </Key>
+          <Property Name="idCompany" Type="int" Nullable="false" />
+          <Property Name="idParameter" Type="int" Nullable="false" />
+          <Property Name="value" Type="varchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="OQUT">
           <Key>
@@ -59,6 +68,18 @@
           <Property Name="uLatitud" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="uLongitud" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="idCompania" Type="int" />
+          <Property Name="cardName" Type="varchar" MaxLength="250" />
+          <Property Name="draftLC" Type="bit" />
+          <Property Name="draftDM" Type="bit" />
+        </EntityType>
+        <EntityType Name="Parameter">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="70" Nullable="false" />
+          <Property Name="label" Type="varchar" MaxLength="350" Nullable="false" />
+          <Property Name="type" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="QUT1">
           <Key>
@@ -89,6 +110,8 @@
           <Property Name="taxCode" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="ocrCode" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="uCssEnvaseDevol" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="taxRate" Type="numeric" Precision="14" Scale="2" />
+          <Property Name="itemName" Type="varchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="WebUser">
           <Key>
@@ -110,7 +133,32 @@
           <Property Name="customerCreator" Type="bit" Nullable="false" />
           <Property Name="purchaseOrderCreator" Type="bit" Nullable="false" />
           <Property Name="slpCode" Type="int" Nullable="false" />
+          <Property Name="orderApprover" Type="bit" Nullable="false" />
         </EntityType>
+        <Association Name="FK_CompanyParameter_Company">
+          <End Role="Company" Type="Self.Company" Multiplicity="1" />
+          <End Role="CompanyParameter" Type="Self.CompanyParameter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CompanyParameter">
+              <PropertyRef Name="idCompany" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CompanyParameter_Parameter">
+          <End Role="Parameter" Type="Self.Parameter" Multiplicity="1" />
+          <End Role="CompanyParameter" Type="Self.CompanyParameter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parameter">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CompanyParameter">
+              <PropertyRef Name="idParameter" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_QUT1_OQUT">
           <End Role="OQUT" Type="Self.OQUT" Multiplicity="1" />
           <End Role="QUT1" Type="Self.QUT1" Multiplicity="*" />
@@ -161,12 +209,22 @@
         </Association>
         <EntityContainer Name="QcaWebMiddleModelStoreContainer">
           <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CompanyParameter" EntityType="Self.CompanyParameter" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OQUT" EntityType="Self.OQUT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ORDR" EntityType="Self.ORDR" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Parameter" EntityType="Self.Parameter" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="QUT1" EntityType="Self.QUT1" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RDR1" EntityType="Self.RDR1" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WebUser" EntityType="Self.WebUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WebUserCompany" EntityType="Self.WebUserCompany" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CompanyParameter_Company" Association="Self.FK_CompanyParameter_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="CompanyParameter" EntitySet="CompanyParameter" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CompanyParameter_Parameter" Association="Self.FK_CompanyParameter_Parameter">
+            <End Role="Parameter" EntitySet="Parameter" />
+            <End Role="CompanyParameter" EntitySet="CompanyParameter" />
+          </AssociationSet>
           <AssociationSet Name="FK_QUT1_OQUT" Association="Self.FK_QUT1_OQUT">
             <End Role="OQUT" EntitySet="OQUT" />
             <End Role="QUT1" EntitySet="QUT1" />
@@ -195,48 +253,11 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="pass" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="WebUserCompany" Relationship="Self.FK_WebUserCompany_WebUser" FromRole="WebUser" ToRole="WebUserCompany" />
           <Property Name="active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="WebUserCompany" Relationship="QcaWebMiddleModel.FK_WebUserCompany_WebUser" FromRole="WebUser" ToRole="WebUserCompany" />
         </EntityType>
-        <EntityType Name="WebUserCompany">
-          <Key>
-            <PropertyRef Name="webUserId" />
-            <PropertyRef Name="companyId" />
-          </Key>
-          <Property Name="webUserId" Type="Int32" Nullable="false" />
-          <Property Name="companyId" Type="Int32" Nullable="false" />
-          <Property Name="admin" Type="Boolean" Nullable="false" />
-          <Property Name="customerCreator" Type="Boolean" Nullable="false" />
-          <Property Name="purchaseOrderCreator" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="WebUser" Relationship="Self.FK_WebUserCompany_WebUser" FromRole="WebUserCompany" ToRole="WebUser" />
-          <Property Name="slpCode" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Company" Relationship="QcaWebMiddleModel.FK_WebUserCompany_Company" FromRole="WebUserCompany" ToRole="Company" />
-        </EntityType>
-        <Association Name="FK_WebUserCompany_WebUser">
-          <End Role="WebUser" Type="Self.WebUser" Multiplicity="1" />
-          <End Role="WebUserCompany" Type="Self.WebUserCompany" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="WebUser">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="WebUserCompany">
-              <PropertyRef Name="webUserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="QcaWebMiddleEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="WebUser" EntityType="Self.WebUser" />
-          <EntitySet Name="WebUserCompany" EntityType="Self.WebUserCompany" />
-          <AssociationSet Name="FK_WebUserCompany_WebUser" Association="Self.FK_WebUserCompany_WebUser">
-            <End Role="WebUser" EntitySet="WebUser" />
-            <End Role="WebUserCompany" EntitySet="WebUserCompany" />
-          </AssociationSet>
-          <EntitySet Name="RDR1" EntityType="QcaWebMiddleModel.RDR1" />
-          <EntitySet Name="ORDR" EntityType="QcaWebMiddleModel.ORDR" />
-          <AssociationSet Name="FK_RDR1_ORDR" Association="QcaWebMiddleModel.FK_RDR1_ORDR">
-            <End Role="ORDR" EntitySet="ORDR" />
-            <End Role="RDR1" EntitySet="RDR1" />
-          </AssociationSet>
           <EntitySet Name="OQUT" EntityType="QcaWebMiddleModel.OQUT" />
           <EntitySet Name="QUT1" EntityType="QcaWebMiddleModel.QUT1" />
           <AssociationSet Name="FK_QUT1_OQUT" Association="QcaWebMiddleModel.FK_QUT1_OQUT">
@@ -244,62 +265,32 @@
             <End Role="QUT1" EntitySet="QUT1" />
           </AssociationSet>
           <EntitySet Name="Company" EntityType="QcaWebMiddleModel.Company" />
+          <EntitySet Name="CompanyParameter" EntityType="QcaWebMiddleModel.CompanyParameter" />
+          <EntitySet Name="Parameter" EntityType="QcaWebMiddleModel.Parameter" />
+          <AssociationSet Name="FK_CompanyParameter_Company" Association="QcaWebMiddleModel.FK_CompanyParameter_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="CompanyParameter" EntitySet="CompanyParameter" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CompanyParameter_Parameter" Association="QcaWebMiddleModel.FK_CompanyParameter_Parameter">
+            <End Role="Parameter" EntitySet="Parameter" />
+            <End Role="CompanyParameter" EntitySet="CompanyParameter" />
+          </AssociationSet>
+          <EntitySet Name="RDR1" EntityType="QcaWebMiddleModel.RDR1" />
+          <EntitySet Name="ORDR" EntityType="QcaWebMiddleModel.ORDR" />
+          <AssociationSet Name="FK_RDR1_ORDR" Association="QcaWebMiddleModel.FK_RDR1_ORDR">
+            <End Role="ORDR" EntitySet="ORDR" />
+            <End Role="RDR1" EntitySet="RDR1" />
+          </AssociationSet>
+          <EntitySet Name="WebUserCompany" EntityType="QcaWebMiddleModel.WebUserCompany" />
           <AssociationSet Name="FK_WebUserCompany_Company" Association="QcaWebMiddleModel.FK_WebUserCompany_Company">
             <End Role="Company" EntitySet="Company" />
             <End Role="WebUserCompany" EntitySet="WebUserCompany" />
           </AssociationSet>
-        </EntityContainer>
-        <EntityType Name="RDR1">
-          <Key>
-            <PropertyRef Name="orderId" />
-            <PropertyRef Name="itemCode" />
-            <PropertyRef Name="whsCode" />
-          </Key>
-          <Property Name="orderId" Type="Int32" Nullable="false" />
-          <Property Name="itemCode" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="quantity" Type="Decimal" Nullable="false" Precision="14" Scale="2" />
-          <Property Name="whsCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="price" Type="Decimal" Nullable="false" Precision="14" Scale="2" />
-          <Property Name="taxCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="ocrCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="uCssEnvaseDevol" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="ORDR" Relationship="QcaWebMiddleModel.FK_RDR1_ORDR" FromRole="RDR1" ToRole="ORDR" />
-        </EntityType>
-        <EntityType Name="ORDR">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="docEntry" Type="Int32" />
-          <Property Name="cardCode" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="series" Type="Int32" Nullable="false" />
-          <Property Name="docDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="docDueDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="taxDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="shipToCode" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="payToCode" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="groupNum" Type="Int32" Nullable="false" />
-          <Property Name="comments" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="slpCode" Type="Int32" />
-          <Property Name="uCssComentarios" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="uOrkUsuarioWeb" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="uLatitud" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="uLongitud" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="idCompania" Type="Int32" />
-          <NavigationProperty Name="RDR1" Relationship="QcaWebMiddleModel.FK_RDR1_ORDR" FromRole="ORDR" ToRole="RDR1" />
-        </EntityType>
-        <Association Name="FK_RDR1_ORDR">
-          <End Type="QcaWebMiddleModel.ORDR" Role="ORDR" Multiplicity="1" />
-          <End Type="QcaWebMiddleModel.RDR1" Role="RDR1" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ORDR">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="RDR1">
-              <PropertyRef Name="orderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+          <AssociationSet Name="FK_WebUserCompany_WebUser" Association="QcaWebMiddleModel.FK_WebUserCompany_WebUser">
+            <End Role="WebUser" EntitySet="WebUser" />
+            <End Role="WebUserCompany" EntitySet="WebUserCompany" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="OQUT">
           <Key>
             <PropertyRef Name="id" />
@@ -361,7 +352,124 @@
           <Property Name="sapPassword" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="logo" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="editaPrecio" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="CompanyParameter" Relationship="QcaWebMiddleModel.FK_CompanyParameter_Company" FromRole="Company" ToRole="CompanyParameter" />
           <NavigationProperty Name="WebUserCompany" Relationship="QcaWebMiddleModel.FK_WebUserCompany_Company" FromRole="Company" ToRole="WebUserCompany" />
+        </EntityType>
+        <EntityType Name="CompanyParameter">
+          <Key>
+            <PropertyRef Name="idCompany" />
+            <PropertyRef Name="idParameter" />
+          </Key>
+          <Property Name="idCompany" Type="Int32" Nullable="false" />
+          <Property Name="idParameter" Type="Int32" Nullable="false" />
+          <Property Name="value" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Company" Relationship="QcaWebMiddleModel.FK_CompanyParameter_Company" FromRole="CompanyParameter" ToRole="Company" />
+          <NavigationProperty Name="Parameter" Relationship="QcaWebMiddleModel.FK_CompanyParameter_Parameter" FromRole="CompanyParameter" ToRole="Parameter" />
+        </EntityType>
+        <EntityType Name="Parameter">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="label" Type="String" Nullable="false" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="type" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CompanyParameter" Relationship="QcaWebMiddleModel.FK_CompanyParameter_Parameter" FromRole="Parameter" ToRole="CompanyParameter" />
+        </EntityType>
+        <Association Name="FK_CompanyParameter_Company">
+          <End Type="QcaWebMiddleModel.Company" Role="Company" Multiplicity="1" />
+          <End Type="QcaWebMiddleModel.CompanyParameter" Role="CompanyParameter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CompanyParameter">
+              <PropertyRef Name="idCompany" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CompanyParameter_Parameter">
+          <End Type="QcaWebMiddleModel.Parameter" Role="Parameter" Multiplicity="1" />
+          <End Type="QcaWebMiddleModel.CompanyParameter" Role="CompanyParameter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parameter">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CompanyParameter">
+              <PropertyRef Name="idParameter" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="RDR1">
+          <Key>
+            <PropertyRef Name="orderId" />
+            <PropertyRef Name="itemCode" />
+            <PropertyRef Name="whsCode" />
+          </Key>
+          <Property Name="orderId" Type="Int32" Nullable="false" />
+          <Property Name="itemCode" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="quantity" Type="Decimal" Nullable="false" Precision="14" Scale="2" />
+          <Property Name="whsCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="price" Type="Decimal" Nullable="false" Precision="14" Scale="2" />
+          <Property Name="taxCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ocrCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="uCssEnvaseDevol" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="taxRate" Type="Decimal" Precision="14" Scale="2" />
+          <Property Name="itemName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ORDR" Relationship="QcaWebMiddleModel.FK_RDR1_ORDR" FromRole="RDR1" ToRole="ORDR" />
+        </EntityType>
+        <EntityType Name="ORDR">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="docEntry" Type="Int32" />
+          <Property Name="cardCode" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="series" Type="Int32" Nullable="false" />
+          <Property Name="docDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="docDueDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="taxDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="shipToCode" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="payToCode" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="groupNum" Type="Int32" Nullable="false" />
+          <Property Name="comments" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="slpCode" Type="Int32" />
+          <Property Name="uCssComentarios" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="uOrkUsuarioWeb" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="uLatitud" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="uLongitud" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="idCompania" Type="Int32" />
+          <Property Name="cardName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="draftLC" Type="Boolean" />
+          <Property Name="draftDM" Type="Boolean" />
+          <NavigationProperty Name="RDR1" Relationship="QcaWebMiddleModel.FK_RDR1_ORDR" FromRole="ORDR" ToRole="RDR1" />
+        </EntityType>
+        <Association Name="FK_RDR1_ORDR">
+          <End Type="QcaWebMiddleModel.ORDR" Role="ORDR" Multiplicity="1" />
+          <End Type="QcaWebMiddleModel.RDR1" Role="RDR1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ORDR">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RDR1">
+              <PropertyRef Name="orderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="WebUserCompany">
+          <Key>
+            <PropertyRef Name="webUserId" />
+            <PropertyRef Name="companyId" />
+          </Key>
+          <Property Name="webUserId" Type="Int32" Nullable="false" />
+          <Property Name="companyId" Type="Int32" Nullable="false" />
+          <Property Name="admin" Type="Boolean" Nullable="false" />
+          <Property Name="customerCreator" Type="Boolean" Nullable="false" />
+          <Property Name="purchaseOrderCreator" Type="Boolean" Nullable="false" />
+          <Property Name="slpCode" Type="Int32" Nullable="false" />
+          <Property Name="orderApprover" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Company" Relationship="QcaWebMiddleModel.FK_WebUserCompany_Company" FromRole="WebUserCompany" ToRole="Company" />
+          <NavigationProperty Name="WebUser" Relationship="QcaWebMiddleModel.FK_WebUserCompany_WebUser" FromRole="WebUserCompany" ToRole="WebUser" />
         </EntityType>
         <Association Name="FK_WebUserCompany_Company">
           <End Type="QcaWebMiddleModel.Company" Role="Company" Multiplicity="1" />
@@ -375,7 +483,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <Association Name="FK_WebUserCompany_WebUser">
+          <End Type="QcaWebMiddleModel.WebUser" Role="WebUser" Multiplicity="1" />
+          <End Type="QcaWebMiddleModel.WebUserCompany" Role="WebUserCompany" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WebUser">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="WebUserCompany">
+              <PropertyRef Name="webUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -388,55 +508,6 @@
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="pass" ColumnName="pass" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="WebUserCompany">
-            <EntityTypeMapping TypeName="QcaWebMiddleModel.WebUserCompany">
-              <MappingFragment StoreEntitySet="WebUserCompany">
-                <ScalarProperty Name="slpCode" ColumnName="slpCode" />
-                <ScalarProperty Name="webUserId" ColumnName="webUserId" />
-                <ScalarProperty Name="companyId" ColumnName="companyId" />
-                <ScalarProperty Name="admin" ColumnName="admin" />
-                <ScalarProperty Name="customerCreator" ColumnName="customerCreator" />
-                <ScalarProperty Name="purchaseOrderCreator" ColumnName="purchaseOrderCreator" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="RDR1">
-            <EntityTypeMapping TypeName="QcaWebMiddleModel.RDR1">
-              <MappingFragment StoreEntitySet="RDR1">
-                <ScalarProperty Name="uCssEnvaseDevol" ColumnName="uCssEnvaseDevol" />
-                <ScalarProperty Name="ocrCode" ColumnName="ocrCode" />
-                <ScalarProperty Name="taxCode" ColumnName="taxCode" />
-                <ScalarProperty Name="price" ColumnName="price" />
-                <ScalarProperty Name="whsCode" ColumnName="whsCode" />
-                <ScalarProperty Name="quantity" ColumnName="quantity" />
-                <ScalarProperty Name="itemCode" ColumnName="itemCode" />
-                <ScalarProperty Name="orderId" ColumnName="orderId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ORDR">
-            <EntityTypeMapping TypeName="QcaWebMiddleModel.ORDR">
-              <MappingFragment StoreEntitySet="ORDR">
-                <ScalarProperty Name="idCompania" ColumnName="idCompania" />
-                <ScalarProperty Name="uLongitud" ColumnName="uLongitud" />
-                <ScalarProperty Name="uLatitud" ColumnName="uLatitud" />
-                <ScalarProperty Name="uOrkUsuarioWeb" ColumnName="uOrkUsuarioWeb" />
-                <ScalarProperty Name="uCssComentarios" ColumnName="uCssComentarios" />
-                <ScalarProperty Name="slpCode" ColumnName="slpCode" />
-                <ScalarProperty Name="comments" ColumnName="comments" />
-                <ScalarProperty Name="groupNum" ColumnName="groupNum" />
-                <ScalarProperty Name="payToCode" ColumnName="payToCode" />
-                <ScalarProperty Name="shipToCode" ColumnName="shipToCode" />
-                <ScalarProperty Name="taxDate" ColumnName="taxDate" />
-                <ScalarProperty Name="docDueDate" ColumnName="docDueDate" />
-                <ScalarProperty Name="docDate" ColumnName="docDate" />
-                <ScalarProperty Name="series" ColumnName="series" />
-                <ScalarProperty Name="cardCode" ColumnName="cardCode" />
-                <ScalarProperty Name="docEntry" ColumnName="docEntry" />
-                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -486,6 +557,80 @@
                 <ScalarProperty Name="connStringName" ColumnName="connStringName" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CompanyParameter">
+            <EntityTypeMapping TypeName="QcaWebMiddleModel.CompanyParameter">
+              <MappingFragment StoreEntitySet="CompanyParameter">
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="idParameter" ColumnName="idParameter" />
+                <ScalarProperty Name="idCompany" ColumnName="idCompany" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Parameter">
+            <EntityTypeMapping TypeName="QcaWebMiddleModel.Parameter">
+              <MappingFragment StoreEntitySet="Parameter">
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="label" ColumnName="label" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RDR1">
+            <EntityTypeMapping TypeName="QcaWebMiddleModel.RDR1">
+              <MappingFragment StoreEntitySet="RDR1">
+                <ScalarProperty Name="itemName" ColumnName="itemName" />
+                <ScalarProperty Name="taxRate" ColumnName="taxRate" />
+                <ScalarProperty Name="uCssEnvaseDevol" ColumnName="uCssEnvaseDevol" />
+                <ScalarProperty Name="ocrCode" ColumnName="ocrCode" />
+                <ScalarProperty Name="taxCode" ColumnName="taxCode" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="whsCode" ColumnName="whsCode" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="itemCode" ColumnName="itemCode" />
+                <ScalarProperty Name="orderId" ColumnName="orderId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ORDR">
+            <EntityTypeMapping TypeName="QcaWebMiddleModel.ORDR">
+              <MappingFragment StoreEntitySet="ORDR">
+                <ScalarProperty Name="draftDM" ColumnName="draftDM" />
+                <ScalarProperty Name="draftLC" ColumnName="draftLC" />
+                <ScalarProperty Name="cardName" ColumnName="cardName" />
+                <ScalarProperty Name="idCompania" ColumnName="idCompania" />
+                <ScalarProperty Name="uLongitud" ColumnName="uLongitud" />
+                <ScalarProperty Name="uLatitud" ColumnName="uLatitud" />
+                <ScalarProperty Name="uOrkUsuarioWeb" ColumnName="uOrkUsuarioWeb" />
+                <ScalarProperty Name="uCssComentarios" ColumnName="uCssComentarios" />
+                <ScalarProperty Name="slpCode" ColumnName="slpCode" />
+                <ScalarProperty Name="comments" ColumnName="comments" />
+                <ScalarProperty Name="groupNum" ColumnName="groupNum" />
+                <ScalarProperty Name="payToCode" ColumnName="payToCode" />
+                <ScalarProperty Name="shipToCode" ColumnName="shipToCode" />
+                <ScalarProperty Name="taxDate" ColumnName="taxDate" />
+                <ScalarProperty Name="docDueDate" ColumnName="docDueDate" />
+                <ScalarProperty Name="docDate" ColumnName="docDate" />
+                <ScalarProperty Name="series" ColumnName="series" />
+                <ScalarProperty Name="cardCode" ColumnName="cardCode" />
+                <ScalarProperty Name="docEntry" ColumnName="docEntry" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WebUserCompany">
+            <EntityTypeMapping TypeName="QcaWebMiddleModel.WebUserCompany">
+              <MappingFragment StoreEntitySet="WebUserCompany">
+                <ScalarProperty Name="orderApprover" ColumnName="orderApprover" />
+                <ScalarProperty Name="slpCode" ColumnName="slpCode" />
+                <ScalarProperty Name="purchaseOrderCreator" ColumnName="purchaseOrderCreator" />
+                <ScalarProperty Name="customerCreator" ColumnName="customerCreator" />
+                <ScalarProperty Name="admin" ColumnName="admin" />
+                <ScalarProperty Name="companyId" ColumnName="companyId" />
+                <ScalarProperty Name="webUserId" ColumnName="webUserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

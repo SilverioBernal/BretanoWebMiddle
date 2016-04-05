@@ -36,6 +36,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
             if (!String.IsNullOrEmpty(model.UserName) && !String.IsNullOrEmpty(model.Password))
             {
                 //user exists
+                #region user exists
                 WebUser userTarget = null;
                 string contraseñaDesencriptada = "";
 
@@ -59,6 +60,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
                         pass = ConfigurationManager.AppSettings["RootKey"].ToString()
                     };
                 }
+                #endregion
 
                 contraseñaDesencriptada = Cryptography.Decrypt(HexSerialization.HexToString(userTarget.pass));
 
@@ -86,22 +88,34 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
                         model.companies = BizCompany.GetList().ToList();
                         return View(model);
                     }
+
+                    #region SESSION OBJECTS
+                    //List<CompanyParameter> companyParameters = BizCompanyParameter.GetList(model.companyId).ToList();
+
+                    //Session["companyParameters"] = companyParameters;
+
+                    Company co = BizCompany.GetSingle(model.companyId);
+
+
                     FormsAuthentication.SetAuthCookie(model.UserName, false);
 
                     int id = userTarget.id;
                     int isAdmin = webUserCompany.admin ? 1 : 0;
                     int customerCreator = webUserCompany.customerCreator ? 1 : 0;
                     int purchaseOrderCreator = webUserCompany.purchaseOrderCreator ? 1 : 0;
+                    int orderApprover = webUserCompany.orderApprover ? 1 : 0;
                     int company = webUserCompany.companyId;
                     int slpCode = webUserCompany.slpCode;
 
-                    string userData = string.Format("{0}|{1}|{2}|{3}|{4}|{5}",
+                    string userData = string.Format("{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}",
                         id.ToString().Trim(),
                         isAdmin.ToString().Trim(),
                         customerCreator.ToString().Trim(),
                         purchaseOrderCreator.ToString().Trim(),
-                        company, 
-                        slpCode.ToString().Trim());
+                        company,
+                        slpCode.ToString().Trim(),
+                        co.name,
+                        orderApprover.ToString().Trim());
 
                     FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, model.UserName, DateTime.Now, DateTime.Now.AddMinutes(30), false, userData);
 
@@ -118,7 +132,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
                         GenericPrincipal newUser = new GenericPrincipal(identity, new string[] { });
                         HttpContext.User = newUser;
                     }
-
+                    #endregion
                     //ActivityLogBiz.SaveActivityLog(new ActivityLog() { idUsuario = id, accion = "Login", fecha = DateTime.Now });
                     if (!string.IsNullOrEmpty(returnUrl))
                         return RedirectToLocal(returnUrl);

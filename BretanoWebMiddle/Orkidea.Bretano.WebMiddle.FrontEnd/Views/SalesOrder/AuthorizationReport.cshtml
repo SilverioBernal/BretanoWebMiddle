@@ -1,4 +1,46 @@
-﻿@{
+﻿@model IEnumerable<Orkidea.Bretano.WebMiddle.FrontEnd.Models.ORDRViewModel>
+@{
+    ViewBag.Title = "Index";
+}
+
+<script src="~/Scripts/Custom/ordrIndex.js"></script>
+
+<div class="container-fluid">
+    <h2>Pedidos por aprobar</h2>
+    
+    <br />
+    <div class="row">
+        <table id="ordr" class="display" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Código</th>
+                    <th>Cliente</th>
+                    <th>Causa</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.docDate.ToString("yyyy-MM-dd")</td>
+                        <td>@item.cardCode</td>
+                        <td>@item.cardName</td>
+                        <td>@item.comment</td>
+                        <td>
+                            <a href="@Url.Action("ViewOrder", new { id = item.id })" class="sepV_a" title="Ver orden"><i class="fa fa-search-plus"></i></a>                            
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+@*@{
     ViewBag.Title = "AuthorizationReport";
 }
 <script src="~/Scripts/Custom/ordrAuthorizacionReport.js"></script>
@@ -34,5 +76,5 @@
 <hr />
 <div class="row ordersTable">
 
-</div>
+</div>*@
 

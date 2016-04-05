@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Orkidea.Bretano.WebMiddle.FrontEnd.Entities.RDR1>
+@using System.Globalization
+    @{
+        Layout = null;
+        decimal totalOrder = ViewBag.totalOrder + ViewBag.totalIva;
+    }
+    <table id="ordrLines" class="display" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>item</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Total</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                decimal total = item.price * item.quantity;
+                string name = string.IsNullOrEmpty(item.itemName) ? item.itemCode : string.Format("{0}-{1}", item.itemCode, item.itemName);
+                <tr>
+                    <td>@name</td>
+                    <td style="text-align:right;">@item.quantity.ToString("N", CultureInfo.CreateSpecificCulture("es-CO"))</td>
+                    <td style="text-align:right;">@item.price.ToString("N", CultureInfo.CreateSpecificCulture("es-CO"))</td>
+                    <td style="text-align:right;">@total.ToString("N", CultureInfo.CreateSpecificCulture("es-CO"))</td>                    
+                    <td><a href="@Url.Action("RemoveLine", new { id = string.Format("{0}|{1}", ViewBag.id, item.itemCode) })" title="Eliminar linea"><i class="fa fa-trash"></i></a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+<hr />
+<p class="text-right"> Subtotal Pedido: <strong>@ViewBag.totalOrder.ToString("N", CultureInfo.CreateSpecificCulture("es-CO"))</strong></p>
+<p class="text-right"> IVA: <strong>@ViewBag.totalIva.ToString("N", CultureInfo.CreateSpecificCulture("es-CO"))</strong></p>
+<p class="text-right"> Total: <strong>@totalOrder.ToString("N", CultureInfo.CreateSpecificCulture("es-CO"))</strong></p>
+
+
+@*<h4><span class="text-right"> Subtotal Pedido: <strong>@ViewBag.totalOrder.ToString("N", CultureInfo.CreateSpecificCulture("es-CO"))</strong></span></h4>
+<h4>Iva: <strong>@ViewBag.totalIva.ToString("N", CultureInfo.CreateSpecificCulture("es-CO"))</strong></h4>*@
+
+<script>
+    $('#ordrLines').dataTable({
+        "language": {
+            "lengthMenu": "Mostrar _MENU_ registros por pagina",
+            "zeroRecords": "Ningun resultado encontrado",
+            "info": "Página _PAGE_ de _PAGES_",
+            "infoEmpty": "Sin registros",
+            "infoFiltered": "(filtered from _MAX_ total records)",
+            "search": "Buscar:",
+            "paginate": {
+                "first": "Primera",
+                "last": "Ultima",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            },
+        }
+    });
+</script>
+

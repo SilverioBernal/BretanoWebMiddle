@@ -24,6 +24,18 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Business
             return ec.GetList(x => x.docDate >= from && x.docDate < to && x.slpCode.Equals(slpCode) && x.idCompania.Equals(idCompany) && x.docEntry!= null);
         }
 
+        public static IList<ORDR> GetPendingList(string idWebUser, int idCompany)
+        {            
+            EntityCRUD<ORDR> ec = new EntityCRUD<ORDR>();
+            return ec.GetList(x => x.uOrkUsuarioWeb == idWebUser && x.idCompania.Equals(idCompany) && x.docEntry == null);
+        }
+
+        public static IList<ORDR> GetPendingList(int idCompany)
+        {
+            EntityCRUD<ORDR> ec = new EntityCRUD<ORDR>();
+            return ec.GetList(x => x.idCompania.Equals(idCompany) && x.docEntry == null);
+        }
+
         public static IList<RDR1> GetLinesList(int orderId)
         {
             EntityCRUD<RDR1> ec = new EntityCRUD<RDR1>();
@@ -80,6 +92,42 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Business
             try
             {
                 ec.Add(line);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public static void Delete(ORDR order)
+        {
+            EntityCRUD<ORDR> ec = new EntityCRUD<ORDR>();
+
+            try
+            {
+                List<RDR1> orderLines = GetLinesList(order.id).ToList();
+
+                foreach (RDR1 item in orderLines)
+                {
+                    DeleteLine(item);
+                }
+
+                ec.Remove(order);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public static void DeleteLine(RDR1 orderLine)
+        {
+            EntityCRUD<RDR1> ec = new EntityCRUD<RDR1>();
+
+            try
+            {
+                RDR1 line = ec.GetSingle(x => x.orderId.Equals(orderLine.orderId) && x.itemCode == orderLine.itemCode);
+                ec.Remove(line);
             }
             catch (Exception)
             {

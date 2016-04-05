@@ -34,8 +34,21 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Business
 
             try
             {
+                ec.Add(Companys);
+
                 foreach (Company item in Companys)
-                    ec.Add(Companys);
+                {
+                    List<Parameter> parameters = BizParameter.GetList().ToList();
+
+                    CompanyParameter[] cp = new CompanyParameter[parameters.Count()];
+
+                    for (int i = 0; i < parameters.Count(); i++)
+                    {
+                        cp[i] = new CompanyParameter() { idCompany = item.id, idParameter = parameters[i].id };
+                    }
+
+                    BizCompanyParameter.Add(cp);
+                }
             }
             catch (Exception)
             {

@@ -17,23 +17,33 @@
             <div class="well">
                 <div class="row">
                     <div class="form-group">
-                        <div class="col-md-2">
-                            @Html.LabelFor(model => model.series, "Serie", new { @class = "control-label" })
-                            @Html.DropDownListFor(model => model.series, new SelectList(Enumerable.Empty<SelectListItem>()), " ", new { @class = "form-control required", style = "max-width:100%" })
-                            @Html.ValidationMessageFor(m => m.series, "Requerido", new { @class = "text-danger" })
-                        </div>
-                        <div class="col-md-3">
-                            <a href="javascript:void(0)" id="customerCode" data-toggle="modal" data-target="#customerModal">@Html.LabelFor(model => model.cardCode, "Cliente", new { @class = "control-label" })</a>
+                        @if (string.IsNullOrEmpty(ViewBag.defaulSeries))
+                        {
+                            <div class="col-md-2">
+                                @Html.LabelFor(model => model.series, "Serie", new { @class = "control-label" })
+                                @Html.DropDownListFor(model => model.series, new SelectList(Enumerable.Empty<SelectListItem>()), " ", new { @class = "form-control required", style = "max-width:100%" })
+                                @Html.ValidationMessageFor(m => m.series, "Requerido", new { @class = "text-danger" })
+                            </div>
+                        }
+                        
+                        @{
+                            string classCliente = string.IsNullOrEmpty(ViewBag.defaulSeries)?"col-md-3":"col-md-5";
+                        }
+
+                        <div class='@classCliente'>
+                            <a href="#" onclick="return false;" id="customerCode" data-toggle="modal" data-target="#customerModal">@Html.LabelFor(model => model.cardCode, "Cliente", new { @class = "control-label" })</a>
                             @Html.TextBoxFor(m => m.cardCode, new { @class = "form-control required", title = "id del socio de negocio", readOnly = true })
                             @Html.ValidationMessageFor(m => m.cardCode, "Requierido", new { @class = "text-danger" })
                         </div>
                         <div class="col-md-5">
                             <label class="control-label">Nombre</label>
-                            <input type="text" class="form-control" value="@ViewBag.cardName" id="cardName" style="max-width:100%" disabled />
+                            @*<input type="text" class="form-control" value="@ViewBag.cardName" id="cardName" style="max-width:100%" disabled />*@
+                            @Html.TextBoxFor(m => m.cardName, new { @class = "form-control required", title = "Socio de negocio", readOnly = true })
+                            @Html.ValidationMessageFor(m => m.cardName, "Requierido", new { @class = "text-danger" })
                         </div>
                         <div class="col-md-2">
                             <label class="control-label">Ver</label>
-                            <a href="javascript:vaoid(0);" class="btn btn-default" id="paymentState">Estado de cartera</a>
+                            <a href="#" onclick="return false;" class="btn btn-default" id="paymentState">Estado de cartera</a>
                         </div>
                     </div>
                 </div>
@@ -69,11 +79,14 @@
                             </div>
                             @Html.ValidationMessageFor(m => m.taxDate, "Requierido", new { @class = "text-danger" })
                         </div>
+                        @if (ViewBag.ShowOnlyCustomerGroupNum == "No")
+                        { 
                         <div class="col-md-6">
                             @Html.LabelFor(model => model.groupNum, "Condiciones de pago", new { @class = "control-label" })
                             @Html.DropDownListFor(model => model.groupNum, new SelectList(Enumerable.Empty<SelectListItem>()), " ", new { @class = "form-control required", style = "max-width:100%" })
                             @Html.ValidationMessageFor(m => m.groupNum, "Requerido", new { @class = "text-danger" })
                         </div>
+                        }
                     </div>
                 </div>
                 <div class="row">
@@ -98,7 +111,7 @@
                             @Html.TextBoxFor(model => model.uLatitud, new { type = "text", @class = "form-control", style = "display:none;" })
                         </div>
                         <div class="col-md-6">
-                            @Html.LabelFor(model => model.uCssComentarios, "Comentarios internos para bodega", new { @class = "control-label" })
+                            @Html.LabelFor(model => model.uCssComentarios, "Comentarios internos para bodega/cartera", new { @class = "control-label" })
                             @Html.TextAreaFor(m => m.uCssComentarios, new { @class = "form-control", title = "id del contacto", rows = 7 })
                             @Html.TextBoxFor(model => model.uLongitud, new { type = "text", @class = "form-control", style = "display:none;" })
                         </div>

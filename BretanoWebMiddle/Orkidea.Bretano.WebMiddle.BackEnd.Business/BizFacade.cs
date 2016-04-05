@@ -74,15 +74,30 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
             return bizBusinessPartner.GetList(cardType, oAppConnData);
         }
 
+        public List<GenericBusinessPartner> GetBusinessPartnersBySalesPerson(CardType cardType, string slpCode, AppConnData oAppConnData)
+        {
+            return bizBusinessPartner.GetList(cardType, slpCode, oAppConnData);
+        }
+
+        public List<GenericBusinessPartner> GetBusinessPartnersByIds(CardType cardType, string[] cardCodes, AppConnData oAppConnData)
+        {
+            return bizBusinessPartner.GetList(cardType, cardCodes, oAppConnData);
+        }
+
         public BusinessPartner GetBusinessPartner(string cardCode, AppConnData oAppConnData)
         {
             return bizBusinessPartner.GetSingle(cardCode, oAppConnData);
         }
 
+        public bool GetBusinessPartnerCreditStatus(string cardCode, AppConnData oAppConnData)
+        {
+            return bizBusinessPartner.GetCreditStatus(cardCode, oAppConnData);
+        }
+
         public List<BusinessPartnerGroup> GetAllBusinessPratnerGroup(CardType cardType, AppConnData oAppConnData)
         {
             return bizBusinessPartner.GetAllBusinessPartnerGroup(cardType, oAppConnData);
-        }
+        }        
 
         public List<ContactEmployee> GetContactList(string cardCode, AppConnData oAppConnData)
         {
@@ -161,6 +176,11 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
             return bizSalesOrder.GetSingle(docNum, oAppConnData);
         }
 
+        public int GetOrderNum(int docEntry, AppConnData oAppConnData)
+        {
+            return bizSalesOrder.GetOrderNum(docEntry, oAppConnData);
+        }
+
         public void CancelOrder(int docEntry, AppConnData oAppConnData)
         {
             bizSalesOrder.Cancel(docEntry, oAppConnData);
@@ -178,6 +198,11 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
         public List<GenericItem> GetItems(AppConnData oAppConnData)
         {
             return bizInventory.GetItemAll(oAppConnData);
+        }
+
+        public Item GetItem(string itemCode,AppConnData oAppConnData)
+        {
+            return bizInventory.GetSingle(itemCode, oAppConnData);
         }
 
         public List<GenericItem> GetItemList(Warehouse warehouse, AppConnData oAppConnData)
@@ -207,6 +232,11 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
         public List<WithholdingTax> GetWithholdingTax(AppConnData oAppConnData)
         {
             return bizFinance.GetWithholdingTax(oAppConnData);
+        }
+
+        public SalesTaxCode GetSingleTaxCode(string taxCode, AppConnData oAppConnData)
+        {
+            return bizFinance.GetSingleTaxCode(taxCode, oAppConnData);
         }
         #endregion
 

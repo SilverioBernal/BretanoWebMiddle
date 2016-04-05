@@ -176,9 +176,11 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BusinessPartnerAddressViewModel.cs" />
+    <Compile Include="Models\CompanyParameterViewModel.cs" />
     <Compile Include="Models\CustomerViewModel.cs" />
     <Compile Include="Models\CustomIdentity.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ORDRViewModel.cs" />
     <Compile Include="Models\SearchFormViewModel.cs" />
     <Compile Include="Models\WebUserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -304,6 +306,7 @@
     <None Include="Properties\PublishProfiles\Disk.pubxml" />
     <None Include="Properties\PublishProfiles\QcaWebMiddle.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Custom\CompanySetup.js" />
     <Content Include="Scripts\Custom\CustomerAddressCreate.js" />
     <Content Include="Scripts\Custom\CustomerContactCreate.js" />
     <Content Include="Scripts\Custom\CustomerCreate.js" />
@@ -317,6 +320,7 @@
     <Content Include="Scripts\Custom\ordrDetails.js" />
     <Content Include="Scripts\Custom\ordrGeoreport.js" />
     <Content Include="Scripts\Custom\ordrHeaderCreate.js" />
+    <Content Include="Scripts\Custom\ordrIndex.js" />
     <Content Include="Scripts\Custom\ordrLineCreate.js" />
     <Content Include="Scripts\Custom\ordrSearch.js" />
     <Content Include="Scripts\Custom\QuotationHeaderCreate.js" />
@@ -458,6 +462,9 @@
     <Content Include="Service References\WebMiddleBackEnd\Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AuthorizationStatus.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <Content Include="Service References\WebMiddleBackEnd\Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.Item.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="Service References\WebMiddleBackEnd\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -508,6 +515,23 @@
     <Content Include="Views\WebUser\Index.cshtml" />
     <Content Include="Views\WebUser\Create.cshtml" />
     <Content Include="Views\WebUser\Asociate.cshtml" />
+    <Content Include="Views\Customer\edit.cshtml" />
+    <Content Include="Views\SalesOrder\Search.cshtml" />
+    <Content Include="Views\SalesOrder\SearchOrders.cshtml" />
+    <Content Include="Views\SalesOrder\Details.cshtml" />
+    <Content Include="Views\SalesOrder\Delete.cshtml" />
+    <Content Include="Views\SalesOrder\Georeport.cshtml" />
+    <Content Include="Views\SalesOrder\ShowGeoReport.cshtml" />
+    <Content Include="Views\Customer\lastPrices.cshtml" />
+    <Content Include="Views\Customer\searchLastPrices.cshtml" />
+    <Content Include="Views\Customer\CustomerPaymentAges.cshtml" />
+    <Content Include="Views\SalesOrder\ItemStock.cshtml" />
+    <Content Include="Views\Quotation\Create.cshtml" />
+    <Content Include="Views\Quotation\AddLine.cshtml" />
+    <Content Include="Views\Quotation\Finish.cshtml" />
+    <Content Include="Views\SalesOrder\AuthorizationReport.cshtml" />
+    <Content Include="Views\SalesOrder\ShowAuthorizationReport.cshtml" />
+    <Content Include="Views\Company\Setup.cshtml" />
     <None Include="Service References\WebMiddleBackEnd\WSSAP.wsdl" />
     <None Include="Service References\WebMiddleBackEnd\WSSAP.xsd">
       <SubType>Designer</SubType>
@@ -528,22 +552,13 @@
     <None Include="Service References\WebMiddleBackEnd\WSSAP5.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="Views\Customer\edit.cshtml" />
-    <Content Include="Views\SalesOrder\Search.cshtml" />
-    <Content Include="Views\SalesOrder\SearchOrders.cshtml" />
-    <Content Include="Views\SalesOrder\Details.cshtml" />
-    <Content Include="Views\SalesOrder\Delete.cshtml" />
-    <Content Include="Views\SalesOrder\Georeport.cshtml" />
-    <Content Include="Views\SalesOrder\ShowGeoReport.cshtml" />
-    <Content Include="Views\Customer\lastPrices.cshtml" />
-    <Content Include="Views\Customer\searchLastPrices.cshtml" />
-    <Content Include="Views\Customer\CustomerPaymentAges.cshtml" />
-    <Content Include="Views\SalesOrder\ItemStock.cshtml" />
-    <Content Include="Views\Quotation\Create.cshtml" />
-    <Content Include="Views\Quotation\AddLine.cshtml" />
-    <Content Include="Views\Quotation\Finish.cshtml" />
-    <Content Include="Views\SalesOrder\AuthorizationReport.cshtml" />
-    <Content Include="Views\SalesOrder\ShowAuthorizationReport.cshtml" />
+    <Content Include="Views\SalesOrder\Index.cshtml" />
+    <None Include="Service References\WebMiddleBackEnd\WSSAP6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Views\SalesOrder\GetOrderLines.cshtml" />
+    <Content Include="Views\SalesOrder\Draft.cshtml" />
+    <Content Include="Views\SalesOrder\ViewOrder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

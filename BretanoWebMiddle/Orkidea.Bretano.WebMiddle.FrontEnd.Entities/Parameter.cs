@@ -12,19 +12,18 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class RDR1
+    public partial class Parameter
     {
-        public int orderId { get; set; }
-        public string itemCode { get; set; }
-        public decimal quantity { get; set; }
-        public string whsCode { get; set; }
-        public decimal price { get; set; }
-        public string taxCode { get; set; }
-        public string ocrCode { get; set; }
-        public string uCssEnvaseDevol { get; set; }
-        public Nullable<decimal> taxRate { get; set; }
-        public string itemName { get; set; }
+        public Parameter()
+        {
+            this.CompanyParameter = new HashSet<CompanyParameter>();
+        }
     
-        public virtual ORDR ORDR { get; set; }
+        public int id { get; set; }
+        public string name { get; set; }
+        public string label { get; set; }
+        public string type { get; set; }
+    
+        public virtual ICollection<CompanyParameter> CompanyParameter { get; set; }
     }
 }

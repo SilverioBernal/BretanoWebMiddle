@@ -42,9 +42,9 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
                 return RedirectToAction("create", "salesorder");
 
             if (customerCreator)
-                return RedirectToAction("create", "customer");            
+                return RedirectToAction("index", "customer");            
 
-            return RedirectToAction("create", "salesorder");
+            return RedirectToAction("index", "salesorder");
         }
 
         public ActionResult About()

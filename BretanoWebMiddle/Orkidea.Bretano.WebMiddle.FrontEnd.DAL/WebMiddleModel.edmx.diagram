@@ -6,17 +6,21 @@
     <edmx:Diagrams>
       <Diagram DiagramId="4e125292be644a22bd1a7feab71916c0" Name="Diagram1">
         <EntityTypeShape EntityType="QcaWebMiddleModel.WebUser" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="QcaWebMiddleModel.WebUserCompany" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <AssociationConnector Association="QcaWebMiddleModel.FK_WebUserCompany_WebUser" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="QcaWebMiddleModel.RDR1" Width="1.5" PointX="5.625" PointY="5.75" />
-        <EntityTypeShape EntityType="QcaWebMiddleModel.ORDR" Width="1.5" PointX="3.375" PointY="4.875" />
-        <AssociationConnector Association="QcaWebMiddleModel.FK_RDR1_ORDR" />
         <EntityTypeShape EntityType="QcaWebMiddleModel.OQUT" Width="1.5" PointX="8.375" PointY="1" />
         <EntityTypeShape EntityType="QcaWebMiddleModel.QUT1" Width="1.5" PointX="10.625" PointY="1.75" />
         <AssociationConnector Association="QcaWebMiddleModel.FK_QUT1_OQUT" />
         <EntityTypeShape EntityType="QcaWebMiddleModel.Company" Width="1.5" PointX="0.75" PointY="0.875" />
+        <EntityTypeShape EntityType="QcaWebMiddleModel.CompanyParameter" Width="1.5" PointX="6" PointY="1.375" />
+        <EntityTypeShape EntityType="QcaWebMiddleModel.Parameter" Width="1.5" PointX="3.75" PointY="10.375" />
+        <AssociationConnector Association="QcaWebMiddleModel.FK_CompanyParameter_Company" />
+        <AssociationConnector Association="QcaWebMiddleModel.FK_CompanyParameter_Parameter" />
+        <EntityTypeShape EntityType="QcaWebMiddleModel.RDR1" Width="1.5" PointX="8.625" PointY="7.75" />
+        <EntityTypeShape EntityType="QcaWebMiddleModel.ORDR" Width="1.5" PointX="6.375" PointY="6.75" />
+        <AssociationConnector Association="QcaWebMiddleModel.FK_RDR1_ORDR" />
+        <EntityTypeShape EntityType="QcaWebMiddleModel.WebUserCompany" Width="1.5" PointX="3" PointY="2.625" />
         <AssociationConnector Association="QcaWebMiddleModel.FK_WebUserCompany_Company" />
-      </Diagram>
+        <AssociationConnector Association="QcaWebMiddleModel.FK_WebUserCompany_WebUser" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

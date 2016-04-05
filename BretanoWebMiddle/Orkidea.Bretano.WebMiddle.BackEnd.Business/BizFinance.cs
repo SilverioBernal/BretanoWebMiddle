@@ -128,6 +128,55 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
             }
             return null;
         }
+
+        public SalesTaxCode GetSingleTaxCode(string taxCode, AppConnData oAppConnData)
+        {
+            try
+            {
+                if (!BizUtilities.ValidateServiceConnection(oAppConnData))
+                    throw new BusinessException(15, "Nombre de Usuario o Contraseña incorrecta para el Servicio");
+
+                oAppConnData = BizUtilities.GetDataConnection(oAppConnData);
+
+                FinanceAccess = new FinanceData(oAppConnData.adoConnString);
+                return FinanceAccess.GetSingleTaxCode(taxCode);
+            }
+            catch (DbException ex)
+            {
+                Exception outEx;
+                if (ExceptionPolicy.HandleException(ex, "Politica_SQLServer", out outEx))
+                {
+                    outEx.Data.Add("1", "14");
+                    outEx.Data.Add("2", "NA");
+                    outEx.Data.Add("3", outEx.Message + " Descripción: " + ex.Message);
+                    throw outEx;
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
+            catch (BusinessException ex)
+            {
+                BizUtilities.ProcessBusinessException(ex);
+            }
+            catch (Exception ex)
+            {
+                Exception outEx;
+                if (ExceptionPolicy.HandleException(ex, "Politica_ExcepcionGenerica", out outEx))
+                {
+                    outEx.Data.Add("1", "3");
+                    outEx.Data.Add("2", "NA");
+                    outEx.Data.Add("3", outEx.Message);
+                    throw outEx;
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
+            return null;
+        }
         #endregion
     }
 }

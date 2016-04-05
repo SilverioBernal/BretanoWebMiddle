@@ -25,7 +25,10 @@
                         <td>@item.name</td>
                         <td>
                             <a href="@Url.Action("Edit", new { id = item.id })" class="sepV_a" title="Editar"><i class="fa fa-pencil"></i></a>
+                            <span>|</span>
                             <a href="@Url.Action("Delete", new { id = item.id })" title="Eliminar"><i class="fa fa-trash"></i></a>
+                            <span>|</span>
+                            <a href="@Url.Action("Setup", new { id = item.id })" class="sepV_a" title="Configurar"><i class="fa fa-cogs"></i></a>
                         </td>
                     </tr>
                 }

@@ -16,6 +16,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Entities
     {
         public Company()
         {
+            this.CompanyParameter = new HashSet<CompanyParameter>();
             this.WebUserCompany = new HashSet<WebUserCompany>();
         }
     
@@ -28,6 +29,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Entities
         public string logo { get; set; }
         public bool editaPrecio { get; set; }
     
+        public virtual ICollection<CompanyParameter> CompanyParameter { get; set; }
         public virtual ICollection<WebUserCompany> WebUserCompany { get; set; }
     }
 }

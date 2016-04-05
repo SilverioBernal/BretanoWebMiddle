@@ -61,6 +61,7 @@ input[type="checkbox"].input-validation-error {
     margin-right: 50px;
 }
 
+
 .navbar {
     min-height: 65PX;
     color: red;
@@ -69,7 +70,6 @@ input[type="checkbox"].input-validation-error {
 
 .navbar-inverse {
     /*background-color: #eff0f0*/ /*#222222*/
-    ;
     /*border-color: #8d060c ;
     border-bottom-width:3px;*/
     background: #f0eee9 /*url('../Images/header-bg-low.png')*/ 100% 0 no-repeat;
@@ -80,18 +80,28 @@ input[type="checkbox"].input-validation-error {
     box-shadow: 0px 2px 8px 0px rgba(0,0,0,1);
 }
 
-.navbar-inverse .navbar-nav > li > a {
+    .navbar-inverse .navbar-nav > li > a {
         color: black /*#999999*/;
     }
 
         .navbar-inverse .navbar-nav > li > a:hover,
         .navbar-inverse .navbar-nav > li > a:focus {
-            color: #428bca; /*#ffffff*/;
+            color: #428bca; /*#ffffff*/
+            ;
             background-color: transparent;
             /*text-shadow: 0 0 21px #fbfbfb;*/
         }
 
 @media (min-width: 768px) {
+    .logo {
+         max-width: 100px;
+         padding-top:20px;
+    }
+
+    .navbar {        
+        min-height: 50PX;
+    }
+
     .navbar-nav {
         float: left;
         margin: 0;
@@ -107,6 +117,17 @@ input[type="checkbox"].input-validation-error {
             }
 }
 
+
+@media (max-width: 768px) {
+    .logo {
+        width: 50%;
+    }
+    .navbar {        
+        min-height: 50PX;
+    }
+
+        
+}
 /*Body*/
 .body-content {
     /*padding-left: 15px;
@@ -126,10 +147,23 @@ input[type="checkbox"].input-validation-error {
 }
 
 
-#myTab
-        {
-            border-color:white;
-        }
-/*.my-tab .tab-pane{ border:solid 1px white;  border-top: 0;    }*/
-#myTab li a { border-color: #4aafcd;background-color:#4aafcd; color:white; }
-#myTab li.active a {border-bottom-color: transparent;background-color:#016ecd; border-color: #016ecd}
+#myTab {
+    border-color: white;
+}
+    /*.my-tab .tab-pane{ border:solid 1px white;  border-top: 0;    }*/
+    #myTab li a {
+        border-color: #4aafcd;
+        background-color: #4aafcd;
+        color: white;
+    }
+
+    #myTab li.active a {
+        border-bottom-color: transparent;
+        background-color: #016ecd;
+        border-color: #016ecd;
+    }
+
+
+.setupRes{
+    display:none;
+}

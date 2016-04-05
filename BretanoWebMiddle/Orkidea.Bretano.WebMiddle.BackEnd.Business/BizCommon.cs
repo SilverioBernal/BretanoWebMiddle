@@ -2,6 +2,7 @@
 using Orkidea.Framework.SAP.BusinessOne.DiApiClient;
 using Orkidea.Framework.SAP.BusinessOne.DiApiClient.SecurityData;
 using Orkidea.Framework.SAP.BusinessOne.Entities.BusinessPartners;
+using Orkidea.Framework.SAP.BusinessOne.Entities.Finance;
 using Orkidea.Framework.SAP.BusinessOne.Entities.Global.Administration;
 using Orkidea.Framework.SAP.BusinessOne.Entities.Global.ExceptionManagement;
 using Orkidea.Framework.SAP.BusinessOne.Entities.Global.Misc;
@@ -33,7 +34,6 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
         #endregion
 
         #region Methods
-
         #region Currencies
         public List<Currency> GetCurrencyList(AppConnData oAppConnData)
         {

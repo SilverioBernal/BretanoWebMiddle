@@ -151,6 +151,114 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
             return null;
         }
 
+        public List<GenericBusinessPartner> GetList(CardType cardType, string slpCode, AppConnData oAppConnData)
+        {
+            try
+            {
+                if (!BizUtilities.ValidateServiceConnection(oAppConnData))
+                    throw new BusinessException(15, "Nombre de Usuario o Contraseña incorrecta para el Servicio");
+
+                oAppConnData = BizUtilities.GetDataConnection(oAppConnData);
+
+                BusinessPartnerAccess = new BusinessPartnerData(oAppConnData.adoConnString);
+
+                List<GenericBusinessPartner> businessPartners = BusinessPartnerAccess.GetList(cardType, slpCode);
+
+
+                return businessPartners;
+            }
+            catch (DbException ex)
+            {
+                Exception outEx;
+                if (ExceptionPolicy.HandleException(ex, "Politica_SQLServer", out outEx))
+                {
+                    outEx.Data.Add("1", "14");
+                    outEx.Data.Add("2", "NA");
+                    //outEx.Data.Add("3", outEx.Message);
+                    outEx.Data.Add("3", outEx.Message + " Descripción: " + ex.Message);
+                    throw outEx;
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
+            catch (BusinessException ex)
+            {
+                BizUtilities.ProcessBusinessException(ex);
+            }
+            catch (Exception ex)
+            {
+                Exception outEx;
+                if (ExceptionPolicy.HandleException(ex, "Politica_ExcepcionGenerica", out outEx))
+                {
+                    outEx.Data.Add("1", "3");
+                    outEx.Data.Add("2", "NA");
+                    outEx.Data.Add("3", outEx.Message);
+                    throw outEx;
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
+            return null;
+        }
+
+        public List<GenericBusinessPartner> GetList(CardType cardType, string[] cardCodes, AppConnData oAppConnData)
+        {
+            try
+            {
+                if (!BizUtilities.ValidateServiceConnection(oAppConnData))
+                    throw new BusinessException(15, "Nombre de Usuario o Contraseña incorrecta para el Servicio");
+
+                oAppConnData = BizUtilities.GetDataConnection(oAppConnData);
+
+                BusinessPartnerAccess = new BusinessPartnerData(oAppConnData.adoConnString);
+
+                List<GenericBusinessPartner> businessPartners = BusinessPartnerAccess.GetList(cardType, cardCodes);
+
+
+                return businessPartners;
+            }
+            catch (DbException ex)
+            {
+                Exception outEx;
+                if (ExceptionPolicy.HandleException(ex, "Politica_SQLServer", out outEx))
+                {
+                    outEx.Data.Add("1", "14");
+                    outEx.Data.Add("2", "NA");
+                    //outEx.Data.Add("3", outEx.Message);
+                    outEx.Data.Add("3", outEx.Message + " Descripción: " + ex.Message);
+                    throw outEx;
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
+            catch (BusinessException ex)
+            {
+                BizUtilities.ProcessBusinessException(ex);
+            }
+            catch (Exception ex)
+            {
+                Exception outEx;
+                if (ExceptionPolicy.HandleException(ex, "Politica_ExcepcionGenerica", out outEx))
+                {
+                    outEx.Data.Add("1", "3");
+                    outEx.Data.Add("2", "NA");
+                    outEx.Data.Add("3", outEx.Message);
+                    throw outEx;
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
+            return null;
+        }
+
         public List<ContactEmployee> GetContactList(string cardCode, AppConnData oAppConnData)
         {
             try
@@ -458,6 +566,55 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
             return null;
         }
 
+        public bool GetCreditStatus(string cardCode, AppConnData oAppConnData)
+        {
+            try
+            {
+                if (!BizUtilities.ValidateServiceConnection(oAppConnData))
+                    throw new BusinessException(15, "Nombre de Usuario o Contraseña incorrecta para el Servicio");
+
+                oAppConnData = BizUtilities.GetDataConnection(oAppConnData);
+
+                BusinessPartnerAccess = new BusinessPartnerData(oAppConnData.adoConnString);
+                return  BusinessPartnerAccess.GetCreditStatus(cardCode);                
+            }
+            catch (DbException ex)
+            {
+                Exception outEx;
+                if (ExceptionPolicy.HandleException(ex, "Politica_SQLServer", out outEx))
+                {
+                    outEx.Data.Add("1", "14");
+                    outEx.Data.Add("2", "NA");
+                    outEx.Data.Add("3", outEx.Message + " Descripción: " + ex.Message);
+                    throw outEx;
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
+            catch (BusinessException ex)
+            {
+                BizUtilities.ProcessBusinessException(ex);
+            }
+            catch (Exception ex)
+            {
+                Exception outEx;
+                if (ExceptionPolicy.HandleException(ex, "Politica_ExcepcionGenerica", out outEx))
+                {
+                    outEx.Data.Add("1", "3");
+                    outEx.Data.Add("2", "NA");
+                    outEx.Data.Add("3", outEx.Message);
+                    throw outEx;
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
+            return false;
+        }
+
         public bool Add(BusinessPartner partner, AppConnData oAppConnData)
         {
             try
@@ -478,10 +635,12 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
 
                 if (DataConnection.ConnectCompany(oAppConnData.dataBaseName, oAppConnData.sapUser, oAppConnData.sapUserPassword))
                 {
-                    DataConnection.BeginTran();                    
-                    BusinessPartnerAccess = new BusinessPartnerData();
+                    DataConnection.BeginTran();
+                    BusinessPartnerAccess = new BusinessPartnerData(oAppConnData.adoConnString);
                     BusinessPartnerAccess.Add(partner, DataConnection.Conn);
                     DataConnection.EndTran(BoWfTransOpt.wf_Commit);
+
+                    
                     return true;
                 }                
             }
@@ -579,7 +738,7 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
                 if (DataConnection.ConnectCompany(oAppConnData.dataBaseName, oAppConnData.sapUser, oAppConnData.sapUserPassword))
                 {
                     DataConnection.BeginTran();
-                    BusinessPartnerAccess = new BusinessPartnerData();
+                    BusinessPartnerAccess = new BusinessPartnerData(oAppConnData.adoConnString);
                     BusinessPartnerAccess.Update(partner, DataConnection.Conn);
                     DataConnection.EndTran(BoWfTransOpt.wf_Commit);
                     return true;

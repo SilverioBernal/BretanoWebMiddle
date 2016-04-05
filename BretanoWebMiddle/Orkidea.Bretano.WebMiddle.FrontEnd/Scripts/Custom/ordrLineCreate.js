@@ -4,70 +4,70 @@
         document.getElementById("price").readOnly = true;
     }
 
-    $('#ordrLines').DataTable({
-        "ajax": '../../SalesOrder/AsyncOrderLinesList/' + $('#orderId').val(),
-        "language": {
-            "lengthMenu": "Mostrar _MENU_ registros por pagina",
-            //"zeroRecords": "Ningun resultado encontrado",
-            "sLoadingRecords": "Obteniendo la información, espere un momento...",
-            "info": "Página _PAGE_ de _PAGES_",
-            "infoEmpty": "Sin registros",
-            "infoFiltered": "(filtered from _MAX_ total records)",
-            "search": "Buscar:",
-            "paginate": {
-                "first": "Primera",
-                "last": "Ultima",
-                "next": "Siguiente",
-                "previous": "Anterior"
-            },
-        },
+    //$('#ordrLines').DataTable({
+    //    "ajax": '../../SalesOrder/AsyncOrderLinesList/' + $('#orderId').val(),
+    //    "language": {
+    //        "lengthMenu": "Mostrar _MENU_ registros por pagina",
+    //        //"zeroRecords": "Ningun resultado encontrado",
+    //        "sLoadingRecords": "Obteniendo la información, espere un momento...",
+    //        "info": "Página _PAGE_ de _PAGES_",
+    //        "infoEmpty": "Sin registros",
+    //        "infoFiltered": "(filtered from _MAX_ total records)",
+    //        "search": "Buscar:",
+    //        "paginate": {
+    //            "first": "Primera",
+    //            "last": "Ultima",
+    //            "next": "Siguiente",
+    //            "previous": "Anterior"
+    //        },
+    //    },
 
-        footerCallback: function (row, data, start, end, display) {
-            var api = this.api();
-            // Remove the formatting to get integer data for summation
-            var intVal = function (i) {
+    //    footerCallback: function (row, data, start, end, display) {
+    //        var api = this.api();
+    //        // Remove the formatting to get integer data for summation
+    //        var intVal = function (i) {
 
-                return typeof i === 'string' ?
-                    i.replace(/[\$,]/g, '') * 1 :
-                    typeof i === 'number' ?
-                    i : 0;
+    //            return typeof i === 'string' ?
+    //                i.replace(/[\$,]/g, '') * 1 :
+    //                typeof i === 'number' ?
+    //                i : 0;
 
-            };
+    //        };
 
-            // Total over all pages
+    //        // Total over all pages
 
-            if (api.column(3).data().length) {
-                var total = api
-                .column(3)
-                .data()
-                .reduce(function (a, b) {
-                    return intVal(a) + intVal(b);
-                })
-            }
-            else { total = 0 };
-
-
-            // Total over this page
-
-            if (api.column(3).data().length) {
-                var pageTotal = api
-                    .column(3, { page: 'current' })
-                    .data()
-                    .reduce(function (a, b) {
-                        return intVal(a) + intVal(b);
-                    })
-            }
-            else { pageTotal = 0 };
-
-            // Update footer
-            $(api.column(3).footer()).html(
-                '$' + pageTotal
-            );
-        }
+    //        if (api.column(3).data().length) {
+    //            var total = api
+    //            .column(3)
+    //            .data()
+    //            .reduce(function (a, b) {
+    //                return intVal(a) + intVal(b);
+    //            })
+    //        }
+    //        else { total = 0 };
 
 
+    //        // Total over this page
 
-    });
+    //        if (api.column(3).data().length) {
+    //            var pageTotal = api
+    //                .column(3, { page: 'current' })
+    //                .data()
+    //                .reduce(function (a, b) {
+    //                    return intVal(a) + intVal(b);
+    //                })
+    //        }
+    //        else { pageTotal = 0 };
+
+    //        // Update footer
+    //        $(api.column(3).footer()).html(
+    //            '$' + pageTotal
+    //        );
+    //    }
+
+
+
+    //});
 
     var itemsTable = $('#itemsTable').DataTable({
         "ajax": '../../SalesOrder/AsyncItemsList',

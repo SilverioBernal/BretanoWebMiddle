@@ -24,15 +24,16 @@
     <MetadataSource Address="http://localhost:60593/WSSAP.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="WSSAP.xsd" MetadataType="Schema" ID="c63bda18-8cf9-46fa-85b4-24acb3c4241e" SourceId="1" SourceUrl="http://localhost:60593/WSSAP.svc?xsd=xsd1" />
-    <MetadataFile FileName="WSSAP.disco" MetadataType="Disco" ID="09a84b79-f87f-44ce-ae9b-6510a30ff0b8" SourceId="1" SourceUrl="http://localhost:60593/WSSAP.svc?disco" />
-    <MetadataFile FileName="WSSAP1.xsd" MetadataType="Schema" ID="88e99fa0-a43e-45b9-8625-fa42fabcde00" SourceId="1" SourceUrl="http://localhost:60593/WSSAP.svc?xsd=xsd3" />
-    <MetadataFile FileName="WSSAP2.xsd" MetadataType="Schema" ID="f6258507-881d-4bbd-bfb2-69387753b033" SourceId="1" SourceUrl="http://localhost:60593/WSSAP.svc?xsd=xsd4" />
-    <MetadataFile FileName="WSSAP3.xsd" MetadataType="Schema" ID="6106d5c7-d1d2-456f-8426-57d4a8177fed" SourceId="1" SourceUrl="http://localhost:60593/WSSAP.svc?xsd=xsd5" />
-    <MetadataFile FileName="WSSAP.wsdl" MetadataType="Wsdl" ID="d78cdcf5-3546-4193-8cc7-3026a75d8780" SourceId="1" SourceUrl="http://localhost:60593/WSSAP.svc?wsdl=wsdl0" />
-    <MetadataFile FileName="WSSAP1.wsdl" MetadataType="Wsdl" ID="c4617ea5-d86f-4ea1-a711-43a0a5ff4121" SourceId="1" SourceUrl="http://localhost:60593/WSSAP.svc?wsdl" />
-    <MetadataFile FileName="WSSAP4.xsd" MetadataType="Schema" ID="02c1cebd-fe29-4847-9ac6-bd88bcbd5b7e" SourceId="1" SourceUrl="http://localhost:60593/WSSAP.svc?xsd=xsd2" />
-    <MetadataFile FileName="WSSAP5.xsd" MetadataType="Schema" ID="01dc0528-904f-4d19-b08e-a6fab242d00c" SourceId="1" SourceUrl="http://localhost:60593/WSSAP.svc?xsd=xsd0" />
+    <MetadataFile FileName="WSSAP.xsd" MetadataType="Schema" ID="d18ef6d1-bf42-4089-82b2-8f91bbf70705" SourceId="1" SourceUrl="http://localhost:60593/WSSAP.svc?xsd=xsd1" />
+    <MetadataFile FileName="WSSAP.disco" MetadataType="Disco" ID="6a4ad4fb-e0b1-4618-b7df-87813298766d" SourceId="1" SourceUrl="http://localhost:60593/WSSAP.svc?disco" />
+    <MetadataFile FileName="WSSAP1.xsd" MetadataType="Schema" ID="d87a1822-c4d8-4be8-a862-d421b25ab54a" SourceId="1" SourceUrl="http://localhost:60593/WSSAP.svc?xsd=xsd3" />
+    <MetadataFile FileName="WSSAP2.xsd" MetadataType="Schema" ID="9c3d5356-27d7-496b-9dfe-dd4e06876563" SourceId="1" SourceUrl="http://localhost:60593/WSSAP.svc?xsd=xsd4" />
+    <MetadataFile FileName="WSSAP3.xsd" MetadataType="Schema" ID="47ea2708-0978-4d9d-a65e-f210a29ecd35" SourceId="1" SourceUrl="http://localhost:60593/WSSAP.svc?xsd=xsd5" />
+    <MetadataFile FileName="WSSAP6.xsd" MetadataType="Schema" ID="09c527ac-2ab5-446f-960a-85e62c84760d" SourceId="1" SourceUrl="http://localhost:60593/WSSAP.svc?xsd=xsd6" />
+    <MetadataFile FileName="WSSAP.wsdl" MetadataType="Wsdl" ID="03b767ed-a3cb-411e-8d2e-42297f49bcd0" SourceId="1" SourceUrl="http://localhost:60593/WSSAP.svc?wsdl=wsdl0" />
+    <MetadataFile FileName="WSSAP1.wsdl" MetadataType="Wsdl" ID="5cecc5ff-0c10-44b6-b370-2c670f4cf9d7" SourceId="1" SourceUrl="http://localhost:60593/WSSAP.svc?wsdl" />
+    <MetadataFile FileName="WSSAP4.xsd" MetadataType="Schema" ID="df9a1187-ed55-4e8f-af09-0dc3a3274a9c" SourceId="1" SourceUrl="http://localhost:60593/WSSAP.svc?xsd=xsd2" />
+    <MetadataFile FileName="WSSAP5.xsd" MetadataType="Schema" ID="d441a821-2b6b-4234-b252-ededc59ab6b0" SourceId="1" SourceUrl="http://localhost:60593/WSSAP.svc?xsd=xsd0" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

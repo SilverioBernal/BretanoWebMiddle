@@ -7,16 +7,10 @@
 <table id="payTable" class="display" cellspacing="0">
     <thead>
         <tr>
-            <th>Código</th>
-            <th>Nombre</th>
             <th>Documento</th>
             <th>Contabilización</th>
-            <th>Vencimiento</th>
-            <th>0-30</th>
-            <th>31-60</th>
-            <th>61-90</th>
-            <th>91-120</th>
-            <th>121+</th>            
+            <th>Valor</th>
+            <th>Referencia</th>            
         </tr>
     </thead>
 </table>
@@ -24,7 +18,7 @@
 <script>
     $(document).ready(function () {
         var whsTable = $('#payTable').DataTable({
-            "ajax": '@Url.Action("AsyncGetPaymentAgeList", new { id = ViewBag.id })',            
+            "ajax": '@Url.Action("AsyncGetSmallPaymentAgeList", new { id = ViewBag.id })',            
             "language": {
                 //"processing": "Hang on. Waiting for response...",
                 "lengthMenu": "Mostrar _MENU_ registros por pagina",

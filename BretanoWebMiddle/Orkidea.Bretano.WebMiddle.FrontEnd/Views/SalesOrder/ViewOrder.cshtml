@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Orkidea.Bretano.WebMiddle.FrontEnd.Entities.RDR1>
+@using System.Globalization
+@{
+    ViewBag.Title = "ViewOrder";
+}
+
+<h2>Detalle pedido</h2>
+<div class="row">
+    <div class="well">
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-3">
+                    <label class="control-label">Cliente</label>
+                    <input type="text" class="form-control" value="@ViewBag.cardCode" id="cardCode" style="max-width:100%" disabled />
+                </div>
+                <div class="col-md-9">
+                    <label class="control-label">Nombre</label>
+                    <input type="text" class="form-control" value="@ViewBag.cardName" id="cardName" style="max-width:100%" disabled />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-2">
+                    <label class="control-label">Fecha documento</label>
+                    <input type="text" class="form-control" value="@ViewBag.docDate" id="docDate" style="max-width:100%" disabled />
+                </div>
+                <div class="col-md-2">
+                    <label class="control-label">Fecha entrega</label>
+                    <input type="text" class="form-control" value="@ViewBag.docDueDate" id="docDueDate" style="max-width:100%" disabled />
+                </div>
+
+                <div class="col-md-8" style="padding-top: 25px;">
+                    @if (ViewBag.orderApprover)
+                    {
+                        @Html.ActionLink("Aprobar", "finish", "SalesOrder", new { id = ViewBag.id }, new { @class = "btn btn-success" });
+                        <span > | </span>
+                        @Html.ActionLink("Cancelar", "remove", "SalesOrder", new { id = ViewBag.id }, new { @class = "btn btn-danger" })
+                    }
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="well">
+        <div class="row">
+            <table class="table table-bordered table-striped table_vam" id="dt">
+                <thead>
+                    <tr>
+                        <th>Articulo</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        decimal total = item.price * item.quantity;
+
+                        <tr>
+                            <td>@item.itemCode <span> - </span> @item.itemName</td>
+                            <td>@item.quantity.ToString("N", CultureInfo.CreateSpecificCulture("es-CO"))</td>
+                            <td>@item.price.ToString("N", CultureInfo.CreateSpecificCulture("es-CO"))</td>
+                            <td>@total.ToString("N", CultureInfo.CreateSpecificCulture("es-CO"))</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <p class="text-right"> Subtotal Pedido: <strong>@ViewBag.totalOrder.ToString("N", CultureInfo.CreateSpecificCulture("es-CO"))</strong></p>
+            <p class="text-right"> IVA: <strong>@ViewBag.totalIva.ToString("N", CultureInfo.CreateSpecificCulture("es-CO"))</strong></p>
+            <p class="text-right"> Total: <strong>@ViewBag.total.ToString("N", CultureInfo.CreateSpecificCulture("es-CO"))</strong></p>
+        </div>
+    </div>
+</div>
+

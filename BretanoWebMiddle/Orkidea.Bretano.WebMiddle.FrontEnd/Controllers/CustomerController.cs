@@ -6,6 +6,7 @@ using Orkidea.Framework.Security;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
 using System.Linq;
 using System.Security.Principal;
 using System.ServiceModel;
@@ -1247,6 +1248,48 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
                        { 
                            c.cardCode, c.cardName, c.docNum, c.docDate, c.docDueDate, 
                            c.up30.ToString(), c.up60.ToString(), c.up90.ToString(), c.up120.ToString(), c.up9999.ToString() 
+                       };
+
+            return Json(new
+            {
+                data = data
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        [Authorize]
+        //[OutputCache(Duration = 3600, VaryByParam = "none")]
+        public JsonResult AsyncGetSmallPaymentAgeList(string id)
+        {
+            #region User identification
+            IIdentity context = HttpContext.User.Identity;
+            bool admin = false;
+            bool customerCreator = false;
+            bool purchaseOrderCreator = false;
+            int companyId = 0;
+            string userName = "";
+            AppConnData appConnData = new AppConnData();
+
+            if (context.IsAuthenticated)
+            {
+
+                System.Web.Security.FormsIdentity ci = (System.Web.Security.FormsIdentity)HttpContext.User.Identity;
+                string[] userRole = ci.Ticket.UserData.Split('|');
+
+                admin = int.Parse(userRole[1]) == 1 ? true : false;
+                customerCreator = int.Parse(userRole[2]) == 1 ? true : false;
+                purchaseOrderCreator = int.Parse(userRole[3]) == 1 ? true : false;
+                companyId = int.Parse(userRole[4]);
+                userName = ci.Name;
+                appConnData = GetAppConnData(companyId);
+            }
+            #endregion
+
+            List<PaymentAge> payments = backEnd.GetPaymentAgeList(id, appConnData);
+
+            var data = from c in payments
+                       select new[] 
+                       { 
+                          string.Format("{0}-{1}-({2})", c.seriesName, c.docNum, c.pendingTime.ToString()), c.docDate, c.pendingToPay.ToString("N", CultureInfo.CreateSpecificCulture("es-CO")), c.numAtCard 
                        };
 
             return Json(new

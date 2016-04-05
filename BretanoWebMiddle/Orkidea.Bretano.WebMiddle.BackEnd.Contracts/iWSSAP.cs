@@ -31,14 +31,22 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Contracts
         [FaultContract(typeof(DataAccessFault))]
         List<GenericBusinessPartner> GetBusinessPartners(CardType cardType, AppConnData oAppConnData);
 
-        //[WebGet(UriTemplate = "Employee", ResponseFormat = WebMessageFormat.Json)]
-        //[OperationContract]
-        //List<BusinessPartner> GetBusinessPartnersJson(CardType cardType, AppConnData oAppConnData);
+        [OperationContract(IsOneWay = false)]
+        [FaultContract(typeof(DataAccessFault))]
+        List<GenericBusinessPartner> GetBusinessPartnersBySalesPerson(CardType cardType, string slpCode, AppConnData oAppConnData);
+
+        [OperationContract(IsOneWay = false)]
+        [FaultContract(typeof(DataAccessFault))]
+        List<GenericBusinessPartner> GetBusinessPartnersByIds(CardType cardType, string[] cardCodes, AppConnData oAppConnData);
 
         [OperationContract(IsOneWay = false)]
         [FaultContract(typeof(DataAccessFault))]
         BusinessPartner GetBusinessPartner(string cardCode, AppConnData oAppConnData);
 
+        [OperationContract(IsOneWay = false)]
+        [FaultContract(typeof(DataAccessFault))]
+        bool GetBusinessPartnerCreditStatus(string cardCode, AppConnData oAppConnData);
+        
         [OperationContract(IsOneWay = false)]
         [FaultContract(typeof(DataAccessFault))]
         List<BusinessPartnerGroup> GetAllBusinessPratnerGroup(CardType cardType, AppConnData oAppConnData);
@@ -89,7 +97,7 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Contracts
 
         [OperationContract(IsOneWay = false)]
         [FaultContract(typeof(DataAccessFault))]
-        void AddBusinessPartnerWithholdingTax(BusinessPartnerWithholdingTax withholdingTax, AppConnData oAppConnData);        
+        void AddBusinessPartnerWithholdingTax(BusinessPartnerWithholdingTax withholdingTax, AppConnData oAppConnData);
         #endregion
 
         #region Sales Order
@@ -107,6 +115,10 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Contracts
 
         [OperationContract(IsOneWay = false)]
         [FaultContract(typeof(DataAccessFault))]
+        int GetOrderNum(int docEntry, AppConnData oAppConnData);
+
+        [OperationContract(IsOneWay = false)]
+        [FaultContract(typeof(DataAccessFault))]
         void CancelOrder(int docEntry, AppConnData oAppConnData);
         #endregion
 
@@ -115,7 +127,7 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Contracts
         [FaultContract(typeof(DataAccessFault))]
         MarketingDocument AddQuotation(MarketingDocument document, AppConnData oAppConnData);
         #endregion
-        
+
         #region Inventory
         [OperationContract(IsOneWay = false)]
         [FaultContract(typeof(DataAccessFault))]
@@ -127,12 +139,16 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Contracts
 
         [OperationContract(IsOneWay = false)]
         [FaultContract(typeof(DataAccessFault))]
+        Item GetItem(string itemCode, AppConnData oAppConnData);
+
+        [OperationContract(IsOneWay = false)]
+        [FaultContract(typeof(DataAccessFault))]
         List<StockLevel> GetItemStockLevel(string itemCode, AppConnData oAppConnData);
 
         [OperationContract(IsOneWay = false)]
         [FaultContract(typeof(DataAccessFault))]
         double GetItemPrice(string itemCode, int priceList, AppConnData oAppConnData);
-        #endregion   
+        #endregion
 
         #region Finance
         [OperationContract(IsOneWay = false)]
@@ -142,7 +158,11 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Contracts
         [OperationContract(IsOneWay = false)]
         [FaultContract(typeof(DataAccessFault))]
         List<WithholdingTax> GetWithholdingTax(AppConnData oAppConnData);
-        #endregion   
+
+        [OperationContract(IsOneWay = false)]
+        [FaultContract(typeof(DataAccessFault))]
+        SalesTaxCode GetSingleTaxCode(string taxCode, AppConnData oAppConnData);
+        #endregion
 
         #region Common
 
@@ -171,7 +191,7 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Contracts
         #region PaymentTerms
         [OperationContract(IsOneWay = false)]
         [FaultContract(typeof(DataAccessFault))]
-        List<PaymentTerm> GetPaymentTermList(AppConnData oAppConnData);        
+        List<PaymentTerm> GetPaymentTermList(AppConnData oAppConnData);
         #endregion
 
         #region Country/state
@@ -181,20 +201,20 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Contracts
 
         [OperationContract(IsOneWay = false)]
         [FaultContract(typeof(DataAccessFault))]
-        List<State> GetStateList(string countryCode, AppConnData oAppConnData);        
+        List<State> GetStateList(string countryCode, AppConnData oAppConnData);
         #endregion
 
         #region Distribution rules
         [OperationContract(IsOneWay = false)]
         [FaultContract(typeof(DataAccessFault))]
-        List<SapDistributionRule> GetDistributionRulesList(AppConnData oAppConnData);       
+        List<SapDistributionRule> GetDistributionRulesList(AppConnData oAppConnData);
         #endregion
 
         #region UDF's
         [OperationContract(IsOneWay = false)]
         [FaultContract(typeof(DataAccessFault))]
         List<UserDefinedFieldValue> GetUserDefinedFieldValuesList(string tableId, string fieldId, AppConnData oAppConnData);
-        
+
         #endregion
 
         #region UDO's

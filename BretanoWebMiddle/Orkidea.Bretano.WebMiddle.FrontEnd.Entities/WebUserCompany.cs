@@ -20,8 +20,9 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Entities
         public bool customerCreator { get; set; }
         public bool purchaseOrderCreator { get; set; }
         public int slpCode { get; set; }
+        public bool orderApprover { get; set; }
     
-        public virtual WebUser WebUser { get; set; }
         public virtual Company Company { get; set; }
+        public virtual WebUser WebUser { get; set; }
     }
 }
