@@ -48,6 +48,7 @@
     <Compile Include="BizCompany.cs" />
     <Compile Include="BizCompanyParameter.cs" />
     <Compile Include="BizParameter.cs" />
+    <Compile Include="BizProcessQueue.cs" />
     <Compile Include="BizQuotation.cs" />
     <Compile Include="BizSalesOrderDraft.cs" />
     <Compile Include="BizWebUser.cs" />

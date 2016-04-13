@@ -30,8 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Orkidea.Framework.SAP.BusinessOne.Entities">
-      <HintPath>..\Libraries\Orkidea.Framework.SAP.BusinessOne.Entities.dll</HintPath>
+    <Reference Include="Orkidea.Framework.SAP.BusinessOne.Entities, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\OrkideaFramework\OrkideaFramework\Orkidea.Framework.SAP.BusinessOne.Entities\bin\Release\Orkidea.Framework.SAP.BusinessOne.Entities.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

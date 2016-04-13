@@ -182,6 +182,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ORDRViewModel.cs" />
     <Compile Include="Models\SearchFormViewModel.cs" />
+    <Compile Include="Models\vmOrderQueue.cs" />
     <Compile Include="Models\WebUserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\WebMiddleBackEnd\Reference.cs">
@@ -305,6 +306,7 @@
     <None Include="Properties\PublishProfiles\Azure.pubxml" />
     <None Include="Properties\PublishProfiles\Disk.pubxml" />
     <None Include="Properties\PublishProfiles\QcaWebMiddle.pubxml" />
+    <Content Include="Properties\webjobs-list.json" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Custom\CompanySetup.js" />
     <Content Include="Scripts\Custom\CustomerAddressCreate.js" />
@@ -559,6 +561,9 @@
     <Content Include="Views\SalesOrder\GetOrderLines.cshtml" />
     <Content Include="Views\SalesOrder\Draft.cshtml" />
     <Content Include="Views\SalesOrder\ViewOrder.cshtml" />
+    <None Include="Service References\WebMiddleBackEnd\WSSAP7.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -614,6 +619,7 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="..\packages\Microsoft.Web.WebJobs.Publish.1.0.3\tools\webjobs.targets" Condition="Exists('..\packages\Microsoft.Web.WebJobs.Publish.1.0.3\tools\webjobs.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -30,6 +30,16 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Business
             return ec.GetList(x => x.uOrkUsuarioWeb == idWebUser && x.idCompania.Equals(idCompany) && x.docEntry == null);
         }
 
+        public static IList<ORDR> GetPendingList(string idWebUser, int idCompany, int daysOld)
+        {
+            EntityCRUD<ORDR> ec = new EntityCRUD<ORDR>();
+
+            IList<ORDR> orders = ec.GetList(x => x.uOrkUsuarioWeb == idWebUser && x.idCompania.Equals(idCompany) && (DateTime.Now - x.docDate).TotalDays <= daysOld);
+
+            return orders;
+
+        }
+
         public static IList<ORDR> GetPendingList(int idCompany)
         {
             EntityCRUD<ORDR> ec = new EntityCRUD<ORDR>();
@@ -105,6 +115,8 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Business
 
             try
             {
+                DeleteQueue(order.id);
+
                 List<RDR1> orderLines = GetLinesList(order.id).ToList();
 
                 foreach (RDR1 item in orderLines)
@@ -133,6 +145,13 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Business
             {
                 throw;
             }
+        }
+
+        public static void DeleteQueue(int id)
+        {
+            ProcessQueue queue = BizProcessQueue.GetSingle(id.ToString());
+
+            BizProcessQueue.Remove(queue);
         }
     }
 }

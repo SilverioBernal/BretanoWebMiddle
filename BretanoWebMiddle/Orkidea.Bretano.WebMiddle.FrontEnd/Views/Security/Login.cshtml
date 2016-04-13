@@ -19,15 +19,15 @@
 
     </div>
 </section>*@
-<header class="homeHeader"><h1>Bretano Web Middle</h1></header>
+@*<header class="homeHeader"><h1>Bretano Web Middle</h1></header>*@
 @*<hr />*@
 <div class="row">
     <div class="col-md-8">
 
-        <img src="~/Images/Main.png" />
+        <img class="img-responsive" src="~/Images/Main.png" />
     </div>
     
-    <div class="col-md-4">
+    <div class="col-md-4 loginFormBox">
         <h4 class="homeBoxTitle">Acceder al portal</h4>
         <section id="loginForm">
             @using (Html.BeginForm("Login", "Security", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))

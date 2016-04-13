@@ -1,28 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.Inventory" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.Inventory" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:simpleType name="Item.Gestion">
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.Global.Misc" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.Global.Misc" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="ActionType">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="Series" />
-      <xs:enumeration value="Lotes" />
-      <xs:enumeration value="Ninguno" />
+      <xs:enumeration value="Add" />
+      <xs:enumeration value="Cancel" />
     </xs:restriction>
   </xs:simpleType>
-  <xs:element name="Item.Gestion" nillable="true" type="tns:Item.Gestion" />
-  <xs:complexType name="ArrayOfStockLevel">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="StockLevel" nillable="true" type="tns:StockLevel" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfStockLevel" nillable="true" type="tns:ArrayOfStockLevel" />
-  <xs:complexType name="StockLevel">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="IsAvailable" type="xs:double" />
-      <xs:element minOccurs="0" name="IsCommited" type="xs:double" />
-      <xs:element minOccurs="0" name="OnHand" type="xs:double" />
-      <xs:element minOccurs="0" name="OnOrder" type="xs:double" />
-      <xs:element minOccurs="0" name="WhsCode" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="WhsName" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="StockLevel" nillable="true" type="tns:StockLevel" />
+  <xs:element name="ActionType" nillable="true" type="tns:ActionType" />
 </xs:schema>

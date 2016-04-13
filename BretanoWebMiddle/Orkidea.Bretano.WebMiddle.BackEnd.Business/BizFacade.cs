@@ -166,6 +166,11 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
             return bizSalesOrder.Add(document, oAppConnData);
         }
 
+        public List<MarketingDocument> ProcessBatchTransaction(List<MarketingDocument> documents, AppConnData oAppConnData)
+        {
+            return bizSalesOrder.ProcessBatchTransaction(documents, oAppConnData);
+        }
+
         public List<LightMarketingDocument> ListSaleOrders(DateTime startDate, DateTime endDate, string cardCode, AppConnData oAppConnData)
         {
             return bizSalesOrder.List(startDate, endDate, cardCode, oAppConnData);

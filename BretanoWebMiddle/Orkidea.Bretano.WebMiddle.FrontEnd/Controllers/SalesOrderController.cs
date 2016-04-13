@@ -49,28 +49,80 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
             }
             #endregion
 
-            List<ORDR> orders = BizSalesOrderDraft.GetPendingList(userId, companyId)
+            List<CompanyParameter> companyParameters = BizCompanyParameter.GetList(companyId).ToList();
+            string MaxOlderOrderDays = companyParameters.Where(x => x.idParameter.Equals(4)).Select(x => x.value).FirstOrDefault();
+            string batchMarketingTransactions = companyParameters.Where(x => x.idParameter.Equals(5)).Select(x => x.value).FirstOrDefault();
+
+            List<ORDR> orders = BizSalesOrderDraft.GetPendingList(userId, companyId, int.Parse(MaxOlderOrderDays))
                 //.Where(x => x.draftDM.Equals(false) && x.draftLC.Equals(false))
                 .ToList();
-            List<ORDRViewModel> listOrders = new List<ORDRViewModel>();
 
-            //List<string> customers = orders.Select(x => x.cardCode).Distinct().ToList();
-            //List<GenericBusinessPartner> customerList = backEnd.GetBusinessPartnersByIds(CardType.Customer, customers, appConnData);
+            List<ORDRViewModel> listOrders = new List<ORDRViewModel>();
+            List<ProcessQueue> pendingByProcess = BizProcessQueue.GetList(companyId, int.Parse(MaxOlderOrderDays)).ToList();
+            vmOrderQueue model = new vmOrderQueue();           
 
             foreach (ORDR item in orders)
             {
-                ORDRViewModel order = new ORDRViewModel()
+                if (batchMarketingTransactions == "Si")
                 {
-                    id = HexSerialization.StringToHex(item.id.ToString()),
-                    cardCode = item.cardCode,
-                    cardName = !string.IsNullOrEmpty(item.cardName) ? item.cardName : "",
-                    docDate = item.docDate
-                };
+                    if (pendingByProcess.Where(x => x.actionType == "A" && x.idTarget.Equals(item.id)).Count() == 0)
+                    {
+                        ORDRViewModel order = new ORDRViewModel()
+                        {
+                            id = HexSerialization.StringToHex(item.id.ToString()),
+                            cardCode = item.cardCode,
+                            cardName = !string.IsNullOrEmpty(item.cardName) ? item.cardName : "",
+                            docDate = item.docDate,
+                            comment = item.docEntry == null ? "No finalizada" : "Enviada a SAP correctamente",
+                            editable = item.docEntry== null?true:false,
+                        };
 
-                listOrders.Add(order);
+                        listOrders.Add(order);
+                        //model.openOrders.Add(order);
+                    }
+                    else
+                    {
+                        ProcessQueue orderProcess = pendingByProcess.Where(x => x.actionType == "A" && x.idTarget.Equals(item.id)).FirstOrDefault();
+                        ORDRViewModel order = new ORDRViewModel()
+                        {
+                            id = HexSerialization.StringToHex(item.id.ToString()),
+                            cardCode = item.cardCode,
+                            cardName = !string.IsNullOrEmpty(item.cardName) ? item.cardName : "",
+                            docDate = item.docDate,
+                            editable = false
+                        };
+
+                        if (orderProcess.processed == null)
+                            order.comment = "En cola";
+                        else
+                        {
+                            if (orderProcess.logMessage.Substring(0, 5) == "Error")
+                                order.redo = true;
+                            else
+                                order.redo = false;
+
+                            order.comment = string.Format("{0}", orderProcess.logMessage);
+                        }
+                        listOrders.Add(order);
+                    }
+                }
+                else
+                {
+                    ORDRViewModel order = new ORDRViewModel()
+                    {
+                        id = HexSerialization.StringToHex(item.id.ToString()),
+                        cardCode = item.cardCode,
+                        cardName = !string.IsNullOrEmpty(item.cardName) ? item.cardName : "",
+                        docDate = item.docDate,
+                        comment = item.docEntry== null?"No finalizada":"Enviada a SAP correctamente",
+                        editable = item.docEntry == null ? true : false
+                    };
+
+                    listOrders.Add(order);
+                }
+
+                
             }
-
-
 
             return View(listOrders);
         }
@@ -552,11 +604,11 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
 
             string realId = HexSerialization.HexToString(id);
 
-            #region Order header            
+            #region Order header
             ORDR ordr = BizSalesOrderDraft.GetSingle(int.Parse(realId));
 
             BusinessPartner customer = backEnd.GetBusinessPartner(ordr.cardCode, appConnData);
-            
+
             ViewBag.cardCode = ordr.cardCode;
             ViewBag.cardName = customer.cardName;
             ViewBag.docDate = ordr.docDate.ToString("yyyy-MM-dd");
@@ -568,7 +620,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
             ViewBag.id = id;
 
             ViewBag.orderApprover = orderApprover;
-            #endregion            
+            #endregion
 
             #region order detail
             List<RDR1> items = BizSalesOrderDraft.GetLinesList(int.Parse(realId)).ToList();
@@ -639,131 +691,203 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
         [Authorize]
         public ActionResult Finish(string id)
         {
-            try
+            #region User identification
+            IIdentity context = HttpContext.User.Identity;
+            int user = 0;
+            bool admin = false;
+            bool customerCreator = false;
+            bool purchaseOrderCreator = false;
+            int companyId = 0;
+            string userName = "";
+            int slpCode = 0;
+            AppConnData appConnData = new AppConnData();
+
+            if (context.IsAuthenticated)
             {
-                #region User identification
-                IIdentity context = HttpContext.User.Identity;
-                int user = 0;
-                bool admin = false;
-                bool customerCreator = false;
-                bool purchaseOrderCreator = false;
-                int companyId = 0;
-                string userName = "";
-                int slpCode = 0;
-                AppConnData appConnData = new AppConnData();
 
-                if (context.IsAuthenticated)
+                System.Web.Security.FormsIdentity ci = (System.Web.Security.FormsIdentity)HttpContext.User.Identity;
+                string[] userRole = ci.Ticket.UserData.Split('|');
+                user = int.Parse(userRole[0]);
+                admin = int.Parse(userRole[1]) == 1 ? true : false;
+                customerCreator = int.Parse(userRole[2]) == 1 ? true : false;
+                purchaseOrderCreator = int.Parse(userRole[3]) == 1 ? true : false;
+                companyId = int.Parse(userRole[4]);
+                slpCode = int.Parse(userRole[5]);
+                userName = ci.Name;
+                appConnData = GetAppConnData(companyId);
+            }
+            #endregion
+
+            string realId = HexSerialization.HexToString(id);
+
+            List<CompanyParameter> companyParameters = BizCompanyParameter.GetList(companyId).ToList();
+            string batchMarketingTransactions = companyParameters.Where(x => x.idParameter.Equals(5)).Select(x => x.value).FirstOrDefault();
+
+            if (batchMarketingTransactions == "No")
+            {
+                #region Live transaction
+                try
                 {
+                    ORDR ordr = BizSalesOrderDraft.GetSingle(int.Parse(realId));
 
-                    System.Web.Security.FormsIdentity ci = (System.Web.Security.FormsIdentity)HttpContext.User.Identity;
-                    string[] userRole = ci.Ticket.UserData.Split('|');
-                    user = int.Parse(userRole[0]);
-                    admin = int.Parse(userRole[1]) == 1 ? true : false;
-                    customerCreator = int.Parse(userRole[2]) == 1 ? true : false;
-                    purchaseOrderCreator = int.Parse(userRole[3]) == 1 ? true : false;
-                    companyId = int.Parse(userRole[4]);
-                    slpCode = int.Parse(userRole[5]);
-                    userName = ci.Name;
-                    appConnData = GetAppConnData(companyId);
-                }
-                #endregion
+                    if (ordr.docEntry != null)
+                        throw new Exception("Este pedido ya fué registrado en SAP");
 
-                string realId = HexSerialization.HexToString(id);
-                ORDR ordr = BizSalesOrderDraft.GetSingle(int.Parse(realId));
+                    List<RDR1> lines = BizSalesOrderDraft.GetLinesList(int.Parse(realId)).ToList();
 
-                if (ordr.docEntry != null)
-                    throw new Exception("Este pedido ya fué registrado en SAP");
-
-                List<RDR1> lines = BizSalesOrderDraft.GetLinesList(int.Parse(realId)).ToList();
-
-                MarketingDocument document = new MarketingDocument()
-                {
-                    cardCode = ordr.cardCode,
-                    serie = ordr.series,
-                    docDate = ordr.docDate,
-                    docDueDate = ordr.docDueDate,
-                    taxDate = ordr.taxDate,
-                    shipToCode = ordr.shipToCode,
-                    payToCode = ordr.payToCode,
-                    groupNum = ordr.groupNum,
-                    lines = new List<MarketingDocumentLine>(),
-                    userDefinedFields = new List<UserDefinedField>()
-                };
-
-                if (slpCode > 0)
-                    document.slpCode = slpCode;
-
-                document.userDefinedFields.Add(new UserDefinedField()
-                {
-                    name = "U_CSS_COMENTARIOS",
-                    type = UdfType.Text,
-                    value = ordr.uCssComentarios
-                });
-
-                document.userDefinedFields.Add(new UserDefinedField()
-                {
-                    name = "U_orkWebDocument",
-                    type = UdfType.Text,
-                    value = ordr.id.ToString() 
-                });
-
-                foreach (RDR1 item in lines)
-                {
-
-                    MarketingDocumentLine line = new MarketingDocumentLine()
+                    MarketingDocument document = new MarketingDocument()
                     {
-                        itemCode = item.itemCode,
-                        quantity = (double)item.quantity,
-                        whsCode = item.whsCode,
-                        taxCode = item.taxCode,
-                        ocrCode = item.ocrCode,
-                        price = (double)item.price,
-                        batchNumbers = new List<BatchNumber>(),
-                        serialNumbers = new List<SerialNumber>(),
+                        cardCode = ordr.cardCode,
+                        serie = ordr.series,
+                        docDate = ordr.docDate,
+                        docDueDate = ordr.docDueDate,
+                        taxDate = ordr.taxDate,
+                        shipToCode = ordr.shipToCode,
+                        payToCode = ordr.payToCode,
+                        groupNum = ordr.groupNum,
+                        lines = new List<MarketingDocumentLine>(),
                         userDefinedFields = new List<UserDefinedField>()
                     };
 
-                    line.userDefinedFields.Add(new UserDefinedField()
+                    if (slpCode > 0)
+                        document.slpCode = slpCode;
+
+                    document.userDefinedFields.Add(new UserDefinedField()
                     {
-                        name = "U_CSS_ENVASEDEVOL",
-                        type = UdfType.Alphanumeric,
-                        value = item.uCssEnvaseDevol
+                        name = "U_CSS_COMENTARIOS",
+                        type = UdfType.Text,
+                        value = ordr.uCssComentarios
                     });
 
-                    document.lines.Add(line);
-                }
+                    document.userDefinedFields.Add(new UserDefinedField()
+                    {
+                        name = "U_orkWebDocument",
+                        type = UdfType.Text,
+                        value = ordr.id.ToString()
+                    });
 
-                if (userName.ToLower() != "root")
+                    foreach (RDR1 item in lines)
+                    {
+
+                        MarketingDocumentLine line = new MarketingDocumentLine()
+                        {
+                            itemCode = item.itemCode,
+                            quantity = (double)item.quantity,
+                            whsCode = item.whsCode,
+                            taxCode = item.taxCode,
+                            ocrCode = item.ocrCode,
+                            price = (double)item.price,
+                            batchNumbers = new List<BatchNumber>(),
+                            serialNumbers = new List<SerialNumber>(),
+                            userDefinedFields = new List<UserDefinedField>()
+                        };
+
+                        line.userDefinedFields.Add(new UserDefinedField()
+                        {
+                            name = "U_CSS_ENVASEDEVOL",
+                            type = UdfType.Alphanumeric,
+                            value = item.uCssEnvaseDevol
+                        });
+
+                        document.lines.Add(line);
+                    }
+
+                    if (userName.ToLower() != "root")
+                    {
+                        WebUserCompany wuc = BizWebUserCompany.GetSingle(user, companyId);
+                        if (wuc.slpCode != 0)
+                            document.slpCode = wuc.slpCode;
+                    }
+
+
+                    document = backEnd.AddSalesOrder(document, appConnData);
+                    document.docNum = backEnd.GetOrderNum(document.docEntry, appConnData);
+                    ViewBag.colorMensaje = "success";
+                    ViewBag.mensaje = "Orden de venta creada con éxito";
+                    ViewBag.docEntry = string.Format("Se creó la orden no {0}. Numero interno de documento {1}", document.docNum, document.docEntry);
+
+                    ordr.docEntry = document.docEntry;
+                    BizSalesOrderDraft.Update(ordr);
+                }
+                catch (FaultException<DataAccessFault> ex)
                 {
-                    WebUserCompany wuc = BizWebUserCompany.GetSingle(user, companyId);
-                    if (wuc.slpCode != 0)
-                        document.slpCode = wuc.slpCode;
+                    ViewBag.colorMensaje = "danger";
+                    ViewBag.mensaje = "No se pudo crear la Orden de venta";
+                    ViewBag.docEntry = string.Format("Codigo {0} error:{1} {2}", ex.Code, ex.Detail.Description, ex.Message);
                 }
 
+                catch (Exception ex)
+                {
+                    ViewBag.colorMensaje = "danger";
+                    ViewBag.mensaje = "Atención:";
+                    ViewBag.docEntry = string.Format(" - {0}", ex.Message);
+                }
+                #endregion
+            }
+            else if (batchMarketingTransactions == "Si")
+            {
+                #region Queue Transaction
+                BizProcessQueue.Add(new ProcessQueue()
+                {
+                    actionType = "A",
+                    idTarget = int.Parse(realId),
+                    addedToQueue = DateTime.Now,
+                    idCompany = companyId
+                });
 
-                document = backEnd.AddSalesOrder(document, appConnData);
-                document.docNum = backEnd.GetOrderNum(document.docEntry, appConnData);
                 ViewBag.colorMensaje = "success";
-                ViewBag.mensaje = "Orden de venta creada con éxito";
-                ViewBag.docEntry = string.Format("Se creó la orden no {0}. Numero interno de documento {1}", document.docNum, document.docEntry);
-
-                ordr.docEntry = document.docEntry;
-                BizSalesOrderDraft.Update(ordr);
-            }
-            catch (FaultException<DataAccessFault> ex)
-            {
-                ViewBag.colorMensaje = "danger";
-                ViewBag.mensaje = "No se pudo crear la Orden de venta";
-                ViewBag.docEntry = string.Format("Codigo {0} error:{1} {2}", ex.Code, ex.Detail.Description, ex.Message);
+                ViewBag.mensaje = "Registro guardado";
+                ViewBag.docEntry = "Su pedido ha sido guardado y en breve será procesado.";
+                #endregion
             }
 
-            catch (Exception ex)
-            {
-                ViewBag.colorMensaje = "danger";
-                ViewBag.mensaje = "Atención:";
-                ViewBag.docEntry = string.Format(" - {0}", ex.Message);
-            }
             return View();
+        }
+
+        [Authorize]
+        public ActionResult TryAgain(string id)
+        {
+            #region User identification
+            IIdentity context = HttpContext.User.Identity;
+            int user = 0;
+            bool admin = false;
+            bool customerCreator = false;
+            bool purchaseOrderCreator = false;
+            int companyId = 0;
+            string userName = "";
+            int slpCode = 0;
+            AppConnData appConnData = new AppConnData();
+
+            if (context.IsAuthenticated)
+            {
+
+                System.Web.Security.FormsIdentity ci = (System.Web.Security.FormsIdentity)HttpContext.User.Identity;
+                string[] userRole = ci.Ticket.UserData.Split('|');
+                user = int.Parse(userRole[0]);
+                admin = int.Parse(userRole[1]) == 1 ? true : false;
+                customerCreator = int.Parse(userRole[2]) == 1 ? true : false;
+                purchaseOrderCreator = int.Parse(userRole[3]) == 1 ? true : false;
+                companyId = int.Parse(userRole[4]);
+                slpCode = int.Parse(userRole[5]);
+                userName = ci.Name;
+                appConnData = GetAppConnData(companyId);
+            }
+            #endregion
+
+            string realId = HexSerialization.HexToString(id);
+
+            List<CompanyParameter> companyParameters = BizCompanyParameter.GetList(companyId).ToList();
+            string batchMarketingTransactions = companyParameters.Where(x => x.idParameter.Equals(5)).Select(x => x.value).FirstOrDefault();
+
+            ProcessQueue process = BizProcessQueue.GetSingle(realId);
+
+            process.processed = null;
+            process.logMessage = null;
+            process.sucess = null;
+
+            BizProcessQueue.Update(process);
+
+            return RedirectToAction("index");
         }
 
         [Authorize]
@@ -889,10 +1013,32 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
 
             try
             {
-                backEnd.CancelOrder(id, appConnData);
-                ViewBag.colorMensaje = "success";
-                ViewBag.mensaje = "Cancelación de pedidos";
-                ViewBag.docEntry = string.Format("el pedido fue cancelado");
+                List<CompanyParameter> companyParameters = BizCompanyParameter.GetList(companyId).ToList();
+                string batchMarketingTransactions = companyParameters.Where(x => x.idParameter.Equals(5)).Select(x => x.value).FirstOrDefault();
+
+                if (batchMarketingTransactions == "No")
+                {
+                    backEnd.CancelOrder(id, appConnData);
+                    ViewBag.colorMensaje = "success";
+                    ViewBag.mensaje = "Cancelación de pedidos";
+                    ViewBag.docEntry = string.Format("el pedido fue cancelado");
+                }
+                else
+                {
+                    BizProcessQueue.Add(new ProcessQueue()
+                    {
+                        actionType = "C",
+                        idTarget = id,
+                        addedToQueue = DateTime.Now,
+                        idCompany = companyId
+                    });
+
+                    ViewBag.colorMensaje = "success";
+                    ViewBag.mensaje = "Registro guardado";
+                    ViewBag.docEntry = "Su solicitud de cancalación ha sido guardada y en breve será procesada.";
+                }
+
+
             }
             catch (FaultException<DataAccessFault> ex)
             {
@@ -1418,5 +1564,172 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult batchCreate()
+        {
+            string res = "Error";
+            List<MarketingDocument> documents = new List<MarketingDocument>();
+
+            try
+            {
+                //Find document pending to process 
+                List<ProcessQueue> queue = BizProcessQueue.GetList(false).ToList();
+                List<int> companies = queue.Select(x => x.idCompany).Distinct().ToList();
+                List<MarketingDocument> resultTransaction = new List<MarketingDocument>();
+
+                if (companies.Count() > 0)
+                {
+                    foreach (int company in companies)
+                    {
+                        AppConnData appConnData = new AppConnData();
+
+                        List<ProcessQueue> items = BizProcessQueue.GetList(false).Where(x => x.idCompany.Equals(company)).ToList();
+
+                        if (items.Count() > 0)
+                        {
+                            appConnData = GetAppConnData(company);
+
+                            #region Queue Process
+                            foreach (ProcessQueue item in items)
+                            {
+                                if (item.actionType == "A")
+                                {
+                                    #region Add Sales Order
+                                    ORDR ordr = BizSalesOrderDraft.GetSingle(item.idTarget);
+
+                                    if (ordr.docEntry == null)
+                                    {
+                                        List<RDR1> lines = BizSalesOrderDraft.GetLinesList(item.idTarget).ToList();
+
+                                        MarketingDocument document = new MarketingDocument()
+                                        {
+                                            cardCode = ordr.cardCode,
+                                            serie = ordr.series,
+                                            docDate = ordr.docDate,
+                                            docDueDate = ordr.docDueDate,
+                                            taxDate = ordr.taxDate,
+                                            shipToCode = ordr.shipToCode,
+                                            payToCode = ordr.payToCode,
+                                            groupNum = ordr.groupNum,
+                                            slpCode = ordr.slpCode,
+                                            lines = new List<MarketingDocumentLine>(),
+                                            userDefinedFields = new List<UserDefinedField>(),
+                                            actionType = ActionType.Add,
+                                            idQueue = item.id
+                                        };
+
+                                        document.userDefinedFields.Add(new UserDefinedField()
+                                        {
+                                            name = "U_CSS_COMENTARIOS",
+                                            type = UdfType.Text,
+                                            value = ordr.uCssComentarios
+                                        });
+
+                                        document.userDefinedFields.Add(new UserDefinedField()
+                                        {
+                                            name = "U_orkWebDocument",
+                                            type = UdfType.Text,
+                                            value = ordr.id.ToString()
+                                        });
+
+                                        foreach (RDR1 line in lines)
+                                        {
+
+                                            MarketingDocumentLine docLine = new MarketingDocumentLine()
+                                            {
+                                                itemCode = line.itemCode,
+                                                quantity = (double)line.quantity,
+                                                whsCode = line.whsCode,
+                                                taxCode = line.taxCode,
+                                                ocrCode = line.ocrCode,
+                                                price = (double)line.price,
+                                                batchNumbers = new List<BatchNumber>(),
+                                                serialNumbers = new List<SerialNumber>(),
+                                                userDefinedFields = new List<UserDefinedField>()
+                                            };
+
+                                            docLine.userDefinedFields.Add(new UserDefinedField()
+                                            {
+                                                name = "U_CSS_ENVASEDEVOL",
+                                                type = UdfType.Alphanumeric,
+                                                value = line.uCssEnvaseDevol
+                                            });
+
+                                            document.lines.Add(docLine);
+                                        }
+                                        //backEnd.ProcessBatchTransaction()
+                                        documents.Add(document);
+                                    }
+
+                                    #endregion
+                                }
+                                if (item.actionType == "C")
+                                {
+                                    #region Add Sales order Cancellation
+                                    MarketingDocument document = new MarketingDocument()
+                                    {
+                                        docEntry = item.idTarget,
+                                        actionType = ActionType.Cancel,
+                                        idQueue = item.id
+                                    };
+
+                                    documents.Add(document);
+                                    #endregion
+                                }
+                            }
+                            #endregion
+
+                            resultTransaction = backEnd.ProcessBatchTransaction(documents, appConnData);
+
+                            #region QueueUpdate
+                            foreach (ProcessQueue item in items)
+                            {
+                                MarketingDocument trans = resultTransaction.Where(x => x.idQueue.Equals(item.id)).FirstOrDefault();
+
+                                item.processed = DateTime.Now;
+                                item.logMessage = trans.transactionInformation;
+
+                                if (trans.transactionInformation.Substring(0, 5).ToLower() == "error")
+                                {
+                                    item.sucess = false;
+                                    item.logMessage = trans.transactionInformation;
+                                }
+                                else
+                                {
+                                    if (item.actionType == "A")
+                                    {
+                                        ORDR order = BizSalesOrderDraft.GetSingle(item.idTarget);
+                                        string docNum = backEnd.GetOrderNum(trans.docEntry, appConnData).ToString();
+                                        order.docEntry = trans.docEntry;
+                                        BizSalesOrderDraft.Update(order);
+
+                                        trans.transactionInformation = string.Format("{0}. Doc num = {1}", trans.transactionInformation, docNum);
+                                    }
+
+                                    item.sucess = true;
+                                    item.logMessage = trans.transactionInformation;
+                                }
+
+                                BizProcessQueue.Update(item);
+                            }
+                            #endregion
+
+                            res = string.Format("Se procesaron {0} transacciones", items.Count().ToString());
+                        }
+                    }
+                }
+                else
+                    res = "No hay informacion para procesar";
+            }
+            catch (FaultException<DataAccessFault> ex)
+            {
+                res = string.Format("Error - Codigo {0} mensaje:{1} {2}", ex.Code, ex.Detail.Description, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                res = string.Format("Error - mensaje: {0}", ex.Message);
+            }
+
+            return Json(res, JsonRequestBehavior.AllowGet);
+        }
     }
 }

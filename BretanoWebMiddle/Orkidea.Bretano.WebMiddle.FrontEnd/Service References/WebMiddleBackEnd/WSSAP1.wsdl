@@ -244,6 +244,18 @@
         <soap:fault use="literal" name="DataAccessFaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
+    <wsdl:operation name="ProcessBatchTransaction">
+      <soap:operation soapAction="http://WSSAP/WSSAP/ProcessBatchTransaction" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DataAccessFaultFault">
+        <soap:fault use="literal" name="DataAccessFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
     <wsdl:operation name="ListSaleOrders">
       <soap:operation soapAction="http://WSSAP/WSSAP/ListSaleOrders" style="document" />
       <wsdl:input>

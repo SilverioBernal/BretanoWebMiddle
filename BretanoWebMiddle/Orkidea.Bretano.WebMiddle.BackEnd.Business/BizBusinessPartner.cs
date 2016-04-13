@@ -638,7 +638,7 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
                     DataConnection.BeginTran();
                     BusinessPartnerAccess = new BusinessPartnerData(oAppConnData.adoConnString);
                     BusinessPartnerAccess.Add(partner, DataConnection.Conn);
-                    DataConnection.EndTran(BoWfTransOpt.wf_Commit);
+                    DataConnection.EndTranAndRelease(BoWfTransOpt.wf_Commit);
 
                     
                     return true;
@@ -647,13 +647,13 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
             #region Catch
             catch (SAPException ex)
             {
-                DataConnection.EndTran(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
+                DataConnection.EndTranAndRelease(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
                 BizUtilities.ProcessSapException(ex, "Gestión de Pagos");                
                 return false;
             }
             catch (COMException ex)
             {
-                DataConnection.EndTran(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
+                DataConnection.EndTranAndRelease(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
                 Exception outEx;
                 if (ExceptionPolicy.HandleException(ex, "Politica_Excepcion_Com", out outEx))
                 {
@@ -693,7 +693,7 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
             }
             catch (Exception ex)
             {
-                DataConnection.EndTran(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
+                DataConnection.EndTranAndRelease(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
                 Exception outEx;
                 if (ex.Data["1"] == null)
                 {
@@ -740,20 +740,20 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
                     DataConnection.BeginTran();
                     BusinessPartnerAccess = new BusinessPartnerData(oAppConnData.adoConnString);
                     BusinessPartnerAccess.Update(partner, DataConnection.Conn);
-                    DataConnection.EndTran(BoWfTransOpt.wf_Commit);
+                    DataConnection.EndTranAndRelease(BoWfTransOpt.wf_Commit);
                     return true;
                 }
             }
             #region Catch
             catch (SAPException ex)
             {
-                DataConnection.EndTran(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
+                DataConnection.EndTranAndRelease(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
                 BizUtilities.ProcessSapException(ex, "Gestión de Pagos");
                 return false;
             }
             catch (COMException ex)
             {
-                DataConnection.EndTran(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
+                DataConnection.EndTranAndRelease(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
                 Exception outEx;
                 if (ExceptionPolicy.HandleException(ex, "Politica_Excepcion_Com", out outEx))
                 {
@@ -793,7 +793,7 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
             }
             catch (Exception ex)
             {
-                DataConnection.EndTran(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
+                DataConnection.EndTranAndRelease(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
                 Exception outEx;
                 if (ex.Data["1"] == null)
                 {
@@ -839,20 +839,20 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
                     DataConnection.BeginTran();
                     BusinessPartnerAccess = new BusinessPartnerData(oAppConnData.adoConnString);
                     BusinessPartnerAccess.AddContact(contact, DataConnection.Conn);
-                    DataConnection.EndTran(BoWfTransOpt.wf_Commit);
+                    DataConnection.EndTranAndRelease(BoWfTransOpt.wf_Commit);
                     return true;
                 }
             }
             #region Catch
             catch (SAPException ex)
             {
-                DataConnection.EndTran(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
+                DataConnection.EndTranAndRelease(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
                 BizUtilities.ProcessSapException(ex, "Gestión de Pagos");
                 return false;
             }
             catch (COMException ex)
             {
-                DataConnection.EndTran(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
+                DataConnection.EndTranAndRelease(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
                 Exception outEx;
                 try
                 {
@@ -899,7 +899,7 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
             }
             catch (Exception ex)
             {
-                DataConnection.EndTran(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
+                DataConnection.EndTranAndRelease(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
                 Exception outEx;
                 if (ex.Data["1"] == null)
                 {
@@ -945,20 +945,20 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
                     DataConnection.BeginTran();
                     BusinessPartnerAccess = new BusinessPartnerData(oAppConnData.adoConnString);
                     BusinessPartnerAccess.AddAddress(address, DataConnection.Conn);
-                    DataConnection.EndTran(BoWfTransOpt.wf_Commit);
+                    DataConnection.EndTranAndRelease(BoWfTransOpt.wf_Commit);
                     return true;
                 }
             }
             #region Catch
             catch (SAPException ex)
             {
-                DataConnection.EndTran(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
+                DataConnection.EndTranAndRelease(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
                 BizUtilities.ProcessSapException(ex, "Gestión de Pagos");
                 return false;
             }
             catch (COMException ex)
             {
-                DataConnection.EndTran(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
+                DataConnection.EndTranAndRelease(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
                 Exception outEx;
                 if (ExceptionPolicy.HandleException(ex, "Politica_Excepcion_Com", out outEx))
                 {
@@ -998,7 +998,7 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
             }
             catch (Exception ex)
             {
-                DataConnection.EndTran(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
+                DataConnection.EndTranAndRelease(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
                 Exception outEx;
                 if (ex.Data["1"] == null)
                 {
@@ -1203,20 +1203,20 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
                     DataConnection.BeginTran();
                     BusinessPartnerAccess = new BusinessPartnerData(oAppConnData.adoConnString);
                     BusinessPartnerAccess.AddBusinessPartnerWithholdingTax(withholdingTax, DataConnection.Conn);
-                    DataConnection.EndTran(BoWfTransOpt.wf_Commit);
+                    DataConnection.EndTranAndRelease(BoWfTransOpt.wf_Commit);
                     return true;
                 }
             }
             #region Catch
             catch (SAPException ex)
             {
-                DataConnection.EndTran(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
+                DataConnection.EndTranAndRelease(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
                 BizUtilities.ProcessSapException(ex, "Gestión de Pagos");
                 return false;
             }
             catch (COMException ex)
             {
-                DataConnection.EndTran(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
+                DataConnection.EndTranAndRelease(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
                 Exception outEx;
                 if (ExceptionPolicy.HandleException(ex, "Politica_Excepcion_Com", out outEx))
                 {
@@ -1256,7 +1256,7 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
             }
             catch (Exception ex)
             {
-                DataConnection.EndTran(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
+                DataConnection.EndTranAndRelease(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
                 Exception outEx;
                 if (ex.Data["1"] == null)
                 {

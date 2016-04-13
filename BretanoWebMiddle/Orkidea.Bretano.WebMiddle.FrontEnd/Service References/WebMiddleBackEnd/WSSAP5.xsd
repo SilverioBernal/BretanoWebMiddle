@@ -3,8 +3,9 @@
   <xs:import schemaLocation="http://localhost:60593/WSSAP.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.BusinessPartners" />
   <xs:import schemaLocation="http://localhost:60593/WSSAP.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
   <xs:import schemaLocation="http://localhost:60593/WSSAP.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.Global.UserDefinedFileds" />
-  <xs:import schemaLocation="http://localhost:60593/WSSAP.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.Inventory" />
-  <xs:import schemaLocation="http://localhost:60593/WSSAP.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.Global.Administration" />
+  <xs:import schemaLocation="http://localhost:60593/WSSAP.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.Global.Misc" />
+  <xs:import schemaLocation="http://localhost:60593/WSSAP.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.Inventory" />
+  <xs:import schemaLocation="http://localhost:60593/WSSAP.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.Global.Administration" />
   <xs:element name="GetAuthorizationStatusList">
     <xs:complexType>
       <xs:sequence>
@@ -616,6 +617,7 @@
   </xs:element>
   <xs:complexType name="MarketingDocument">
     <xs:sequence>
+      <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.Global.Misc" minOccurs="0" name="actionType" type="q10:ActionType" />
       <xs:element minOccurs="0" name="canceled" type="xs:boolean" />
       <xs:element minOccurs="0" name="cardCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="cardName" nillable="true" type="xs:string" />
@@ -627,6 +629,7 @@
       <xs:element minOccurs="0" name="docStatus" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="doctype" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="groupNum" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="idQueue" type="xs:int" />
       <xs:element minOccurs="0" name="invntsttus" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="lines" nillable="true" type="tns:ArrayOfMarketingDocumentLine" />
       <xs:element minOccurs="0" name="numAtCard" nillable="true" type="xs:string" />
@@ -636,6 +639,7 @@
       <xs:element minOccurs="0" name="shipToCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="slpCode" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="taxDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="transactionInformation" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="updateDate" type="xs:dateTime" />
       <xs:element minOccurs="0" name="userDefinedFields" nillable="true" type="tns:ArrayOfUserDefinedField" />
     </xs:sequence>
@@ -711,6 +715,27 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="AddSalesOrderResult" nillable="true" type="tns:MarketingDocument" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ProcessBatchTransaction">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="documents" nillable="true" type="tns:ArrayOfMarketingDocument" />
+        <xs:element minOccurs="0" name="oAppConnData" nillable="true" type="tns:AppConnData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ArrayOfMarketingDocument">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MarketingDocument" nillable="true" type="tns:MarketingDocument" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMarketingDocument" nillable="true" type="tns:ArrayOfMarketingDocument" />
+  <xs:element name="ProcessBatchTransactionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ProcessBatchTransactionResult" nillable="true" type="tns:ArrayOfMarketingDocument" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -893,7 +918,7 @@
       <xs:element minOccurs="0" name="BuyUnitMsr" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CodeBars" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DefaultWarehouse" nillable="true" type="xs:string" />
-      <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.Inventory" minOccurs="0" name="Gestionado" type="q10:Item.Gestion" />
+      <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.Inventory" minOccurs="0" name="Gestionado" type="q11:Item.Gestion" />
       <xs:element minOccurs="0" name="InventoyItem" type="xs:boolean" />
       <xs:element minOccurs="0" name="ItemCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ItemName" nillable="true" type="xs:string" />
@@ -925,7 +950,7 @@
   <xs:element name="GetItemStockLevelResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.Inventory" minOccurs="0" name="GetItemStockLevelResult" nillable="true" type="q11:ArrayOfStockLevel" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.Inventory" minOccurs="0" name="GetItemStockLevelResult" nillable="true" type="q12:ArrayOfStockLevel" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1045,7 +1070,7 @@
   <xs:element name="GetDocumentSeriesList">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.Global.Administration" minOccurs="0" name="docType" type="q12:SapDocumentType" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.Global.Administration" minOccurs="0" name="docType" type="q13:SapDocumentType" />
         <xs:element minOccurs="0" name="oAppConnData" nillable="true" type="tns:AppConnData" />
       </xs:sequence>
     </xs:complexType>

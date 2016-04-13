@@ -58,7 +58,7 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
                     DataConnection.BeginTran();
                     SaleOrderAccess = new MarketingDocumentData(oAppConnData.adoConnString);
                     document = SaleOrderAccess.Add(SapDocumentType.Quotation, document, DataConnection.Conn);
-                    DataConnection.EndTran(BoWfTransOpt.wf_Commit);
+                    DataConnection.EndTranAndRelease(BoWfTransOpt.wf_Commit);
                     return document;
                 }
 
@@ -67,13 +67,13 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
             #region Catch
             catch (SAPException ex)
             {
-                DataConnection.EndTran(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
+                DataConnection.EndTranAndRelease(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
                 BizUtilities.ProcessSapException(ex, "Gestión de Pagos");
                 
             }
             catch (COMException ex)
             {
-                DataConnection.EndTran(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
+                DataConnection.EndTranAndRelease(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
                 Exception outEx;
                 try
                 {
@@ -120,7 +120,7 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
             }
             catch (Exception ex)
             {
-                DataConnection.EndTran(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
+                DataConnection.EndTranAndRelease(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
                 Exception outEx;
                 if (ex.Data["1"] == null)
                 {
@@ -283,19 +283,19 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
                     DataConnection.BeginTran();
                     SaleOrderAccess = new MarketingDocumentData(oAppConnData.adoConnString);
                     SaleOrderAccess.Cancel(SapDocumentType.Quotation, docEntry, DataConnection.Conn);
-                    DataConnection.EndTran(BoWfTransOpt.wf_Commit);                    
+                    DataConnection.EndTranAndRelease(BoWfTransOpt.wf_Commit);                    
                 }
             }
             #region Catch
             catch (SAPException ex)
             {
-                DataConnection.EndTran(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
+                DataConnection.EndTranAndRelease(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
                 BizUtilities.ProcessSapException(ex, "Gestión de Pagos");
 
             }
             catch (COMException ex)
             {
-                DataConnection.EndTran(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
+                DataConnection.EndTranAndRelease(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
                 Exception outEx;
                 try
                 {
@@ -342,7 +342,7 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
             }
             catch (Exception ex)
             {
-                DataConnection.EndTran(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
+                DataConnection.EndTranAndRelease(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
                 Exception outEx;
                 if (ex.Data["1"] == null)
                 {

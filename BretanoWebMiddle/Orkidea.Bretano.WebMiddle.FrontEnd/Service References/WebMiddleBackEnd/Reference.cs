@@ -3456,6 +3456,9 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.ActionType actionTypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool canceledField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -3489,6 +3492,9 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd {
         private System.Nullable<int> groupNumField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int idQueueField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string invntsttusField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -3516,6 +3522,9 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd {
         private System.DateTime taxDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string transactionInformationField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.DateTime updateDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -3528,6 +3537,19 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.ActionType actionType {
+            get {
+                return this.actionTypeField;
+            }
+            set {
+                if ((this.actionTypeField.Equals(value) != true)) {
+                    this.actionTypeField = value;
+                    this.RaisePropertyChanged("actionType");
+                }
             }
         }
         
@@ -3675,6 +3697,19 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public int idQueue {
+            get {
+                return this.idQueueField;
+            }
+            set {
+                if ((this.idQueueField.Equals(value) != true)) {
+                    this.idQueueField = value;
+                    this.RaisePropertyChanged("idQueue");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string invntsttus {
             get {
                 return this.invntsttusField;
@@ -3792,6 +3827,19 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string transactionInformation {
+            get {
+                return this.transactionInformationField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.transactionInformationField, value) != true)) {
+                    this.transactionInformationField = value;
+                    this.RaisePropertyChanged("transactionInformation");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.DateTime updateDate {
             get {
                 return this.updateDateField;
@@ -3825,6 +3873,18 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ActionType", Namespace="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entitie" +
+        "s.Global.Misc")]
+    public enum ActionType : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Add = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Cancel = 1,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -6148,6 +6208,13 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd {
         [System.ServiceModel.OperationContractAttribute(Action="http://WSSAP/WSSAP/AddSalesOrder", ReplyAction="http://WSSAP/WSSAP/AddSalesOrderResponse")]
         System.Threading.Tasks.Task<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.MarketingDocument> AddSalesOrderAsync(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.MarketingDocument document, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://WSSAP/WSSAP/ProcessBatchTransaction", ReplyAction="http://WSSAP/WSSAP/ProcessBatchTransactionResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.DataAccessFault), Action="http://WSSAP/WSSAP/ProcessBatchTransactionDataAccessFaultFault", Name="DataAccessFault")]
+        System.Collections.Generic.List<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.MarketingDocument> ProcessBatchTransaction(System.Collections.Generic.List<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.MarketingDocument> documents, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://WSSAP/WSSAP/ProcessBatchTransaction", ReplyAction="http://WSSAP/WSSAP/ProcessBatchTransactionResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.MarketingDocument>> ProcessBatchTransactionAsync(System.Collections.Generic.List<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.MarketingDocument> documents, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://WSSAP/WSSAP/ListSaleOrders", ReplyAction="http://WSSAP/WSSAP/ListSaleOrdersResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.DataAccessFault), Action="http://WSSAP/WSSAP/ListSaleOrdersDataAccessFaultFault", Name="DataAccessFault")]
         System.Collections.Generic.List<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.LightMarketingDocument> ListSaleOrders(System.DateTime startDate, System.DateTime endDate, string cardCode, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData);
@@ -6495,6 +6562,14 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd {
         
         public System.Threading.Tasks.Task<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.MarketingDocument> AddSalesOrderAsync(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.MarketingDocument document, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData) {
             return base.Channel.AddSalesOrderAsync(document, oAppConnData);
+        }
+        
+        public System.Collections.Generic.List<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.MarketingDocument> ProcessBatchTransaction(System.Collections.Generic.List<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.MarketingDocument> documents, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData) {
+            return base.Channel.ProcessBatchTransaction(documents, oAppConnData);
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.MarketingDocument>> ProcessBatchTransactionAsync(System.Collections.Generic.List<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.MarketingDocument> documents, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData) {
+            return base.Channel.ProcessBatchTransactionAsync(documents, oAppConnData);
         }
         
         public System.Collections.Generic.List<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.LightMarketingDocument> ListSaleOrders(System.DateTime startDate, System.DateTime endDate, string cardCode, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData) {

@@ -107,6 +107,10 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Contracts
 
         [OperationContract(IsOneWay = false)]
         [FaultContract(typeof(DataAccessFault))]
+        List<MarketingDocument> ProcessBatchTransaction(List<MarketingDocument> documents, AppConnData oAppConnData);
+
+        [OperationContract(IsOneWay = false)]
+        [FaultContract(typeof(DataAccessFault))]
         List<LightMarketingDocument> ListSaleOrders(DateTime startDate, DateTime endDate, string cardCode, AppConnData oAppConnData);
 
         [OperationContract(IsOneWay = false)]

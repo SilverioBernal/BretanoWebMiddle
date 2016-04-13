@@ -7,8 +7,9 @@
       <xsd:import schemaLocation="http://localhost:60593/WSSAP.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.BusinessPartners" />
       <xsd:import schemaLocation="http://localhost:60593/WSSAP.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
       <xsd:import schemaLocation="http://localhost:60593/WSSAP.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.Global.UserDefinedFileds" />
-      <xsd:import schemaLocation="http://localhost:60593/WSSAP.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.Inventory" />
-      <xsd:import schemaLocation="http://localhost:60593/WSSAP.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.Global.Administration" />
+      <xsd:import schemaLocation="http://localhost:60593/WSSAP.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.Global.Misc" />
+      <xsd:import schemaLocation="http://localhost:60593/WSSAP.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.Inventory" />
+      <xsd:import schemaLocation="http://localhost:60593/WSSAP.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/Orkidea.Framework.SAP.BusinessOne.Entities.Global.Administration" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="WSSAP_GetAuthorizationStatusList_InputMessage">
@@ -189,6 +190,15 @@
     <wsdl:part name="parameters" element="tns:AddSalesOrderResponse" />
   </wsdl:message>
   <wsdl:message name="WSSAP_AddSalesOrder_DataAccessFaultFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:DataAccessFault" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_ProcessBatchTransaction_InputMessage">
+    <wsdl:part name="parameters" element="tns:ProcessBatchTransaction" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_ProcessBatchTransaction_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ProcessBatchTransactionResponse" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_ProcessBatchTransaction_DataAccessFaultFault_FaultMessage">
     <wsdl:part name="detail" element="tns:DataAccessFault" />
   </wsdl:message>
   <wsdl:message name="WSSAP_ListSaleOrders_InputMessage">
@@ -498,6 +508,11 @@
       <wsdl:input wsaw:Action="http://WSSAP/WSSAP/AddSalesOrder" message="tns:WSSAP_AddSalesOrder_InputMessage" />
       <wsdl:output wsaw:Action="http://WSSAP/WSSAP/AddSalesOrderResponse" message="tns:WSSAP_AddSalesOrder_OutputMessage" />
       <wsdl:fault wsaw:Action="http://WSSAP/WSSAP/AddSalesOrderDataAccessFaultFault" name="DataAccessFaultFault" message="tns:WSSAP_AddSalesOrder_DataAccessFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ProcessBatchTransaction">
+      <wsdl:input wsaw:Action="http://WSSAP/WSSAP/ProcessBatchTransaction" message="tns:WSSAP_ProcessBatchTransaction_InputMessage" />
+      <wsdl:output wsaw:Action="http://WSSAP/WSSAP/ProcessBatchTransactionResponse" message="tns:WSSAP_ProcessBatchTransaction_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://WSSAP/WSSAP/ProcessBatchTransactionDataAccessFaultFault" name="DataAccessFaultFault" message="tns:WSSAP_ProcessBatchTransaction_DataAccessFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="ListSaleOrders">
       <wsdl:input wsaw:Action="http://WSSAP/WSSAP/ListSaleOrders" message="tns:WSSAP_ListSaleOrders_InputMessage" />

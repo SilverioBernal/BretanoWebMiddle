@@ -81,6 +81,19 @@
           <Property Name="label" Type="varchar" MaxLength="350" Nullable="false" />
           <Property Name="type" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
+        <EntityType Name="ProcessQueue">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idCompany" Type="int" Nullable="false" />
+          <Property Name="actionType" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="idTarget" Type="int" Nullable="false" />
+          <Property Name="addedToQueue" Type="datetime" Nullable="false" />
+          <Property Name="processed" Type="datetime" />
+          <Property Name="logMessage" Type="varchar" MaxLength="250" />
+          <Property Name="sucess" Type="bit" />
+        </EntityType>
         <EntityType Name="QUT1">
           <Key>
             <PropertyRef Name="orderId" />
@@ -213,6 +226,7 @@
           <EntitySet Name="OQUT" EntityType="Self.OQUT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ORDR" EntityType="Self.ORDR" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Parameter" EntityType="Self.Parameter" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProcessQueue" EntityType="Self.ProcessQueue" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="QUT1" EntityType="Self.QUT1" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RDR1" EntityType="Self.RDR1" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WebUser" EntityType="Self.WebUser" Schema="dbo" store:Type="Tables" />
@@ -290,6 +304,7 @@
             <End Role="WebUser" EntitySet="WebUser" />
             <End Role="WebUserCompany" EntitySet="WebUserCompany" />
           </AssociationSet>
+          <EntitySet Name="ProcessQueue" EntityType="QcaWebMiddleModel.ProcessQueue" />
           </EntityContainer>
         <EntityType Name="OQUT">
           <Key>
@@ -495,6 +510,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ProcessQueue">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idCompany" Type="Int32" Nullable="false" />
+          <Property Name="actionType" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="idTarget" Type="Int32" Nullable="false" />
+          <Property Name="addedToQueue" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="processed" Type="DateTime" Precision="3" />
+          <Property Name="logMessage" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="sucess" Type="Boolean" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -631,6 +659,20 @@
                 <ScalarProperty Name="admin" ColumnName="admin" />
                 <ScalarProperty Name="companyId" ColumnName="companyId" />
                 <ScalarProperty Name="webUserId" ColumnName="webUserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProcessQueue">
+            <EntityTypeMapping TypeName="QcaWebMiddleModel.ProcessQueue">
+              <MappingFragment StoreEntitySet="ProcessQueue">
+                <ScalarProperty Name="sucess" ColumnName="sucess" />
+                <ScalarProperty Name="logMessage" ColumnName="logMessage" />
+                <ScalarProperty Name="processed" ColumnName="processed" />
+                <ScalarProperty Name="addedToQueue" ColumnName="addedToQueue" />
+                <ScalarProperty Name="idTarget" ColumnName="idTarget" />
+                <ScalarProperty Name="actionType" ColumnName="actionType" />
+                <ScalarProperty Name="idCompany" ColumnName="idCompany" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -20,6 +20,7 @@
         <EntityTypeShape EntityType="QcaWebMiddleModel.WebUserCompany" Width="1.5" PointX="3" PointY="2.625" />
         <AssociationConnector Association="QcaWebMiddleModel.FK_WebUserCompany_Company" />
         <AssociationConnector Association="QcaWebMiddleModel.FK_WebUserCompany_WebUser" />
+        <EntityTypeShape EntityType="QcaWebMiddleModel.ProcessQueue" Width="1.5" PointX="3.375" PointY="6.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

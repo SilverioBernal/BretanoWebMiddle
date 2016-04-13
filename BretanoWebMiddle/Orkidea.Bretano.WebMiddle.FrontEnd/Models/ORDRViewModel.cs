@@ -13,5 +13,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Models
         public DateTime docDate { get; set; }
         public decimal ordrValue { get; set; }
         public string comment { get; set; }
+        public bool editable { get; set; }
+        public bool redo { get; set; }
     }
 }

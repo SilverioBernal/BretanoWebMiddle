@@ -592,6 +592,34 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Core
             }
         }
 
+        public List<MarketingDocument> ProcessBatchTransaction(List<MarketingDocument> documents, AppConnData oAppConnData)
+        {
+            try
+            {
+                facade = new BizFacade(BusinessClass.BizSalesOrder);
+                return facade.ProcessBatchTransaction(documents, oAppConnData);
+            }
+            catch (Exception ex)
+            {
+                DataAccessFault detalleError = new DataAccessFault();
+                foreach (string valores in ex.Data.Keys)
+                {
+                    switch (valores)
+                    {
+                        case "1": detalleError.ErrorID = ex.Data[valores].ToString();
+                            break;
+                        case "2": detalleError.ErrorSAP = ex.Data[valores].ToString();
+                            break;
+                        case "3": detalleError.Description = ex.Data[valores].ToString();
+                            break;
+                        default: detalleError.ErrorID = ex.Data[valores].ToString();
+                            break;
+                    }
+                }
+                throw new FaultException<DataAccessFault>(detalleError, "Error al Procesar la solicitud");
+            }
+        }
+
         public List<LightMarketingDocument> ListSaleOrders(DateTime startDate, DateTime endDate, string cardCode, AppConnData oAppConnData)
         {
             try
