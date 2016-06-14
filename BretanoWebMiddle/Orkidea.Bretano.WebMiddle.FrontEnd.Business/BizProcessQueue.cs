@@ -12,48 +12,42 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Business
     {
         public static IList<ProcessQueue> GetList()
         {
-            EntityCRUD<ProcessQueue> ec = new EntityCRUD<ProcessQueue>();
-            return ec.GetAll();
+            return DbMngmt<ProcessQueue>.GetList();
         }
 
         public static IList<ProcessQueue> GetList(bool status)
         {
-            EntityCRUD<ProcessQueue> ec = new EntityCRUD<ProcessQueue>();
             if (status)
-                return ec.GetList(x => x.processed != null).ToList();
+                return DbMngmt<ProcessQueue>.GetList(x => x.processed != null).ToList();
             else
-                return ec.GetList(x => x.processed == null).ToList();
+                return DbMngmt<ProcessQueue>.GetList(x => x.processed == null).ToList();
         }
 
         public static IList<ProcessQueue> GetList(int companyId, int daysOld)
-        {
-            EntityCRUD<ProcessQueue> ec = new EntityCRUD<ProcessQueue>();
-
-            return ec.GetList(x => x.idCompany.Equals(companyId) && (DateTime.Now - x.addedToQueue).TotalDays <= daysOld).ToList();
+        {            
+            //return ec.GetList(x => x.idCompany.Equals(companyId) && (DateTime.Now - x.addedToQueue).TotalDays <= daysOld).ToList();
+            return DbMngmt<ProcessQueue>.executeSqlQueryToList(string.Format("Select * from ProcessQueue where idCompany = {0} and datediff(dd, addedToQueue, getdate()) <= {1}", companyId.ToString(), daysOld));
         }
 
         public static ProcessQueue GetSingle(int id)
         {
-            EntityCRUD<ProcessQueue> ec = new EntityCRUD<ProcessQueue>();
-            return ec.GetSingle(c => c.id.Equals(id));
+            return DbMngmt<ProcessQueue>.GetSingle(c => c.id.Equals(id));
         }
 
         public static ProcessQueue GetSingle(string targetId)
         {
-            int id = int.Parse(targetId);
-            EntityCRUD<ProcessQueue> ec = new EntityCRUD<ProcessQueue>();
-            return ec.GetSingle(c => c.idTarget.Equals(id));
+            int id = int.Parse(targetId);                        
+            //return ec.GetSingle(c => c.idTarget.Equals(id));
+            return DbMngmt<ProcessQueue>.executeSqlQuerySingle(string.Format("Select * from ProcessQueue where idTarget = {0}", id.ToString()));
         }
 
         public static void Add(params ProcessQueue[] Parameters)
         {
-            EntityCRUD<ProcessQueue> ec = new EntityCRUD<ProcessQueue>();
-
             try
             {
                 foreach (ProcessQueue item in Parameters)
                 {
-                    ec.Add(Parameters);
+                    DbMngmt<ProcessQueue>.Add(Parameters);
                 }
             }
             catch (Exception)
@@ -64,11 +58,9 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Business
 
         public static void Update(ProcessQueue processQueue)
         {
-            EntityCRUD<ProcessQueue> ec = new EntityCRUD<ProcessQueue>();
-
             try
             {
-                ec.Update(processQueue);
+                DbMngmt<ProcessQueue>.Update(processQueue);
             }
             catch (Exception)
             {
@@ -78,8 +70,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Business
 
         public static void Remove(ProcessQueue processQueue)
         {
-            EntityCRUD<ProcessQueue> ec = new EntityCRUD<ProcessQueue>();
-            ec.Remove(processQueue);
+            DbMngmt<ProcessQueue>.Remove(processQueue);
         }
     }
 }

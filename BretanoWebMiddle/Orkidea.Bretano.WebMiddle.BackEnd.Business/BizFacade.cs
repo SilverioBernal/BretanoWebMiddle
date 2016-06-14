@@ -94,6 +94,11 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
             return bizBusinessPartner.GetCreditStatus(cardCode, oAppConnData);
         }
 
+        public int GetOldestOpenInvoice(string cardCode, AppConnData oAppConnData)
+        {
+            return bizBusinessPartner.GetOldestOpenInvoice(cardCode, oAppConnData);
+        }
+
         public List<BusinessPartnerGroup> GetAllBusinessPratnerGroup(CardType cardType, AppConnData oAppConnData)
         {
             return bizBusinessPartner.GetAllBusinessPartnerGroup(cardType, oAppConnData);
@@ -174,6 +179,11 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
         public List<LightMarketingDocument> ListSaleOrders(DateTime startDate, DateTime endDate, string cardCode, AppConnData oAppConnData)
         {
             return bizSalesOrder.List(startDate, endDate, cardCode, oAppConnData);
+        }
+
+        public List<LightMarketingDocument> ListSaleOrdersFiltered(DateTime startDate, DateTime endDate, char fieldFilter, string slp_card_Code, AppConnData oAppConnData)
+        {
+            return bizSalesOrder.List(startDate, endDate, fieldFilter, slp_card_Code, oAppConnData);
         }
 
         public LightMarketingDocument GetSingleOrder(string docNum, AppConnData oAppConnData) 

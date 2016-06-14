@@ -615,6 +615,56 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
             return false;
         }
 
+        public int GetOldestOpenInvoice(string cardCode, AppConnData oAppConnData)
+        {
+            try
+            {
+                if (!BizUtilities.ValidateServiceConnection(oAppConnData))
+                    throw new BusinessException(15, "Nombre de Usuario o Contraseña incorrecta para el Servicio");
+
+                oAppConnData = BizUtilities.GetDataConnection(oAppConnData);
+
+                BusinessPartnerAccess = new BusinessPartnerData(oAppConnData.adoConnString);
+                
+                return BusinessPartnerAccess.GetOldestOpenInvoice(cardCode);
+            }
+            catch (DbException ex)
+            {
+                Exception outEx;
+                if (ExceptionPolicy.HandleException(ex, "Politica_SQLServer", out outEx))
+                {
+                    outEx.Data.Add("1", "14");
+                    outEx.Data.Add("2", "NA");
+                    outEx.Data.Add("3", outEx.Message + " Descripción: " + ex.Message);
+                    throw outEx;
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
+            catch (BusinessException ex)
+            {
+                BizUtilities.ProcessBusinessException(ex);
+            }
+            catch (Exception ex)
+            {
+                Exception outEx;
+                if (ExceptionPolicy.HandleException(ex, "Politica_ExcepcionGenerica", out outEx))
+                {
+                    outEx.Data.Add("1", "3");
+                    outEx.Data.Add("2", "NA");
+                    outEx.Data.Add("3", outEx.Message);
+                    throw outEx;
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
+            return -1;
+        }
+
         public bool Add(BusinessPartner partner, AppConnData oAppConnData)
         {
             try

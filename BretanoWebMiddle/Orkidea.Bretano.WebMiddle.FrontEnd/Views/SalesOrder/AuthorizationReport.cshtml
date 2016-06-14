@@ -1,12 +1,12 @@
 ﻿@model IEnumerable<Orkidea.Bretano.WebMiddle.FrontEnd.Models.ORDRViewModel>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Index";           
 }
 
 <script src="~/Scripts/Custom/ordrIndex.js"></script>
 
 <div class="container-fluid">
-    <h2>Pedidos por aprobar</h2>
+    <h2>Autorizaciones</h2>
     
     <br />
     <div class="row">
@@ -17,17 +17,30 @@
                     <th>Código</th>
                     <th>Cliente</th>
                     <th>Causa</th>
+                    <th>Estado</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
+                    string status = "";
+
+                    if (item.status == null)
+                    {
+                        status = "Pendiente";
+                    }
+                    else
+                    {
+                        status = (bool)item.status ? "Aprobado" : "Rechazado";
+                    }
+                    
                     <tr>
-                        <td>@item.docDate.ToString("yyyy-MM-dd")</td>
+                        <td>@item.docDate.ToString("yyyy-MM-dd hh:mm")</td>
                         <td>@item.cardCode</td>
                         <td>@item.cardName</td>
                         <td>@item.comment</td>
+                        <td>@status</td>
                         <td>
                             <a href="@Url.Action("ViewOrder", new { id = item.id })" class="sepV_a" title="Ver orden"><i class="fa fa-search-plus"></i></a>                            
                         </td>

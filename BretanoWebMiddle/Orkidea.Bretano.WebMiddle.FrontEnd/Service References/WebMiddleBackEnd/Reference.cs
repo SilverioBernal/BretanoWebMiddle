@@ -3034,6 +3034,9 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd {
         private double up120Field;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double up15Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private double up30Field;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -3186,6 +3189,19 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public double up15 {
+            get {
+                return this.up15Field;
+            }
+            set {
+                if ((this.up15Field.Equals(value) != true)) {
+                    this.up15Field = value;
+                    this.RaisePropertyChanged("up15");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public double up30 {
             get {
                 return this.up30Field;
@@ -3318,6 +3334,9 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string docDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string itemCodeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -3326,6 +3345,9 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd {
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private double priceField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double quantityField;
+        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -3333,6 +3355,19 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string docDate {
+            get {
+                return this.docDateField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.docDateField, value) != true)) {
+                    this.docDateField = value;
+                    this.RaisePropertyChanged("docDate");
+                }
             }
         }
         
@@ -3371,6 +3406,19 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd {
                 if ((this.priceField.Equals(value) != true)) {
                     this.priceField = value;
                     this.RaisePropertyChanged("price");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double quantity {
+            get {
+                return this.quantityField;
+            }
+            set {
+                if ((this.quantityField.Equals(value) != true)) {
+                    this.quantityField = value;
+                    this.RaisePropertyChanged("quantity");
                 }
             }
         }
@@ -5769,6 +5817,12 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int extraDaysField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int extraMonthField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int groupNumField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -5781,6 +5835,32 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int extraDays {
+            get {
+                return this.extraDaysField;
+            }
+            set {
+                if ((this.extraDaysField.Equals(value) != true)) {
+                    this.extraDaysField = value;
+                    this.RaisePropertyChanged("extraDays");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int extraMonth {
+            get {
+                return this.extraMonthField;
+            }
+            set {
+                if ((this.extraMonthField.Equals(value) != true)) {
+                    this.extraMonthField = value;
+                    this.RaisePropertyChanged("extraMonth");
+                }
             }
         }
         
@@ -6110,6 +6190,13 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd {
         [System.ServiceModel.OperationContractAttribute(Action="http://WSSAP/WSSAP/GetBusinessPartnerCreditStatus", ReplyAction="http://WSSAP/WSSAP/GetBusinessPartnerCreditStatusResponse")]
         System.Threading.Tasks.Task<bool> GetBusinessPartnerCreditStatusAsync(string cardCode, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://WSSAP/WSSAP/GetOldestOpenInvoice", ReplyAction="http://WSSAP/WSSAP/GetOldestOpenInvoiceResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.DataAccessFault), Action="http://WSSAP/WSSAP/GetOldestOpenInvoiceDataAccessFaultFault", Name="DataAccessFault")]
+        int GetOldestOpenInvoice(string cardCode, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://WSSAP/WSSAP/GetOldestOpenInvoice", ReplyAction="http://WSSAP/WSSAP/GetOldestOpenInvoiceResponse")]
+        System.Threading.Tasks.Task<int> GetOldestOpenInvoiceAsync(string cardCode, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://WSSAP/WSSAP/GetAllBusinessPratnerGroup", ReplyAction="http://WSSAP/WSSAP/GetAllBusinessPratnerGroupResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.DataAccessFault), Action="http://WSSAP/WSSAP/GetAllBusinessPratnerGroupDataAccessFaultFault", Name="DataAccessFault")]
         System.Collections.Generic.List<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.BusinessPartnerGroup> GetAllBusinessPratnerGroup(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.CardType cardType, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData);
@@ -6221,6 +6308,13 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://WSSAP/WSSAP/ListSaleOrders", ReplyAction="http://WSSAP/WSSAP/ListSaleOrdersResponse")]
         System.Threading.Tasks.Task<System.Collections.Generic.List<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.LightMarketingDocument>> ListSaleOrdersAsync(System.DateTime startDate, System.DateTime endDate, string cardCode, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://WSSAP/WSSAP/ListSaleOrdersFiltered", ReplyAction="http://WSSAP/WSSAP/ListSaleOrdersFilteredResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.DataAccessFault), Action="http://WSSAP/WSSAP/ListSaleOrdersFilteredDataAccessFaultFault", Name="DataAccessFault")]
+        System.Collections.Generic.List<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.LightMarketingDocument> ListSaleOrdersFiltered(System.DateTime startDate, System.DateTime endDate, char fieldFilter, string slp_card_Code, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://WSSAP/WSSAP/ListSaleOrdersFiltered", ReplyAction="http://WSSAP/WSSAP/ListSaleOrdersFilteredResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.LightMarketingDocument>> ListSaleOrdersFilteredAsync(System.DateTime startDate, System.DateTime endDate, char fieldFilter, string slp_card_Code, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://WSSAP/WSSAP/GetSingleOrder", ReplyAction="http://WSSAP/WSSAP/GetSingleOrderResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.DataAccessFault), Action="http://WSSAP/WSSAP/GetSingleOrderDataAccessFaultFault", Name="DataAccessFault")]
@@ -6452,6 +6546,14 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd {
             return base.Channel.GetBusinessPartnerCreditStatusAsync(cardCode, oAppConnData);
         }
         
+        public int GetOldestOpenInvoice(string cardCode, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData) {
+            return base.Channel.GetOldestOpenInvoice(cardCode, oAppConnData);
+        }
+        
+        public System.Threading.Tasks.Task<int> GetOldestOpenInvoiceAsync(string cardCode, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData) {
+            return base.Channel.GetOldestOpenInvoiceAsync(cardCode, oAppConnData);
+        }
+        
         public System.Collections.Generic.List<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.BusinessPartnerGroup> GetAllBusinessPratnerGroup(Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.CardType cardType, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData) {
             return base.Channel.GetAllBusinessPratnerGroup(cardType, oAppConnData);
         }
@@ -6578,6 +6680,14 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd {
         
         public System.Threading.Tasks.Task<System.Collections.Generic.List<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.LightMarketingDocument>> ListSaleOrdersAsync(System.DateTime startDate, System.DateTime endDate, string cardCode, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData) {
             return base.Channel.ListSaleOrdersAsync(startDate, endDate, cardCode, oAppConnData);
+        }
+        
+        public System.Collections.Generic.List<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.LightMarketingDocument> ListSaleOrdersFiltered(System.DateTime startDate, System.DateTime endDate, char fieldFilter, string slp_card_Code, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData) {
+            return base.Channel.ListSaleOrdersFiltered(startDate, endDate, fieldFilter, slp_card_Code, oAppConnData);
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.LightMarketingDocument>> ListSaleOrdersFilteredAsync(System.DateTime startDate, System.DateTime endDate, char fieldFilter, string slp_card_Code, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData) {
+            return base.Channel.ListSaleOrdersFilteredAsync(startDate, endDate, fieldFilter, slp_card_Code, oAppConnData);
         }
         
         public Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.LightMarketingDocument GetSingleOrder(string docNum, Orkidea.Bretano.WebMiddle.FrontEnd.WebMiddleBackEnd.AppConnData oAppConnData) {

@@ -11,14 +11,14 @@
         @Html.ActionLink("Crear nuevo", "Create", null, new { @class = "btn btn-info" }) | @Html.ActionLink("Volver al home", "Index", "Home")
     </div>
     <br />
-    <div class="row">        
+    <div class="row">
         <table id="ordr" class="display" cellspacing="0" width="100%">
             <thead>
                 <tr>
                     <th>Fecha</th>
-                    <th>Código</th>                    
-                    <th>Cliente</th>                    
-                    <th>Estatus</th>  
+                    <th>Código</th>
+                    <th>Cliente</th>
+                    <th>Estatus</th>
                     <th></th>
                 </tr>
             </thead>
@@ -31,16 +31,18 @@
                         <td>@item.cardName</td>
                         <td>@item.comment</td>
                         <td>
-                            @if(item.editable == true)
-                            { 
-                            <a href="@Url.Action("AddLine", new { id = item.id })" class="sepV_a" title="Editar"><i class="fa fa-pencil"></i></a>
-                            <span>|</span>                            
-                            <a href="@Url.Action("Remove", new { id = item.id })" title="Eliminar"><i class="fa fa-trash"></i></a>
+                            @if (item.editable == true)
+                            {
+                                <a href="@Url.Action("AddLine", new { id = item.id })" class="sepV_a" title="Editar"><i class="fa fa-pencil"></i></a>
+                                <span>|</span>
+                                <a href="@Url.Action("Remove", new { id = item.id })" title="Eliminar"><i class="fa fa-trash"></i></a>
                             }
                             else
                             {
                                 if (item.redo)
                                 {
+                                    <a href="@Url.Action("AddLine", new { id = item.id })" class="sepV_a" title="Editar"><i class="fa fa-pencil"></i></a>
+                                    <span> | </span>
                                     <a href="@Url.Action("tryAgain", new { id = item.id })" class="sepV_a" title="Reintentar"><i class="fa fa-refresh"></i></a>
                                 }
                             }

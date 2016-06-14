@@ -4,6 +4,8 @@
     ViewBag.Title = "ViewOrder";
 }
 
+<script src="~/Scripts/Custom/ordrViewOrder.js"></script>
+
 <h2>Detalle pedido</h2>
 <div class="row">
     <div class="well">
@@ -33,12 +35,35 @@
                 <div class="col-md-8" style="padding-top: 25px;">
                     @if (ViewBag.orderApprover)
                     {
-                        @Html.ActionLink("Aprobar", "finish", "SalesOrder", new { id = ViewBag.id }, new { @class = "btn btn-success" });
-                        <span > | </span>
-                        @Html.ActionLink("Cancelar", "remove", "SalesOrder", new { id = ViewBag.id }, new { @class = "btn btn-danger" })
+                        if (ViewBag.enabled)
+                        {
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#approveModal"><i class="fa fa-thumbs-up "></i> Aprobar</button>
+                            <span> | </span>
+
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#rejectModal"><i class="fa fa-thumbs-down "></i> Rechazar</button>
+                            <span> | </span>
+                        }
+                        @Html.ActionLink("Cancelar", "AuthorizationReport", "SalesOrder", new { @class = "btn btn-danger" })
+
+                        <span> | </span>
+
+                        <a href="#" onclick="return false;" class="btn btn-default" id="paymentState">Estado de cartera</a>
                     }
                 </div>
 
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-6">
+                    <label class="control-label">Comentarios internos</label>
+                    <p>@ViewBag.draftComments</p>
+                </div>
+                <div class="col-md-6">
+                    <label class="control-label">Comentarios autorizador</label>
+                    <p>@ViewBag.authComments</p>
+                </div>
             </div>
         </div>
     </div>
@@ -78,3 +103,43 @@
     </div>
 </div>
 
+<div class="modal fade" id="paymentModal">
+    <div class="modal-dialog modal-lg" style=" width:auto;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Estado de cartera</h4>
+            </div>
+            <div class="modal-body stockBody">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="approveModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>*@
+                <h4 class="modal-title">Aprobar Solicitud</h4>
+            </div>
+            @{ Html.RenderAction("Approve", "SalesOrder", new { id = ViewBag.id });}
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="rejectModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>*@
+                <h4 class="modal-title">Rechazar Solicitud</h4>
+            </div>
+            @{ Html.RenderAction("Reject", "SalesOrder", new { id = ViewBag.id });}
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

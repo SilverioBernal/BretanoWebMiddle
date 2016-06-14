@@ -11,30 +11,25 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Business
     public static class BizCompany
     {
         public static IList<Company> GetList()
-        {
-            EntityCRUD<Company> ec = new EntityCRUD<Company>();
-            return ec.GetAll();
+        {            
+            return DbMngmt<Company>.GetList();
         }
 
         public static Company GetSingle(int id)
         {
-            EntityCRUD<Company> ec = new EntityCRUD<Company>();
-            return ec.GetSingle(c => c.id.Equals(id));
+            return DbMngmt<Company>.GetSingle(c => c.id.Equals(id));
         }
 
         public static Company GetSingle(string name)
         {
-            EntityCRUD<Company> ec = new EntityCRUD<Company>();
-            return ec.GetSingle(c => c.name.Equals(name));
+            return DbMngmt<Company>.GetSingle(c => c.name.Equals(name));
         }
 
         public static void Add(params Company[] Companys)
         {
-            EntityCRUD<Company> ec = new EntityCRUD<Company>();
-
             try
             {
-                ec.Add(Companys);
+                DbMngmt<Company>.Add(Companys);
 
                 foreach (Company item in Companys)
                 {
@@ -57,13 +52,11 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Business
         }
 
         public static void Update(params Company[] Companys)
-        {
-            EntityCRUD<Company> ec = new EntityCRUD<Company>();
-
+        {            
             try
             {
                 foreach (Company item in Companys)
-                   ec.Update(Companys);
+                    DbMngmt<Company>.Update(Companys);
             }
             catch (Exception)
             {
@@ -73,8 +66,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Business
 
         public static void Remove(params Company[] Companys)
         {
-            EntityCRUD<Company> ec = new EntityCRUD<Company>();
-            ec.Remove(Companys);
+            DbMngmt<Company>.Remove(Companys);
         }
     }
 }

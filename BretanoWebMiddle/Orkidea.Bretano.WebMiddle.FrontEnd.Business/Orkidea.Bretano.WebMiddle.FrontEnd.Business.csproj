@@ -30,9 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Orkidea.Framework.Data">
-      <HintPath>..\Libraries\Orkidea.Framework.Data.dll</HintPath>
-    </Reference>
     <Reference Include="Orkidea.Framework.Security">
       <HintPath>..\Libraries\Orkidea.Framework.Security.dll</HintPath>
     </Reference>

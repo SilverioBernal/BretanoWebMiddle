@@ -198,6 +198,34 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Core
             }
         }
 
+        public int GetOldestOpenInvoice(string cardCode, AppConnData oAppConnData)
+        {
+            try
+            {
+                facade = new BizFacade(BusinessClass.BizBusinessPartner);
+                return facade.GetOldestOpenInvoice(cardCode, oAppConnData);
+            }
+            catch (Exception ex)
+            {
+                DataAccessFault detalleError = new DataAccessFault();
+                foreach (string valores in ex.Data.Keys)
+                {
+                    switch (valores)
+                    {
+                        case "1": detalleError.ErrorID = ex.Data[valores].ToString();
+                            break;
+                        case "2": detalleError.ErrorSAP = ex.Data[valores].ToString();
+                            break;
+                        case "3": detalleError.Description = ex.Data[valores].ToString();
+                            break;
+                        default: detalleError.ErrorID = ex.Data[valores].ToString();
+                            break;
+                    }
+                }
+                throw new FaultException<DataAccessFault>(detalleError, "Error al Procesar la solicitud");
+            }
+        }
+
         public List<BusinessPartnerGroup> GetAllBusinessPratnerGroup(CardType cardType, AppConnData oAppConnData)
         {
             try
@@ -626,6 +654,34 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Core
             {
                 facade = new BizFacade(BusinessClass.BizSalesOrder);
                 return facade.ListSaleOrders(startDate, endDate, cardCode, oAppConnData);
+            }
+            catch (Exception ex)
+            {
+                DataAccessFault detalleError = new DataAccessFault();
+                foreach (string valores in ex.Data.Keys)
+                {
+                    switch (valores)
+                    {
+                        case "1": detalleError.ErrorID = ex.Data[valores].ToString();
+                            break;
+                        case "2": detalleError.ErrorSAP = ex.Data[valores].ToString();
+                            break;
+                        case "3": detalleError.Description = ex.Data[valores].ToString();
+                            break;
+                        default: detalleError.ErrorID = ex.Data[valores].ToString();
+                            break;
+                    }
+                }
+                throw new FaultException<DataAccessFault>(detalleError, "Error al Procesar la solicitud");
+            }
+        }
+
+        public List<LightMarketingDocument> ListSaleOrdersFiltered(DateTime startDate, DateTime endDate, char fieldFilter, string slp_card_Code, AppConnData oAppConnData)
+        {
+            try
+            {
+                facade = new BizFacade(BusinessClass.BizSalesOrder);
+                return facade.ListSaleOrdersFiltered(startDate, endDate, fieldFilter, slp_card_Code, oAppConnData);
             }
             catch (Exception ex)
             {

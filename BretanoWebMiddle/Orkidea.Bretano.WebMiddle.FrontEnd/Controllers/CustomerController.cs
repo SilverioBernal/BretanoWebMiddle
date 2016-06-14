@@ -751,6 +751,13 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
         }
 
         [Authorize]
+        public ActionResult smallPaymentAge(string id)
+        {
+            ViewBag.id = id;
+            return View();
+        }
+
+        [Authorize]
         public ActionResult lastPrices()
         {
             return View();
@@ -1241,12 +1248,16 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
             }
             #endregion
 
+            var myTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SA Pacific Standard Time");
+            var currentDateTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, myTimeZone);
+
             List<PaymentAge> payments = backEnd.GetPaymentAgeList(id, appConnData);
 
             var data = from c in payments
                        select new[] 
                        { 
-                           c.cardCode, c.cardName, c.docNum, c.docDate, c.docDueDate, 
+                           //c.cardCode, c.cardName, 
+                           string.Format("{0}-{1}", c.seriesName, c.docNum), c.docDate, c.docDueDate, c.pendingTime.ToString(), c.up15.ToString(),
                            c.up30.ToString(), c.up60.ToString(), c.up90.ToString(), c.up120.ToString(), c.up9999.ToString() 
                        };
 
@@ -1628,11 +1639,55 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
 
             List<ItemPrice> prices = backEnd.GetBusinessPartnerLastPricesList(cardCode, from, to, appConnData);
 
-            var data = from c in prices select new[] { c.itemCode, c.itemName, c.price.ToString() };
+            var data = from c in prices select new[] { c.docDate, c.itemCode, c.itemName, c.quantity.ToString(), c.price.ToString() };
             return Json(new
             {
                 data = data
             }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult AsyncPaymentReportType(string id)
+        {
+            #region User identification
+            IIdentity context = HttpContext.User.Identity;            
+            int companyId = 0;                        
+
+            if (context.IsAuthenticated)
+            {
+
+                System.Web.Security.FormsIdentity ci = (System.Web.Security.FormsIdentity)HttpContext.User.Identity;
+                string[] userRole = ci.Ticket.UserData.Split('|');
+                companyId = int.Parse(userRole[4]);
+            }
+            #endregion
+
+            List<CompanyParameter> companyParameters = BizCompanyParameter.GetList(companyId).ToList();
+            string ShowSmallPaymentReport = companyParameters.Where(x => x.idParameter.Equals(3)).Select(x => x.value).FirstOrDefault();
+            
+            
+            return Json(ShowSmallPaymentReport, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult AsyncCustomerDetails(string id)
+        {
+            #region User identification
+            IIdentity context = HttpContext.User.Identity;
+            int companyId = 0;
+            AppConnData appConnData = new AppConnData();
+
+            if (context.IsAuthenticated)
+            {
+
+                System.Web.Security.FormsIdentity ci = (System.Web.Security.FormsIdentity)HttpContext.User.Identity;
+                string[] userRole = ci.Ticket.UserData.Split('|');
+                companyId = int.Parse(userRole[4]);
+                appConnData = GetAppConnData(companyId);
+            }
+            #endregion
+
+            BusinessPartner bp = backEnd.GetBusinessPartner(id, appConnData);
+
+            return Json(bp, JsonRequestBehavior.AllowGet);
         }
 
         private AppConnData GetAppConnData(int companyId)

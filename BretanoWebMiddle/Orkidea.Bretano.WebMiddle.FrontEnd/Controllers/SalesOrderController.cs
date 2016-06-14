@@ -9,12 +9,14 @@ using System.Configuration;
 using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Security.Principal;
 using System.ServiceModel;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
+using System.Xml.Serialization;
 
 namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
 {
@@ -59,7 +61,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
 
             List<ORDRViewModel> listOrders = new List<ORDRViewModel>();
             List<ProcessQueue> pendingByProcess = BizProcessQueue.GetList(companyId, int.Parse(MaxOlderOrderDays)).ToList();
-            vmOrderQueue model = new vmOrderQueue();           
+            vmOrderQueue model = new vmOrderQueue();
 
             foreach (ORDR item in orders)
             {
@@ -74,7 +76,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
                             cardName = !string.IsNullOrEmpty(item.cardName) ? item.cardName : "",
                             docDate = item.docDate,
                             comment = item.docEntry == null ? "No finalizada" : "Enviada a SAP correctamente",
-                            editable = item.docEntry== null?true:false,
+                            editable = item.docEntry == null ? true : false,
                         };
 
                         listOrders.Add(order);
@@ -114,17 +116,17 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
                         cardCode = item.cardCode,
                         cardName = !string.IsNullOrEmpty(item.cardName) ? item.cardName : "",
                         docDate = item.docDate,
-                        comment = item.docEntry== null?"No finalizada":"Enviada a SAP correctamente",
+                        comment = item.docEntry == null ? "No finalizada" : "Enviada a SAP correctamente",
                         editable = item.docEntry == null ? true : false
                     };
 
                     listOrders.Add(order);
                 }
 
-                
+
             }
 
-            return View(listOrders);
+            return View(listOrders.OrderByDescending(x => x.docDate).ToList());
         }
 
         //
@@ -224,6 +226,10 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
             order.slpCode = slpCode;
             order.uLatitud = !string.IsNullOrEmpty(order.uLatitud) ? order.uLatitud : "4.690449";
             order.uLongitud = !string.IsNullOrEmpty(order.uLongitud) ? order.uLongitud : "-74.0515331";
+
+            var myTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SA Pacific Standard Time");
+            order.docDate = order.docDate.AddHours(TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, myTimeZone).Hour).AddMinutes(TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, myTimeZone).Minute);
+
             int orderNum = BizSalesOrderDraft.Add(order);
 
             return RedirectToAction("AddLine", new { id = HexSerialization.StringToHex(orderNum.ToString()) });
@@ -263,7 +269,6 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
             ORDR ordr = BizSalesOrderDraft.GetSingle(int.Parse(realId));
 
             BusinessPartner customer = backEnd.GetBusinessPartner(ordr.cardCode, appConnData);
-            bool creditStatus = backEnd.GetBusinessPartnerCreditStatus(ordr.cardCode, appConnData);
 
             ViewBag.cardCode = ordr.cardCode;
             ViewBag.cardName = customer.cardName;
@@ -278,12 +283,16 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
 
 
             List<CompanyParameter> companyParameters = BizCompanyParameter.GetList(companyId).ToList();
+            string AuthProcessMethod = companyParameters.Where(x => x.idParameter.Equals(1)).Select(x => x.value).FirstOrDefault();
+            string EnabledAuthProcess = companyParameters.Where(x => x.idParameter.Equals(2)).Select(x => x.value).FirstOrDefault();
             string defaulSeries = companyParameters.Where(x => x.idParameter.Equals(8)).Select(x => x.value).FirstOrDefault();
             string ShowOnlyItemWarehouse = companyParameters.Where(x => x.idParameter.Equals(10)).Select(x => x.value).FirstOrDefault();
             string ShowOnlyItemTaxcode = companyParameters.Where(x => x.idParameter.Equals(11)).Select(x => x.value).FirstOrDefault();
             string ShowOcrCode = companyParameters.Where(x => x.idParameter.Equals(12)).Select(x => x.value).FirstOrDefault();
             string showEnvaseDevolutivo = companyParameters.Where(x => x.idParameter.Equals(14)).Select(x => x.value).FirstOrDefault();
+            string MaxDelayDaysAuthorization = companyParameters.Where(x => x.idParameter.Equals(16)).Select(x => x.value).FirstOrDefault();
             string MaxOverdraftAuthorization = companyParameters.Where(x => x.idParameter.Equals(17)).Select(x => x.value).FirstOrDefault();
+            string AuthOverdraftMode = companyParameters.Where(x => x.idParameter.Equals(18)).Select(x => x.value).FirstOrDefault();
 
             ViewBag.defaulSeries = string.IsNullOrEmpty(defaulSeries) ? "" : defaulSeries;
 
@@ -308,7 +317,6 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
                 ViewBag.showEnvaseDevolutivo = false;
             #endregion
 
-            #region Validate Credit Rules
             List<RDR1> items = BizSalesOrderDraft.GetLinesList(int.Parse(realId)).ToList();
 
             decimal totalOrder = 0;
@@ -320,38 +328,106 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
                 totalIva += ((item.quantity * item.price) * (item.taxRate == null ? 0 : (decimal)item.taxRate)) / 100;
             }
 
-            //Overstep credits            
-            if (customer.groupNum != null)
-            {
-                if (customer.groupNum != -1 && customer.creditLine == 0)
-                    ViewBag.overStepCreditLine = false;
-                else if (customer.groupNum != -1 && customer.creditLine > 0)
-                {
-                    if (MaxOverdraftAuthorization != null)
-                    {
-                        double balance = (double)customer.balance;
-                        double dNotesBal = (double)customer.dNotesBal;
-                        double ordersBal = (double)customer.ordersBal;
-                        double avalaible = (double)customer.creditLine - (balance + dNotesBal + ordersBal);
-                        double maxOverdraftRate = double.Parse(MaxOverdraftAuthorization);
-                        totalOrder = totalOrder + totalIva;
+            #region Validate Credit Rules
+            //bool creditStatus = backEnd.GetBusinessPartnerCreditStatus(ordr.cardCode, appConnData);
 
+            ViewBag.EnabledAuthProcess = EnabledAuthProcess;
+            ViewBag.delayCredits = false;
+            ViewBag.overStepCreditLine = false;
+            ViewBag.positiveBalance = false;
+
+            if (EnabledAuthProcess == "Si")
+            {
+                List<PaymentAge> paymetsAges = backEnd.GetPaymentAgeList(ordr.cardCode, appConnData);
+
+                #region Days delay credit
+                if (AuthProcessMethod == "DM") // dias de mora
+                {
+                    #region delay days validation (QCA)
+                    int delayDays = 0;
+
+                    if (int.TryParse(MaxDelayDaysAuthorization, out delayDays))
+                    {
+                        if (paymetsAges.Where(x => x.pendingToPay > 0 && x.pendingTime > delayDays).Count() > 0)
+                            ViewBag.delayCredits = true;
+                    }
+                    #endregion
+                }
+                else if (AuthProcessMethod == "FP") // formas de pago del cliente
+                {
+                    #region delay days from payment terms validation (Colorisa)
+                    if (customer.groupNum != -1)
+                    {
+                        List<PaymentTerm> paymentTermList = backEnd.GetPaymentTermList(appConnData);
+                        PaymentTerm customerPaymentTerm = paymentTermList.Where(x => x.groupNum == customer.groupNum).FirstOrDefault();
+                        //int oldestOpenInvoice = backEnd.GetOldestOpenInvoice(ordr.cardCode, appConnData);
+
+                        double oldestOpenInvoice = paymetsAges.Where(x => x.pendingToPay > 0).Max(x => x.pendingTime);
+                        string strDocDate = paymetsAges.Where(x => x.pendingTime == oldestOpenInvoice).Select(x => x.docDate).First();
+
+                        DateTime docDate = DateTime.Parse(strDocDate);
+
+                        string[] DelayDaysAuthorization = MaxDelayDaysAuthorization.Split('|');
+                        int DelayDaysForAuthorization = 0;
+
+                        foreach (string item in DelayDaysAuthorization)
+                        {
+                            string[] authParam = item.Split('-');
+
+                            if (authParam.Length == 2)
+                                if (customerPaymentTerm.extraDays > 0)
+                                {
+                                    if (customerPaymentTerm.extraDays == int.Parse(authParam[0]))
+                                        DelayDaysForAuthorization = int.Parse(authParam[1]);
+                                }
+                                else if (customerPaymentTerm.extraMonth > 0)
+                                    if (customerPaymentTerm.extraMonth * 30 == int.Parse(authParam[0]))
+                                        DelayDaysForAuthorization = int.Parse(authParam[1]);
+                        }
+
+                        if (DelayDaysForAuthorization > 0)
+                        {
+                            if (oldestOpenInvoice > 0)
+                                if (docDate.AddDays((double)DelayDaysForAuthorization) < docDate.AddDays(oldestOpenInvoice))
+                                    ViewBag.delayCredits = true;
+                        }
+                    }
+
+
+                    #endregion
+
+                }
+
+                #endregion
+
+                #region Positive balance
+                if (paymetsAges.Where(x => x.pendingToPay < 0).Count() > 0)
+                    ViewBag.positiveBalance = true;
+                #endregion
+
+                #region Overstep credits
+                if (MaxOverdraftAuthorization != null)
+                {
+                    double balance = (double)customer.balance;
+                    double dNotesBal = (double)customer.dNotesBal;
+                    double ordersBal = (double)customer.ordersBal;
+                    double avalaible = (double)customer.creditLine - (balance + dNotesBal + ordersBal);
+                    double maxOverdraftRate = double.Parse(MaxOverdraftAuthorization);
+                    totalOrder = totalOrder + totalIva;
+
+                    if (AuthOverdraftMode == "Si")// overdraft by %
+                    {
                         if ((double)totalOrder >= (avalaible + (avalaible * (maxOverdraftRate / 100))))
                             ViewBag.overStepCreditLine = true;
-                        else
-                            ViewBag.overStepCreditLine = false;
                     }
-                    else
-                        ViewBag.overStepCreditLine = false;
+                    else // overdarft by value
+                    {
+                        if ((double)totalOrder >= (avalaible + maxOverdraftRate))
+                            ViewBag.overStepCreditLine = true;
+                    }
                 }
+                #endregion
             }
-            else
-                ViewBag.overStepCreditLine = false;
-
-            //Delay credits 
-            if (creditStatus)
-                ViewBag.delayCredits = true;
-
             #endregion
 
             return View();
@@ -393,12 +469,16 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
                 line.orderId = int.Parse(realId);
 
                 #region parameters management
+                string EnabledAuthProcess = companyParameters.Where(x => x.idParameter.Equals(2)).Select(x => x.value).FirstOrDefault();
                 string ShowOnlyItemWarehouse = companyParameters.Where(x => x.idParameter.Equals(10)).Select(x => x.value).FirstOrDefault();
                 string ShowOnlyItemTaxcode = companyParameters.Where(x => x.idParameter.Equals(11)).Select(x => x.value).FirstOrDefault();
                 string ShowOcrCode = companyParameters.Where(x => x.idParameter.Equals(12)).Select(x => x.value).FirstOrDefault();
                 string DefaultOcrCode = companyParameters.Where(x => x.idParameter.Equals(13)).Select(x => x.value).FirstOrDefault();
                 string showEnvaseDevolutivo = companyParameters.Where(x => x.idParameter.Equals(14)).Select(x => x.value).FirstOrDefault();
                 string UseOnlyItemEnvaseDevolutivo = companyParameters.Where(x => x.idParameter.Equals(15)).Select(x => x.value).FirstOrDefault();
+
+                if (line.quantity == 0)
+                    throw new Exception("La cantidad no puede ser cero");
 
                 Item item = backEnd.GetItem(line.itemCode, appConnData);
 
@@ -618,8 +698,10 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
             ViewBag.listNum = customer.listNum;
             ViewBag.orderId = realId;
             ViewBag.id = id;
-
+            ViewBag.enabled = ordr.authStatus == null ? true : ((bool)ordr.authStatus ? false : true);
             ViewBag.orderApprover = orderApprover;
+            ViewBag.draftComments = ordr.draftComments;
+            ViewBag.authComments = ordr.authComments;
             #endregion
 
             #region order detail
@@ -641,6 +723,170 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
             #endregion
 
             return View(items);
+        }
+
+        [Authorize]
+        public ActionResult Approve(string id)
+        {
+            #region User identification
+            IIdentity context = HttpContext.User.Identity;
+            string userId = "";
+            bool admin = false;
+            bool customerCreator = false;
+            bool purchaseOrderCreator = false;
+            bool orderApprover = false;
+            int companyId = 0;
+            string userName = "";
+            AppConnData appConnData = new AppConnData();
+
+            if (context.IsAuthenticated)
+            {
+
+                System.Web.Security.FormsIdentity ci = (System.Web.Security.FormsIdentity)HttpContext.User.Identity;
+                string[] userRole = ci.Ticket.UserData.Split('|');
+                userId = userRole[0];
+                admin = int.Parse(userRole[1]) == 1 ? true : false;
+                customerCreator = int.Parse(userRole[2]) == 1 ? true : false;
+                purchaseOrderCreator = int.Parse(userRole[3]) == 1 ? true : false;
+                companyId = int.Parse(userRole[4]);
+                userName = ci.Name;
+                appConnData = GetAppConnData(companyId);
+                orderApprover = int.Parse(userRole[7]) == 1 ? true : false;
+            }
+            #endregion
+
+            string realId = HexSerialization.HexToString(id);
+            ORDR ordr = BizSalesOrderDraft.GetSingle(int.Parse(realId));
+
+            return View(ordr);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult Approve(string id, ORDR approvedOrder)
+        {
+            #region User identification
+            IIdentity context = HttpContext.User.Identity;
+            string userId = "";
+            bool admin = false;
+            bool customerCreator = false;
+            bool purchaseOrderCreator = false;
+            bool orderApprover = false;
+            int companyId = 0;
+            string userName = "";
+            AppConnData appConnData = new AppConnData();
+
+            if (context.IsAuthenticated)
+            {
+
+                System.Web.Security.FormsIdentity ci = (System.Web.Security.FormsIdentity)HttpContext.User.Identity;
+                string[] userRole = ci.Ticket.UserData.Split('|');
+                userId = userRole[0];
+                admin = int.Parse(userRole[1]) == 1 ? true : false;
+                customerCreator = int.Parse(userRole[2]) == 1 ? true : false;
+                purchaseOrderCreator = int.Parse(userRole[3]) == 1 ? true : false;
+                companyId = int.Parse(userRole[4]);
+                userName = ci.Name;
+                appConnData = GetAppConnData(companyId);
+                orderApprover = int.Parse(userRole[7]) == 1 ? true : false;
+            }
+            #endregion
+
+            string realId = HexSerialization.HexToString(id);
+            ORDR ordr = BizSalesOrderDraft.GetSingle(int.Parse(realId));
+            ordr.authStatus = true;
+            ordr.authUser = userId;
+
+            var myTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SA Pacific Standard Time");
+            ordr.authDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, myTimeZone);
+
+            ordr.authComments = approvedOrder.authComments;
+
+            BizSalesOrderDraft.Update(ordr);
+
+            return RedirectToAction("Finish", new { id = id });
+        }
+
+        [Authorize]
+        public ActionResult Reject(string id)
+        {
+            #region User identification
+            IIdentity context = HttpContext.User.Identity;
+            string userId = "";
+            bool admin = false;
+            bool customerCreator = false;
+            bool purchaseOrderCreator = false;
+            bool orderApprover = false;
+            int companyId = 0;
+            string userName = "";
+            AppConnData appConnData = new AppConnData();
+
+            if (context.IsAuthenticated)
+            {
+
+                System.Web.Security.FormsIdentity ci = (System.Web.Security.FormsIdentity)HttpContext.User.Identity;
+                string[] userRole = ci.Ticket.UserData.Split('|');
+                userId = userRole[0];
+                admin = int.Parse(userRole[1]) == 1 ? true : false;
+                customerCreator = int.Parse(userRole[2]) == 1 ? true : false;
+                purchaseOrderCreator = int.Parse(userRole[3]) == 1 ? true : false;
+                companyId = int.Parse(userRole[4]);
+                userName = ci.Name;
+                appConnData = GetAppConnData(companyId);
+                orderApprover = int.Parse(userRole[7]) == 1 ? true : false;
+            }
+            #endregion
+
+            string realId = HexSerialization.HexToString(id);
+            ORDR ordr = BizSalesOrderDraft.GetSingle(int.Parse(realId));
+
+            return View(ordr);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult Reject(string id, ORDR approvedOrder)
+        {
+            #region User identification
+            IIdentity context = HttpContext.User.Identity;
+            string userId = "";
+            bool admin = false;
+            bool customerCreator = false;
+            bool purchaseOrderCreator = false;
+            bool orderApprover = false;
+            int companyId = 0;
+            string userName = "";
+            AppConnData appConnData = new AppConnData();
+
+            if (context.IsAuthenticated)
+            {
+
+                System.Web.Security.FormsIdentity ci = (System.Web.Security.FormsIdentity)HttpContext.User.Identity;
+                string[] userRole = ci.Ticket.UserData.Split('|');
+                userId = userRole[0];
+                admin = int.Parse(userRole[1]) == 1 ? true : false;
+                customerCreator = int.Parse(userRole[2]) == 1 ? true : false;
+                purchaseOrderCreator = int.Parse(userRole[3]) == 1 ? true : false;
+                companyId = int.Parse(userRole[4]);
+                userName = ci.Name;
+                appConnData = GetAppConnData(companyId);
+                orderApprover = int.Parse(userRole[7]) == 1 ? true : false;
+            }
+            #endregion
+
+            string realId = HexSerialization.HexToString(id);
+            ORDR ordr = BizSalesOrderDraft.GetSingle(int.Parse(realId));
+            ordr.authStatus = false;
+            ordr.authUser = userId;
+            
+            var myTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SA Pacific Standard Time");
+            ordr.authDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, myTimeZone);
+            
+            ordr.authComments = approvedOrder.authComments;
+
+            BizSalesOrderDraft.Update(ordr);
+
+            return RedirectToAction("AuthorizationReport");
         }
 
         [Authorize]
@@ -683,7 +929,9 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
 
             string[] realId = id.Split('|');
 
-            BizSalesOrderDraft.DeleteLine(new RDR1() { orderId = int.Parse(HexSerialization.HexToString(realId[0])), itemCode = realId[1] });
+            RDR1 line = BizSalesOrderDraft.GetSingleLine(int.Parse(HexSerialization.HexToString(realId[0])), realId[1]);
+
+            BizSalesOrderDraft.DeleteLine(line);
 
             return RedirectToAction("AddLine", new { id = realId[0] });
         }
@@ -891,6 +1139,46 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
         }
 
         [Authorize]
+        public ActionResult DraftComments(string id)
+        {
+            string realId = HexSerialization.HexToString(id);
+            ORDR ordr = BizSalesOrderDraft.GetSingle(int.Parse(realId));
+
+            return View(ordr);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult DraftComments(string id, ORDR draft)
+        {
+            try
+            {
+                string realId = HexSerialization.HexToString(id);
+                ORDR ordr = BizSalesOrderDraft.GetSingle(int.Parse(realId));
+
+                ordr.draftComments = draft.draftComments;
+
+                BizSalesOrderDraft.Update(ordr);
+
+                return RedirectToAction("Create");
+            }
+            catch (FaultException<DataAccessFault> ex)
+            {
+                ViewBag.colorMensaje = "danger";
+                ViewBag.mensaje = "No se pudo crear la Orden de venta";
+                ViewBag.docEntry = string.Format("Codigo {0} error:{1} {2}", ex.Code, ex.Detail.Description, ex.Message);
+            }
+
+            catch (Exception ex)
+            {
+                ViewBag.colorMensaje = "danger";
+                ViewBag.mensaje = "Atención:";
+                ViewBag.docEntry = string.Format(" - {0}", ex.Message);
+            }
+            return View();
+        }
+
+        [Authorize]
         public ActionResult Draft(string id)
         {
             try
@@ -901,15 +1189,18 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
                 string realId = HexSerialization.HexToString(inParams[0]);
                 ORDR ordr = BizSalesOrderDraft.GetSingle(int.Parse(realId));
 
-                if (crIssues.Length == 1)
-                    if (crIssues[0] == "LC")
-                        ordr.draftLC = true;
-                    else
-                        ordr.draftDM = true;
-                else if (crIssues.Length == 2)
+                ViewBag.id = inParams[0];
+
+                foreach (string item in crIssues)
                 {
-                    ordr.draftLC = true;
-                    ordr.draftDM = true;
+                    if (item == "LC")
+                        ordr.draftLC = true;
+
+                    if (item == "PB")
+                        ordr.draftPB = true;
+
+                    if (item == "DM")
+                        ordr.draftDM = true;
                 }
 
                 BizSalesOrderDraft.Update(ordr);
@@ -1104,11 +1395,11 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
 
             if (orderApprover)
             {
-                orders = BizSalesOrderDraft.GetPendingList(companyId).Where(x => x.draftDM.Equals(true) || x.draftLC.Equals(true)).ToList();
+                orders = BizSalesOrderDraft.GetPendingList(companyId).ToList();
             }
             else
             {
-                orders = BizSalesOrderDraft.GetPendingList(userId, companyId).Where(x => x.draftDM.Equals(true) || x.draftLC.Equals(true)).ToList();
+                orders = BizSalesOrderDraft.GetPendingList(userId, companyId).ToList();
             }
 
             List<ORDRViewModel> listOrders = new List<ORDRViewModel>();
@@ -1132,12 +1423,26 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
                 if (item.draftLC == null)
                     item.draftLC = false;
 
-                if ((bool)item.draftDM && (bool)item.draftLC)
-                    order.comment = "Dias de mora y Sobrecupo";
-                else if ((bool)item.draftDM && !(bool)item.draftLC)
+                if (item.draftPB == null)
+                    item.draftPB = false;
+
+
+                if ((bool)item.draftDM)
                     order.comment = "Dias de mora";
-                else if (!(bool)item.draftDM && (bool)item.draftLC)
-                    order.comment = "Sobrecupo";
+
+                if ((bool)item.draftLC)
+                    if (string.IsNullOrEmpty(order.comment))
+                        order.comment = "Sobrecupo";
+                    else
+                        order.comment += "-Sobrecupo";
+
+                if ((bool)item.draftPB)
+                    if (string.IsNullOrEmpty(order.comment))
+                        order.comment = "Saldo a favor";
+                    else
+                        order.comment += "-Saldo a favor";
+
+                order.status = item.authStatus;
 
                 listOrders.Add(order);
             }
@@ -1153,6 +1458,57 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
             ViewBag.str = id;
 
             return View();
+        }
+
+        public ActionResult AuthorizationDetailReport()
+        {
+            return View();
+        }
+
+        [Authorize]
+        public ActionResult SupervisorDashboard()
+        {
+            return View();
+        }
+
+        [Authorize]
+        public ActionResult ShowSupervisorDashboard(string id)
+        {
+            ViewBag.data = id;
+            return View();
+        }
+
+        [Authorize]
+        //[OutputCache(Duration = int.MaxValue, VaryByParam = "none")]
+        public JsonResult AsyncSupervisorDashboard(string id)
+        {
+            #region User identification
+            IIdentity context = HttpContext.User.Identity;
+            int companyId = 0;
+            AppConnData appConnData = new AppConnData();
+
+            if (context.IsAuthenticated)
+            {
+
+                System.Web.Security.FormsIdentity ci = (System.Web.Security.FormsIdentity)HttpContext.User.Identity;
+                string[] userRole = ci.Ticket.UserData.Split('|');
+                companyId = int.Parse(userRole[4]);
+                appConnData = GetAppConnData(companyId);
+            }
+            #endregion
+
+            string[] parameters = id.Split('|');
+
+            IList<SalesResume> salesResume = BizSalesOrderDraft.GetSalesResumeList(DateTime.Parse(parameters[0]), DateTime.Parse(parameters[1]), companyId);
+
+            var data =
+                from c in salesResume
+                select new[] { c.userName, c.salesCount.ToString(), c.salesValue.ToString("N", CultureInfo.CreateSpecificCulture("es-CO")) };
+
+            return Json(new
+            {
+                data = data
+            }, JsonRequestBehavior.AllowGet);
         }
 
         [Authorize]
@@ -1449,6 +1805,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
             bool customerCreator = false;
             bool purchaseOrderCreator = false;
             int companyId = 0;
+            string slpCode = "";
             string userName = "";
             AppConnData appConnData = new AppConnData();
 
@@ -1462,6 +1819,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
                 customerCreator = int.Parse(userRole[2]) == 1 ? true : false;
                 purchaseOrderCreator = int.Parse(userRole[3]) == 1 ? true : false;
                 companyId = int.Parse(userRole[4]);
+                slpCode = userRole[5];
                 userName = ci.Name;
                 appConnData = GetAppConnData(companyId);
             }
@@ -1472,9 +1830,14 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
             DateTime from = DateTime.Parse(parameters[0]), to = DateTime.Parse(parameters[1]);
             string cardCode = parameters[2];
 
-            List<LightMarketingDocument> ordrs = backEnd.ListSaleOrders(from, to, cardCode, appConnData);
+            List<LightMarketingDocument> ordrs = new List<LightMarketingDocument>();
 
-            var data = from c in ordrs select new[] { c.docNum.ToString(), c.docDate.ToString("yyyy-MM-dd"), c.docDueDate.ToString("yyyy-MM-dd"), c.docStatus };
+            if (string.IsNullOrEmpty(cardCode))
+                ordrs = backEnd.ListSaleOrdersFiltered(from, to, 'S', slpCode, appConnData);
+            else
+                ordrs = backEnd.ListSaleOrders(from, to, cardCode, appConnData);
+
+            var data = from c in ordrs select new[] { c.docNum.ToString(), c.cardName, c.docDate.ToString("yyyy-MM-dd"), c.docDueDate.ToString("yyyy-MM-dd"), c.docStatus };
 
             return Json(new
             {
@@ -1564,6 +1927,129 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
+        [Authorize]
+        public JsonResult AsyncAuthReport(string id)
+        {
+            #region User identification
+            IIdentity context = HttpContext.User.Identity;
+            int user = 0;
+            bool admin = false;
+            bool customerCreator = false;
+            bool purchaseOrderCreator = false;
+            int companyId = 0;
+            string userName = "";
+            AppConnData appConnData = new AppConnData();
+
+            if (context.IsAuthenticated)
+            {
+
+                System.Web.Security.FormsIdentity ci = (System.Web.Security.FormsIdentity)HttpContext.User.Identity;
+                string[] userRole = ci.Ticket.UserData.Split('|');
+                user = int.Parse(userRole[0]);
+                admin = int.Parse(userRole[1]) == 1 ? true : false;
+                customerCreator = int.Parse(userRole[2]) == 1 ? true : false;
+                purchaseOrderCreator = int.Parse(userRole[3]) == 1 ? true : false;
+                companyId = int.Parse(userRole[4]);
+                userName = ci.Name;
+                appConnData = GetAppConnData(companyId);
+            }
+            #endregion
+
+            string[] parms = id.Split('|');
+            DateTime from = DateTime.Parse(parms[0]);
+            DateTime to = DateTime.Parse(parms[1]);
+
+            List<AuthReport> items = BizSalesOrderDraft.GetAuthReport(companyId, from, to).OrderBy(x => x.docDate).ToList();
+
+            foreach (AuthReport item in items)
+            {
+                if (item.docEntry != null)
+                    item.docNum = backEnd.GetOrderNum((int)item.docEntry, appConnData).ToString();
+                else
+                    item.docNum = "";
+            }
+
+            var data =
+                from c in items
+                select new[] { string.Format("{0} - {1}", c.cardCode, c.cardName), c.docNum, c.docDate.ToString("yyyy-MM-dd hh:mm"), c.totalDoc.ToString("N", CultureInfo.CreateSpecificCulture("es-CO")), 
+                    c.draftComments, c.status, c.authUser, c.authDate != null ? ((DateTime)c.authDate).ToString("yyyy-MM-dd hh:mm") : "", c.authComments };
+
+            return Json(new
+            {
+                data = data
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        public FileResult AsyncAuthReportXls(string id)
+        {
+            #region User identification
+            IIdentity context = HttpContext.User.Identity;
+            int user = 0;
+            bool admin = false;
+            bool customerCreator = false;
+            bool purchaseOrderCreator = false;
+            int companyId = 0;
+            string userName = "";
+            AppConnData appConnData = new AppConnData();
+
+            if (context.IsAuthenticated)
+            {
+
+                System.Web.Security.FormsIdentity ci = (System.Web.Security.FormsIdentity)HttpContext.User.Identity;
+                string[] userRole = ci.Ticket.UserData.Split('|');
+                user = int.Parse(userRole[0]);
+                admin = int.Parse(userRole[1]) == 1 ? true : false;
+                customerCreator = int.Parse(userRole[2]) == 1 ? true : false;
+                purchaseOrderCreator = int.Parse(userRole[3]) == 1 ? true : false;
+                companyId = int.Parse(userRole[4]);
+                userName = ci.Name;
+                appConnData = GetAppConnData(companyId);
+            }
+            #endregion
+
+            string[] parms = id.Split('|');
+            DateTime from = DateTime.Parse(parms[0]);
+            DateTime to = DateTime.Parse(parms[1]);
+
+            MemoryStream stream = new MemoryStream(); // cleaned up automatically by MVC
+            List<AuthReport> items = BizSalesOrderDraft.GetAuthReport(companyId, from, to).OrderBy(x => x.docDate).ToList();
+            List<vmAuthReport> reportData = new List<vmAuthReport>();
+
+            foreach (AuthReport item in items)
+            {
+                vmAuthReport line = new vmAuthReport()
+                {
+                    cardName = string.Format("{0} - {1}", item.cardCode, item.cardName),
+                    authComments = item.authComments,
+                    authDate = item.authDate != null ? ((DateTime)item.authDate).ToString("yyyy-MM-dd") : "",
+                    authUser = item.authUser,
+                    docDate = item.docDate.ToString("yyyy-MM-dd"),
+                    draftComments = item.draftComments,
+                    status = item.status,
+                    totalDoc = item.totalDoc
+                };
+
+                if (item.docEntry != null)
+                    line.docNum = backEnd.GetOrderNum((int)item.docEntry, appConnData).ToString();
+                else
+                    line.docNum = "";
+
+                reportData.Add(line);
+            }
+
+            var serialicer = new XmlSerializer(typeof(List<vmAuthReport>));
+
+            serialicer.Serialize(stream, reportData);
+            stream.Position = 0;
+
+            //ExportHelper.GetWinnersAsExcelMemoryStream(stream, winnerList, drawingId);
+
+            string suggestedFilename = string.Format("Solicitudes_{0}_{1}.xls", id.Split('|')[0], id.Split('|')[1]);
+            return File(stream, "application/vnd.ms-excel", suggestedFilename);
+
+            //return File(stream, "application/vnd.ms-excel", "Pedidos.xls");
+        }
+
         public JsonResult batchCreate()
         {
             string res = "Error";
@@ -1574,7 +2060,9 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
                 //Find document pending to process 
                 List<ProcessQueue> queue = BizProcessQueue.GetList(false).ToList();
                 List<int> companies = queue.Select(x => x.idCompany).Distinct().ToList();
+
                 List<MarketingDocument> resultTransaction = new List<MarketingDocument>();
+
 
                 if (companies.Count() > 0)
                 {
@@ -1582,7 +2070,10 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
                     {
                         AppConnData appConnData = new AppConnData();
 
-                        List<ProcessQueue> items = BizProcessQueue.GetList(false).Where(x => x.idCompany.Equals(company)).ToList();
+                        List<ProcessQueue> items = queue.Where(x => x.idCompany.Equals(company)).ToList();
+                        List<int> orderIds = items.Select(x => x.idTarget).ToList();
+                        IList<ORDR> orders = BizSalesOrderDraft.GetList(orderIds);
+                        IList<RDR1> orderLines = BizSalesOrderDraft.GetLinesList(orderIds);
 
                         if (items.Count() > 0)
                         {
@@ -1594,11 +2085,11 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
                                 if (item.actionType == "A")
                                 {
                                     #region Add Sales Order
-                                    ORDR ordr = BizSalesOrderDraft.GetSingle(item.idTarget);
+                                    ORDR ordr = orders.Where(x => x.id.Equals(item.idTarget)).FirstOrDefault();
 
-                                    if (ordr.docEntry == null)
+                                    if (ordr != null)
                                     {
-                                        List<RDR1> lines = BizSalesOrderDraft.GetLinesList(item.idTarget).ToList();
+                                        IList<RDR1> lines = orderLines.Where(x => x.orderId.Equals(ordr.id)).ToList();
 
                                         MarketingDocument document = new MarketingDocument()
                                         {
@@ -1659,6 +2150,10 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
                                         //backEnd.ProcessBatchTransaction()
                                         documents.Add(document);
                                     }
+                                    else
+                                    {
+                                        BizProcessQueue.Remove(item);
+                                    }
 
                                     #endregion
                                 }
@@ -1685,31 +2180,34 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
                             {
                                 MarketingDocument trans = resultTransaction.Where(x => x.idQueue.Equals(item.id)).FirstOrDefault();
 
-                                item.processed = DateTime.Now;
-                                item.logMessage = trans.transactionInformation;
-
-                                if (trans.transactionInformation.Substring(0, 5).ToLower() == "error")
+                                if (trans != null)
                                 {
-                                    item.sucess = false;
+                                    item.processed = DateTime.Now;
                                     item.logMessage = trans.transactionInformation;
-                                }
-                                else
-                                {
-                                    if (item.actionType == "A")
-                                    {
-                                        ORDR order = BizSalesOrderDraft.GetSingle(item.idTarget);
-                                        string docNum = backEnd.GetOrderNum(trans.docEntry, appConnData).ToString();
-                                        order.docEntry = trans.docEntry;
-                                        BizSalesOrderDraft.Update(order);
 
-                                        trans.transactionInformation = string.Format("{0}. Doc num = {1}", trans.transactionInformation, docNum);
+                                    if (trans.transactionInformation.Substring(0, 5).ToLower() == "error")
+                                    {
+                                        item.sucess = false;
+                                        item.logMessage = trans.transactionInformation;
+                                    }
+                                    else
+                                    {
+                                        if (item.actionType == "A")
+                                        {
+                                            ORDR order = orders.Where(x => x.id.Equals(item.idTarget)).FirstOrDefault();
+                                            string docNum = backEnd.GetOrderNum(trans.docEntry, appConnData).ToString();
+                                            order.docEntry = trans.docEntry;
+                                            BizSalesOrderDraft.Update(order);
+
+                                            trans.transactionInformation = string.Format("{0}. Doc num = {1}", trans.transactionInformation, docNum);
+                                        }
+
+                                        item.sucess = true;
+                                        item.logMessage = trans.transactionInformation;
                                     }
 
-                                    item.sucess = true;
-                                    item.logMessage = trans.transactionInformation;
+                                    BizProcessQueue.Update(item);
                                 }
-
-                                BizProcessQueue.Update(item);
                             }
                             #endregion
 

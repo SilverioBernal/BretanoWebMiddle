@@ -12,24 +12,20 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Business
     {
         public static IList<WebUserCompany> GetList()
         {
-            EntityCRUD<WebUserCompany> ec = new EntityCRUD<WebUserCompany>();
-            return ec.GetAll();
+            return DbMngmt<WebUserCompany>.GetList();
         }
 
         public static WebUserCompany GetSingle(int webUserId, int companyId)
-        {
-            EntityCRUD<WebUserCompany> ec = new EntityCRUD<WebUserCompany>();
-            return ec.GetSingle(c => c.webUserId.Equals(webUserId) && c.companyId.Equals(companyId));
-        }        
+        {            
+            return DbMngmt<WebUserCompany>.GetSingle(c => c.webUserId.Equals(webUserId) && c.companyId.Equals(companyId));
+        }
 
         public static void Add(params WebUserCompany[] WebUserCompanys)
         {
-            EntityCRUD<WebUserCompany> ec = new EntityCRUD<WebUserCompany>();
-
             try
             {
                 foreach (WebUserCompany item in WebUserCompanys)
-                    ec.Add(WebUserCompanys);
+                    DbMngmt<WebUserCompany>.Add(WebUserCompanys);
             }
             catch (Exception)
             {
@@ -39,12 +35,10 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Business
 
         public static void Update(params WebUserCompany[] WebUserCompanys)
         {
-            EntityCRUD<WebUserCompany> ec = new EntityCRUD<WebUserCompany>();
-
             try
             {
                 foreach (WebUserCompany item in WebUserCompanys)
-                    ec.Update(WebUserCompanys);
+                    DbMngmt<WebUserCompany>.Update(WebUserCompanys);
             }
             catch (Exception)
             {
@@ -54,8 +48,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Business
 
         public static void Remove(params WebUserCompany[] WebUserCompanys)
         {
-            EntityCRUD<WebUserCompany> ec = new EntityCRUD<WebUserCompany>();
-            ec.Remove(WebUserCompanys);
+            DbMngmt<WebUserCompany>.Remove(WebUserCompanys);
         }
     }
 }

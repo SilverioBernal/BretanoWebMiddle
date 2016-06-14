@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthReport.cs" />
     <Compile Include="Company.cs">
       <DependentUpon>WebMiddleDataModel.tt</DependentUpon>
     </Compile>
@@ -69,6 +70,9 @@
       <DependentUpon>WebMiddleDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="RDR1.cs">
+      <DependentUpon>WebMiddleDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SalesResume.cs">
       <DependentUpon>WebMiddleDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="WebMiddleDataModel.cs">

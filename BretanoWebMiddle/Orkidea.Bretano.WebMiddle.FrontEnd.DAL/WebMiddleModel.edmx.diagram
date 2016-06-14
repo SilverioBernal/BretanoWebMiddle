@@ -15,12 +15,13 @@
         <AssociationConnector Association="QcaWebMiddleModel.FK_CompanyParameter_Company" />
         <AssociationConnector Association="QcaWebMiddleModel.FK_CompanyParameter_Parameter" />
         <EntityTypeShape EntityType="QcaWebMiddleModel.RDR1" Width="1.5" PointX="8.625" PointY="7.75" />
-        <EntityTypeShape EntityType="QcaWebMiddleModel.ORDR" Width="1.5" PointX="6.375" PointY="6.75" />
-        <AssociationConnector Association="QcaWebMiddleModel.FK_RDR1_ORDR" />
+        <EntityTypeShape EntityType="QcaWebMiddleModel.ProcessQueue" Width="1.5" PointX="3.375" PointY="6.75" />
         <EntityTypeShape EntityType="QcaWebMiddleModel.WebUserCompany" Width="1.5" PointX="3" PointY="2.625" />
         <AssociationConnector Association="QcaWebMiddleModel.FK_WebUserCompany_Company" />
         <AssociationConnector Association="QcaWebMiddleModel.FK_WebUserCompany_WebUser" />
-        <EntityTypeShape EntityType="QcaWebMiddleModel.ProcessQueue" Width="1.5" PointX="3.375" PointY="6.75" />
+        <EntityTypeShape EntityType="QcaWebMiddleModel.SalesResume" Width="1.5" PointX="0.75" PointY="8.75" />
+        <EntityTypeShape EntityType="QcaWebMiddleModel.ORDR" Width="1.5" PointX="6.375" PointY="6.25" />
+        <AssociationConnector Association="QcaWebMiddleModel.FK_RDR1_ORDR" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

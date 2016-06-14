@@ -12,18 +12,10 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class WebUserCompany
+    public partial class SalesResume
     {
-        public int webUserId { get; set; }
-        public int companyId { get; set; }
-        public bool admin { get; set; }
-        public bool customerCreator { get; set; }
-        public bool purchaseOrderCreator { get; set; }
-        public int slpCode { get; set; }
-        public bool orderApprover { get; set; }
-        public bool supervisor { get; set; }
-    
-        public virtual Company Company { get; set; }
-        public virtual WebUser WebUser { get; set; }
+        public string userName { get; set; }
+        public int salesCount { get; set; }
+        public decimal salesValue { get; set; }
     }
 }

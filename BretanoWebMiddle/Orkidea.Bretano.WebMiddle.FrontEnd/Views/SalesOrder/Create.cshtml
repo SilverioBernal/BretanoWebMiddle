@@ -25,10 +25,8 @@
                                 @Html.ValidationMessageFor(m => m.series, "Requerido", new { @class = "text-danger" })
                             </div>
                         }
-                        
-                        @{
-                            string classCliente = string.IsNullOrEmpty(ViewBag.defaulSeries)?"col-md-3":"col-md-5";
-                        }
+
+                        @{string classCliente = string.IsNullOrEmpty(ViewBag.defaulSeries) ? "col-md-3" : "col-md-5";}
 
                         <div class='@classCliente'>
                             <a href="#" onclick="return false;" id="customerCode" data-toggle="modal" data-target="#customerModal">@Html.LabelFor(model => model.cardCode, "Cliente", new { @class = "control-label" })</a>
@@ -36,7 +34,7 @@
                             @Html.ValidationMessageFor(m => m.cardCode, "Requierido", new { @class = "text-danger" })
                         </div>
                         <div class="col-md-5">
-                            <label class="control-label">Nombre</label>
+                            <label class="control-label">Nombre</label><span> </span><a href="#" onclick="return false;" id="customerInfo" data-toggle="modal" data-target="#customerDetailModal"><label>Ver detalles</label></a>
                             @*<input type="text" class="form-control" value="@ViewBag.cardName" id="cardName" style="max-width:100%" disabled />*@
                             @Html.TextBoxFor(m => m.cardName, new { @class = "form-control required", title = "Socio de negocio", readOnly = true })
                             @Html.ValidationMessageFor(m => m.cardName, "Requierido", new { @class = "text-danger" })
@@ -80,12 +78,12 @@
                             @Html.ValidationMessageFor(m => m.taxDate, "Requierido", new { @class = "text-danger" })
                         </div>
                         @if (ViewBag.ShowOnlyCustomerGroupNum == "No")
-                        { 
-                        <div class="col-md-6">
-                            @Html.LabelFor(model => model.groupNum, "Condiciones de pago", new { @class = "control-label" })
-                            @Html.DropDownListFor(model => model.groupNum, new SelectList(Enumerable.Empty<SelectListItem>()), " ", new { @class = "form-control required", style = "max-width:100%" })
-                            @Html.ValidationMessageFor(m => m.groupNum, "Requerido", new { @class = "text-danger" })
-                        </div>
+                        {
+                            <div class="col-md-6">
+                                @Html.LabelFor(model => model.groupNum, "Condiciones de pago", new { @class = "control-label" })
+                                @Html.DropDownListFor(model => model.groupNum, new SelectList(Enumerable.Empty<SelectListItem>()), " ", new { @class = "form-control required", style = "max-width:100%" })
+                                @Html.ValidationMessageFor(m => m.groupNum, "Requerido", new { @class = "text-danger" })
+                            </div>
                         }
                     </div>
                 </div>
@@ -111,12 +109,12 @@
                             @Html.TextBoxFor(model => model.uLatitud, new { type = "text", @class = "form-control", style = "display:none;" })
                         </div>
                         <div class="col-md-6">
-                            @Html.LabelFor(model => model.uCssComentarios, "Comentarios internos para bodega/cartera", new { @class = "control-label" })
+                            @Html.LabelFor(model => model.uCssComentarios, "Comentarios internos para bodega", new { @class = "control-label" })
                             @Html.TextAreaFor(m => m.uCssComentarios, new { @class = "form-control", title = "id del contacto", rows = 7 })
                             @Html.TextBoxFor(model => model.uLongitud, new { type = "text", @class = "form-control", style = "display:none;" })
                         </div>
                     </div>
-                </div>                
+                </div>
                 <br />
                 <div class="row">
                     <div class="col-md-6">
@@ -127,8 +125,6 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
 
         <div class="modal fade" id="customerModal">
@@ -165,6 +161,50 @@
                     </div>
                     <div class="modal-body stockBody">
 
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+        <div class="modal fade" id="customerDetailModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Detalles de cliente</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label">Nombre</label>
+                                <input type="text" class="form-control" id="customerCardName" style="max-width:100%" disabled />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label">Dirección</label>
+                                <input type="text" class="form-control" id="customerAddress" style="max-width:100%" disabled />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="control-label">Telefono 1</label>
+                                <input type="text" class="form-control" id="customerPhone1" style="max-width:100%" disabled />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="control-label">Telefono 2</label>
+                                <input type="text" class="form-control" id="customerPhone2" style="max-width:100%" disabled />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label">Contacto</label>
+                                <input type="text" class="form-control" id="customerContact" style="max-width:100%" disabled />
+                            </div>
+                        </div>                        
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>

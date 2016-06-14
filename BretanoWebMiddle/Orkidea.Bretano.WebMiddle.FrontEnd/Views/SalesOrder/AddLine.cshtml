@@ -22,6 +22,18 @@
             auth += "-DM";
         }
     }
+
+    if (ViewBag.positiveBalance == true)
+    { 
+        if (string.IsNullOrEmpty(auth))
+        {
+            auth = "PB";
+        }
+        else
+        {
+            auth += "-PB";
+        }
+    }
 }
 
 <script src="~/Scripts/Custom/ordrLineCreate.js"></script>
@@ -43,23 +55,35 @@
             </div>
         }
 
-        @*if (ViewBag.overStepCreditLine == true)
+        if (ViewBag.EnabledAuthProcess == "Si")
         {
-            <div class="row">
-                <div class="alert alert-warning" role="alert">
-                    <span><strong>Límite de crédito superado.</strong> Si finaliza el pedido entrará en un proceso de autorización</span>
+            if (ViewBag.overStepCreditLine == true)
+            {
+                <div class="row">
+                    <div class="alert alert-warning" role="alert">
+                        <span><strong>Límite de crédito superado.</strong> Si finaliza el pedido entrará en un proceso de autorización</span>
+                    </div>
                 </div>
-            </div>
-        }
+            }
 
-        if (ViewBag.delayCredits == true)
-        {
-            <div class="row">
-                <div class="alert alert-warning" role="alert">
-                    <span><strong>Cliente con edad de cartera superada.</strong> Si finaliza el pedido entrará en un proceso de autorización</span>
+            if (ViewBag.delayCredits == true)
+            {
+                <div class="row">
+                    <div class="alert alert-warning" role="alert">
+                        <span><strong>Cliente con edad de cartera superada.</strong> Si finaliza el pedido entrará en un proceso de autorización</span>
+                    </div>
                 </div>
-            </div>
-        }*@
+            }
+
+            if (ViewBag.positiveBalance == true)
+            {
+                <div class="row">
+                    <div class="alert alert-warning" role="alert">
+                        <span><strong>El cliente tiene saldo a favor.</strong> Si finaliza el pedido entrará en un proceso de autorización</span>
+                    </div>
+                </div>
+            }
+        }
 
         <div class="row">
             <div class="well">
@@ -199,17 +223,23 @@
                                 <hr />
                                 <div class="form-group">
                                     <div class="col-md-12">
-                                        @Html.ActionLink("Terminar", "finish", "SalesOrder", new { id = ViewBag.id }, new { @class = "btn btn-success" });
-                                        @*@if (string.IsNullOrEmpty(auth))
+                                        @if (ViewBag.EnabledAuthProcess == "Si")
                                         {
-                                            <span></span>
+                                            if (string.IsNullOrEmpty(auth))
+                                            {
+                                                @Html.ActionLink("Terminar", "finish", "SalesOrder", new { id = ViewBag.id }, new { @class = "btn btn-success" });
+                                            }
+
+                                            if (!string.IsNullOrEmpty(auth))
+                                            {
+                                                @Html.ActionLink("Terminar", "draft", "SalesOrder", new { id = ViewBag.id + "|" + auth }, new { @class = "btn btn-success" });
+                                            }
+                                        }
+                                        else
+                                        {
                                             @Html.ActionLink("Terminar", "finish", "SalesOrder", new { id = ViewBag.id }, new { @class = "btn btn-success" });
                                         }
-                                        @if (!string.IsNullOrEmpty(auth))
-                                        {
-                                            <span></span>
-                                            @Html.ActionLink("Terminar", "draft", "SalesOrder", new { id = ViewBag.id + "|" + auth }, new { @class = "btn btn-success" });
-                                        }*@
+
                                         <span> | </span>
                                         @Html.ActionLink("Cancelar", "remove", "SalesOrder", new { id = ViewBag.id }, new { @class = "btn btn-danger" })
                                     </div>
@@ -217,47 +247,11 @@
                             </div>
                         </div>
                         <div class="col-md-7">
-                            @{Html.RenderAction("GetOrderLines", "SalesOrder", new { id = ViewBag.id });
-                            }
-
-                            @*<table id="ordrLines" class="display" cellspacing="0" width="100%">
-                                    <thead>
-                                        <tr>
-                                            <th>item</th>
-                                            <th>Cantidad</th>
-                                            <th>Precio</th>
-                                            <th>Total</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th colspan="3" style="text-align:right">Total:</th>
-                                            <th></th>
-                                        </tr>
-
-                                    </tfoot>
-                                </table>*@
+                            @{Html.RenderAction("GetOrderLines", "SalesOrder", new { id = ViewBag.id });}
                         </div>
                     </div>
                 </div>
                 <br />
-                @*<div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input type='submit' value=' Agregar linea ' class="btn btn-info" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <hr />
-                            <div class="form-group">
-                                @Html.ActionLink("Terminar", "finish", "SalesOrder", new { id = ViewBag.id }, new { @class = "btn btn-success" })
-                                <span> | </span>
-                                @Html.ActionLink("Cancelar", "remove", "SalesOrder", new { id = ViewBag.id }, new { @class = "btn btn-danger" })
-                            </div>
-                        </div>
-                    </div>*@
             </div>
 
 

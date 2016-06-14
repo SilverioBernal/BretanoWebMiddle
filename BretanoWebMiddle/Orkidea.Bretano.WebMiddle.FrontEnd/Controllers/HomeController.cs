@@ -18,6 +18,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
             bool admin = false;
             bool customerCreator = false;
             bool saleOrderCreator = false;
+            bool supervisor = false;
             int companyId = 0;
             string userName = "";            
 
@@ -31,12 +32,16 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
                 customerCreator = int.Parse(userRole[2]) == 1 ? true : false;
                 saleOrderCreator = int.Parse(userRole[3]) == 1 ? true : false;
                 companyId = int.Parse(userRole[4]);
+                supervisor = int.Parse(userRole[8]) == 1 ? true : false;
                 userName = ci.Name;                
             }
             #endregion
 
             if (admin)
                 return RedirectToAction("index", "company");
+
+            if(supervisor)
+                return RedirectToAction("SupervisorDashboard", "salesorder");
 
             if (saleOrderCreator)
                 return RedirectToAction("create", "salesorder");

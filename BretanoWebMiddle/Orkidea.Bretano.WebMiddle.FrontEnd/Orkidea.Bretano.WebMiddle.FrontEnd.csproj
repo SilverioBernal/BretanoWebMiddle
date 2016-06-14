@@ -182,6 +182,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ORDRViewModel.cs" />
     <Compile Include="Models\SearchFormViewModel.cs" />
+    <Compile Include="Models\vmAuthReport.cs" />
     <Compile Include="Models\vmOrderQueue.cs" />
     <Compile Include="Models\WebUserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -325,8 +326,10 @@
     <Content Include="Scripts\Custom\ordrIndex.js" />
     <Content Include="Scripts\Custom\ordrLineCreate.js" />
     <Content Include="Scripts\Custom\ordrSearch.js" />
+    <Content Include="Scripts\Custom\ordrViewOrder.js" />
     <Content Include="Scripts\Custom\QuotationHeaderCreate.js" />
     <Content Include="Scripts\Custom\QuotationLineCreate.js" />
+    <Content Include="Scripts\Custom\SupervisorDashBoard.js" />
     <Content Include="Scripts\Custom\WebUserAsociate.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.min.js" />
@@ -564,6 +567,13 @@
     <None Include="Service References\WebMiddleBackEnd\WSSAP7.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Views\Customer\smallPaymentAge.cshtml" />
+    <Content Include="Views\SalesOrder\SupervisorDashboard.cshtml" />
+    <Content Include="Views\SalesOrder\ShowSupervisorDashboard.cshtml" />
+    <Content Include="Views\SalesOrder\DraftComments.cshtml" />
+    <Content Include="Views\SalesOrder\Approve.cshtml" />
+    <Content Include="Views\SalesOrder\Reject.cshtml" />
+    <Content Include="Views\SalesOrder\AuthorizationDetailReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

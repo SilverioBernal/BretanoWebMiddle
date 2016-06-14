@@ -76,6 +76,18 @@
         <soap:fault use="literal" name="DataAccessFaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
+    <wsdl:operation name="GetOldestOpenInvoice">
+      <soap:operation soapAction="http://WSSAP/WSSAP/GetOldestOpenInvoice" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DataAccessFaultFault">
+        <soap:fault use="literal" name="DataAccessFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
     <wsdl:operation name="GetAllBusinessPratnerGroup">
       <soap:operation soapAction="http://WSSAP/WSSAP/GetAllBusinessPratnerGroup" style="document" />
       <wsdl:input>
@@ -258,6 +270,18 @@
     </wsdl:operation>
     <wsdl:operation name="ListSaleOrders">
       <soap:operation soapAction="http://WSSAP/WSSAP/ListSaleOrders" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DataAccessFaultFault">
+        <soap:fault use="literal" name="DataAccessFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ListSaleOrdersFiltered">
+      <soap:operation soapAction="http://WSSAP/WSSAP/ListSaleOrdersFiltered" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

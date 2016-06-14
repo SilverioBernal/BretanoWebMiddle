@@ -33,8 +33,9 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.DAL
         public virtual DbSet<CompanyParameter> CompanyParameter { get; set; }
         public virtual DbSet<Parameter> Parameter { get; set; }
         public virtual DbSet<RDR1> RDR1 { get; set; }
-        public virtual DbSet<ORDR> ORDR { get; set; }
-        public virtual DbSet<WebUserCompany> WebUserCompany { get; set; }
         public virtual DbSet<ProcessQueue> ProcessQueue { get; set; }
+        public virtual DbSet<WebUserCompany> WebUserCompany { get; set; }
+        public virtual DbSet<SalesResume> SalesResume { get; set; }
+        public virtual DbSet<ORDR> ORDR { get; set; }
     }
 }

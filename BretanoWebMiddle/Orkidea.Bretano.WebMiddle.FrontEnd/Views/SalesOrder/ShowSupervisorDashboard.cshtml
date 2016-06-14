@@ -1,33 +1,25 @@
 ﻿@{
-    ViewBag.Title = "itemIndex";
     Layout = null;
 }
-<table id="orders" class="display" cellspacing="0">
+
+<table id="resume" class="display" cellspacing="0">
     <thead>
         <tr>
-            <th>Pedido</th>
-            <th>Cliente</th>
-            <th>Fecha pedido</th>
-            <th>Fecha entrega</th>
-            <th>Estatus</th>
-            <th></th>
+            <th>Vendedor</th>
+            <th>Pedidos</th>
+            <th>Valor</th>
         </tr>
     </thead>
 </table>
 
 <script>
     $(document).ready(function () {
-        
+
         var id = '';
 
-        var itemsTable = $('#orders').DataTable({
+        $('#resume').DataTable({
             //processing: true,
-            "ajax": '@Url.Action("AsyncSearchOrders", new { id = ViewBag.data })',
-            "columnDefs": [{
-                "targets": -1,
-                "data": null,
-                "defaultContent": "<button data-dismiss='modal'>Ver</button>"
-            }],
+            "ajax": '@Url.Action("AsyncSupervisorDashboard", new { id = ViewBag.data })',
             "language": {
                 //"processing": "Hang on. Waiting for response...",
                 "lengthMenu": "Mostrar _MENU_ registros por pagina",
@@ -45,13 +37,5 @@
                 },
             }
         });
-
-        $('#orders tbody').on('click', 'button', function () {
-            var data = itemsTable.row($(this).parents('tr')).data();
-            var docNum = data[0];
-
-            window.location = "@Url.Action("Details")" + "/" + docNum;
-        });
-
     });
 </script>

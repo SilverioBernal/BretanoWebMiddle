@@ -46,6 +46,10 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Contracts
         [OperationContract(IsOneWay = false)]
         [FaultContract(typeof(DataAccessFault))]
         bool GetBusinessPartnerCreditStatus(string cardCode, AppConnData oAppConnData);
+
+        [OperationContract(IsOneWay = false)]
+        [FaultContract(typeof(DataAccessFault))]
+        int GetOldestOpenInvoice(string cardCode, AppConnData oAppConnData);
         
         [OperationContract(IsOneWay = false)]
         [FaultContract(typeof(DataAccessFault))]
@@ -112,6 +116,10 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Contracts
         [OperationContract(IsOneWay = false)]
         [FaultContract(typeof(DataAccessFault))]
         List<LightMarketingDocument> ListSaleOrders(DateTime startDate, DateTime endDate, string cardCode, AppConnData oAppConnData);
+
+        [OperationContract(IsOneWay = false)]
+        [FaultContract(typeof(DataAccessFault))]
+        List<LightMarketingDocument> ListSaleOrdersFiltered(DateTime startDate, DateTime endDate, char fieldFilter, string slp_card_Code, AppConnData oAppConnData);
 
         [OperationContract(IsOneWay = false)]
         [FaultContract(typeof(DataAccessFault))]

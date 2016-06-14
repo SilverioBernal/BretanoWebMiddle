@@ -80,6 +80,8 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
                             admin = true,
                             customerCreator = true,
                             purchaseOrderCreator = true,
+                            supervisor = true,
+                            orderApprover = true,
                             slpCode = 0
                         };
 
@@ -106,8 +108,9 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
                     int orderApprover = webUserCompany.orderApprover ? 1 : 0;
                     int company = webUserCompany.companyId;
                     int slpCode = webUserCompany.slpCode;
+                    int supervisor = webUserCompany.supervisor ? 1 : 0;
 
-                    string userData = string.Format("{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}",
+                    string userData = string.Format("{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|{8}",
                         id.ToString().Trim(),
                         isAdmin.ToString().Trim(),
                         customerCreator.ToString().Trim(),
@@ -115,7 +118,9 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
                         company,
                         slpCode.ToString().Trim(),
                         co.name,
-                        orderApprover.ToString().Trim());
+                        orderApprover.ToString().Trim(),
+                        supervisor.ToString().Trim()
+                        );
 
                     FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, model.UserName, DateTime.Now, DateTime.Now.AddMinutes(30), false, userData);
 

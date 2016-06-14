@@ -11,9 +11,29 @@
             <a href="javascript:void(0)" id="customerCode" data-toggle="modal" data-target="#customerModal">@Html.Label("Cliente", new { @class = "control-label" })</a>
             <input type="text" class="form-control" id="cardCode" style="max-width:100%" disabled />
         </div>
-        <div class="col-md-5">
+        <div class="col-md-6">
             <label class="control-label">Nombre</label>
             <input type="text" class="form-control" value="@ViewBag.cardName" id="cardName" style="max-width:100%" disabled />
+        </div>
+        <div class="col-md-2">
+            <label class="control-label">Cupo riesgo</label>
+            <input type="text" class="form-control" id="cupoRiesgo" style="max-width:100%" disabled />
+        </div>
+        <div class="col-md-2">
+            <label class="control-label">Cupo asegurado</label>
+            <input type="text" class="form-control" id="cupoAsegurado" style="max-width:100%" disabled />
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="form-group">        
+        <div class="col-md-2">
+            <label class="control-label">Cupo total</label>
+            <input type="text" class="form-control" id="cupoTotal" style="max-width:100%" disabled />
+        </div>
+        <div class="col-md-2">
+            <label class="control-label">Pagare</label>
+            <input type="text" class="form-control" id="pagare" style="max-width:100%" disabled />
         </div>
         <div class="col-md-1">
             <label class="control-label" style="color:white">.</label>
@@ -44,8 +64,7 @@
                     </thead>
                 </table>
             </div>
-            <div class="modal-footer">
-                @*<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>*@
+            <div class="modal-footer">                
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

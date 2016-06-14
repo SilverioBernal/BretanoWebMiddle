@@ -12,32 +12,26 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Business
     {
         public static IList<OQUT> GetList()
         {
-            EntityCRUD<OQUT> ec = new EntityCRUD<OQUT>();
-            return ec.GetAll();
+            return DbMngmt<OQUT>.GetList();
         }
 
         public static IList<OQUT> GetList(DateTime from, DateTime to, int slpCode, int idCompany)
         {
             to = to.AddDays(1);
 
-            EntityCRUD<OQUT> ec = new EntityCRUD<OQUT>();
-            return ec.GetList(x => x.docDate >= from && x.docDate < to && x.slpCode.Equals(slpCode) && x.idCompania.Equals(idCompany) && x.docEntry != null);
+            return DbMngmt<OQUT>.GetList(x => x.docDate >= from && x.docDate < to && x.slpCode.Equals(slpCode) && x.idCompania.Equals(idCompany) && x.docEntry != null);
         }
 
         public static IList<QUT1> GetLinesList(int qoutationId)
         {
-            EntityCRUD<QUT1> ec = new EntityCRUD<QUT1>();
-
-            return ec.GetList(c => c.orderId.Equals(qoutationId));
+            return DbMngmt<QUT1>.GetList(c => c.orderId.Equals(qoutationId));
         }
 
         public static OQUT GetSingle(int id)
-        {
-            EntityCRUD<OQUT> ec = new EntityCRUD<OQUT>();
-
+        {           
             try
             {
-                return ec.GetSingle(c => c.id.Equals(id));
+                return DbMngmt<OQUT>.GetSingle(c => c.id.Equals(id));
             }
             catch (Exception)
             {
@@ -47,11 +41,9 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Business
 
         public static int Add(OQUT qoutation)
         {
-            EntityCRUD<OQUT> ec = new EntityCRUD<OQUT>();
-
             try
             {
-                return ec.Add(qoutation).id;
+                return DbMngmt<OQUT>.Add(qoutation).id;
             }
             catch (Exception)
             {
@@ -60,12 +52,10 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Business
         }
 
         public static void Update(OQUT qoutation)
-        {
-            EntityCRUD<OQUT> ec = new EntityCRUD<OQUT>();
-
+        {            
             try
             {
-                ec.Update(qoutation);
+                DbMngmt<OQUT>.Update(qoutation);
             }
             catch (Exception)
             {
@@ -74,12 +64,10 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Business
         }
 
         public static void AddLine(QUT1 line)
-        {
-            EntityCRUD<QUT1> ec = new EntityCRUD<QUT1>();
-
+        {            
             try
             {
-                ec.Add(line);
+                DbMngmt<QUT1>.Add(line);
             }
             catch (Exception)
             {

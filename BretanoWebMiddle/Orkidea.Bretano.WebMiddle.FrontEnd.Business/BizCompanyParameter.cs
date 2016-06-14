@@ -11,30 +11,25 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Business
     public static class BizCompanyParameter
     {
         public static IList<CompanyParameter> GetList()
-        {
-            EntityCRUD<CompanyParameter> ec = new EntityCRUD<CompanyParameter>();
-            return ec.GetAll();
+        {            
+            return DbMngmt<CompanyParameter>.GetList();
         }
 
         public static IList<CompanyParameter> GetList(int idCompany)
         {
-            EntityCRUD<CompanyParameter> ec = new EntityCRUD<CompanyParameter>();
-            return ec.GetList(c => c.idCompany.Equals(idCompany));
+            return DbMngmt<CompanyParameter>.GetList(c => c.idCompany.Equals(idCompany));
         }
 
         public static CompanyParameter GetSingle(int idCompany, int idParameter)
         {
-            EntityCRUD<CompanyParameter> ec = new EntityCRUD<CompanyParameter>();
-            return ec.GetSingle(c => c.idCompany.Equals(idCompany) && c.idParameter.Equals(idParameter));
+            return DbMngmt<CompanyParameter>.GetSingle(c => c.idCompany.Equals(idCompany) && c.idParameter.Equals(idParameter));
         }        
 
         public static void Add(params CompanyParameter[] CompanyParameters)
         {
-            EntityCRUD<CompanyParameter> ec = new EntityCRUD<CompanyParameter>();
-
             try
-            {                
-                    ec.Add(CompanyParameters);
+            {
+                DbMngmt<CompanyParameter>.Add(CompanyParameters);
             }
             catch (Exception)
             {
@@ -44,11 +39,9 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Business
 
         public static void Update(params CompanyParameter[] CompanyParameters)
         {
-            EntityCRUD<CompanyParameter> ec = new EntityCRUD<CompanyParameter>();
-
             try
-            {                
-                    ec.Update(CompanyParameters);
+            {
+                DbMngmt<CompanyParameter>.Update(CompanyParameters);
             }
             catch (Exception)
             {
@@ -58,8 +51,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Business
 
         public static void Remove(params CompanyParameter[] CompanyParameters)
         {
-            EntityCRUD<CompanyParameter> ec = new EntityCRUD<CompanyParameter>();
-            ec.Remove(CompanyParameters);
+            DbMngmt<CompanyParameter>.Remove(CompanyParameters);
         }
     }
 }

@@ -15,5 +15,6 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Models
         public string comment { get; set; }
         public bool editable { get; set; }
         public bool redo { get; set; }
+        public bool? status { get; set; }
     }
 }

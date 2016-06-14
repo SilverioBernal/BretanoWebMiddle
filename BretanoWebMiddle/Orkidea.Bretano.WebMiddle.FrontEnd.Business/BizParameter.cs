@@ -12,31 +12,26 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Business
     {
         public static IList<Parameter> GetList()
         {
-            EntityCRUD<Parameter> ec = new EntityCRUD<Parameter>();
-            return ec.GetAll();
+            return DbMngmt<Parameter>.GetList();
         }
 
         public static Parameter GetSingle(int id)
         {
-            EntityCRUD<Parameter> ec = new EntityCRUD<Parameter>();
-            return ec.GetSingle(c => c.id.Equals(id));
+            return DbMngmt<Parameter>.GetSingle(c => c.id.Equals(id));
         }
 
         public static Parameter GetSingle(string name)
         {
-            EntityCRUD<Parameter> ec = new EntityCRUD<Parameter>();
-            return ec.GetSingle(c => c.name.Equals(name));
+            return DbMngmt<Parameter>.GetSingle(c => c.name.Equals(name));
         }
 
         public static void Add(params Parameter[] Parameters)
-        {
-            EntityCRUD<Parameter> ec = new EntityCRUD<Parameter>();
-
+        {            
             try
             {
                 foreach (Parameter item in Parameters)
-                {                    
-                    ec.Add(Parameters);
+                {
+                    DbMngmt<Parameter>.Add(Parameters);
                 }
             }
             catch (Exception)

@@ -66,6 +66,15 @@
   <wsdl:message name="WSSAP_GetBusinessPartnerCreditStatus_DataAccessFaultFault_FaultMessage">
     <wsdl:part name="detail" element="tns:DataAccessFault" />
   </wsdl:message>
+  <wsdl:message name="WSSAP_GetOldestOpenInvoice_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOldestOpenInvoice" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetOldestOpenInvoice_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOldestOpenInvoiceResponse" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_GetOldestOpenInvoice_DataAccessFaultFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:DataAccessFault" />
+  </wsdl:message>
   <wsdl:message name="WSSAP_GetAllBusinessPratnerGroup_InputMessage">
     <wsdl:part name="parameters" element="tns:GetAllBusinessPratnerGroup" />
   </wsdl:message>
@@ -208,6 +217,15 @@
     <wsdl:part name="parameters" element="tns:ListSaleOrdersResponse" />
   </wsdl:message>
   <wsdl:message name="WSSAP_ListSaleOrders_DataAccessFaultFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:DataAccessFault" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_ListSaleOrdersFiltered_InputMessage">
+    <wsdl:part name="parameters" element="tns:ListSaleOrdersFiltered" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_ListSaleOrdersFiltered_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ListSaleOrdersFilteredResponse" />
+  </wsdl:message>
+  <wsdl:message name="WSSAP_ListSaleOrdersFiltered_DataAccessFaultFault_FaultMessage">
     <wsdl:part name="detail" element="tns:DataAccessFault" />
   </wsdl:message>
   <wsdl:message name="WSSAP_GetSingleOrder_InputMessage">
@@ -439,6 +457,11 @@
       <wsdl:output wsaw:Action="http://WSSAP/WSSAP/GetBusinessPartnerCreditStatusResponse" message="tns:WSSAP_GetBusinessPartnerCreditStatus_OutputMessage" />
       <wsdl:fault wsaw:Action="http://WSSAP/WSSAP/GetBusinessPartnerCreditStatusDataAccessFaultFault" name="DataAccessFaultFault" message="tns:WSSAP_GetBusinessPartnerCreditStatus_DataAccessFaultFault_FaultMessage" />
     </wsdl:operation>
+    <wsdl:operation name="GetOldestOpenInvoice">
+      <wsdl:input wsaw:Action="http://WSSAP/WSSAP/GetOldestOpenInvoice" message="tns:WSSAP_GetOldestOpenInvoice_InputMessage" />
+      <wsdl:output wsaw:Action="http://WSSAP/WSSAP/GetOldestOpenInvoiceResponse" message="tns:WSSAP_GetOldestOpenInvoice_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://WSSAP/WSSAP/GetOldestOpenInvoiceDataAccessFaultFault" name="DataAccessFaultFault" message="tns:WSSAP_GetOldestOpenInvoice_DataAccessFaultFault_FaultMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetAllBusinessPratnerGroup">
       <wsdl:input wsaw:Action="http://WSSAP/WSSAP/GetAllBusinessPratnerGroup" message="tns:WSSAP_GetAllBusinessPratnerGroup_InputMessage" />
       <wsdl:output wsaw:Action="http://WSSAP/WSSAP/GetAllBusinessPratnerGroupResponse" message="tns:WSSAP_GetAllBusinessPratnerGroup_OutputMessage" />
@@ -518,6 +541,11 @@
       <wsdl:input wsaw:Action="http://WSSAP/WSSAP/ListSaleOrders" message="tns:WSSAP_ListSaleOrders_InputMessage" />
       <wsdl:output wsaw:Action="http://WSSAP/WSSAP/ListSaleOrdersResponse" message="tns:WSSAP_ListSaleOrders_OutputMessage" />
       <wsdl:fault wsaw:Action="http://WSSAP/WSSAP/ListSaleOrdersDataAccessFaultFault" name="DataAccessFaultFault" message="tns:WSSAP_ListSaleOrders_DataAccessFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ListSaleOrdersFiltered">
+      <wsdl:input wsaw:Action="http://WSSAP/WSSAP/ListSaleOrdersFiltered" message="tns:WSSAP_ListSaleOrdersFiltered_InputMessage" />
+      <wsdl:output wsaw:Action="http://WSSAP/WSSAP/ListSaleOrdersFilteredResponse" message="tns:WSSAP_ListSaleOrdersFiltered_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://WSSAP/WSSAP/ListSaleOrdersFilteredDataAccessFaultFault" name="DataAccessFaultFault" message="tns:WSSAP_ListSaleOrdersFiltered_DataAccessFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetSingleOrder">
       <wsdl:input wsaw:Action="http://WSSAP/WSSAP/GetSingleOrder" message="tns:WSSAP_GetSingleOrder_InputMessage" />

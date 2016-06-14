@@ -39,6 +39,12 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Entities
         public string cardName { get; set; }
         public Nullable<bool> draftLC { get; set; }
         public Nullable<bool> draftDM { get; set; }
+        public Nullable<bool> draftPB { get; set; }
+        public string draftComments { get; set; }
+        public Nullable<bool> authStatus { get; set; }
+        public string authComments { get; set; }
+        public Nullable<System.DateTime> authDate { get; set; }
+        public string authUser { get; set; }
     
         public virtual ICollection<RDR1> RDR1 { get; set; }
     }

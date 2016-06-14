@@ -14,32 +14,27 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Business
     {
         public static IList<WebUser> GetList()
         {
-            EntityCRUD<WebUser> ec = new EntityCRUD<WebUser>();
-            return ec.GetAll();
+            return DbMngmt<WebUser>.GetList();
         }
 
         public static WebUser GetSingle(int id)
         {
-            EntityCRUD<WebUser> ec = new EntityCRUD<WebUser>();
-            return ec.GetSingle(c => c.id.Equals(id));
+            return DbMngmt<WebUser>.GetSingle(c => c.id.Equals(id));
         }
 
         public static WebUser GetSingle(string name)
         {
-            EntityCRUD<WebUser> ec = new EntityCRUD<WebUser>();
-            return ec.GetSingle(c => c.name.Equals(name));
+            return DbMngmt<WebUser>.GetSingle(c => c.name.Equals(name));
         }
 
         public static void Add(params WebUser[] WebUsers)
         {
-            EntityCRUD<WebUser> ec = new EntityCRUD<WebUser>();
-
             try
             {
                 foreach (WebUser item in WebUsers)
                 {
                     //item.pass = Cryptography.Encrypt(HexSerialization.StringToHex(PasswordHelper.Generate()));
-                    ec.Add(WebUsers);
+                    DbMngmt<WebUser>.Add(WebUsers);
 
                     //SendWebUserNotification(item, WebUserAction.New);
                 }
@@ -52,8 +47,6 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Business
 
         public static void Update(WebUserAction action, params WebUser[] WebUsers)
         {
-            EntityCRUD<WebUser> ec = new EntityCRUD<WebUser>();
-
             try
             {
                 foreach (WebUser item in WebUsers)
@@ -76,7 +69,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Business
                             break;
                     }
 
-                    ec.Update(WebUsers);
+                    DbMngmt<WebUser>.Update(WebUsers);
 
                     //SendWebUserNotification(item, action);
                 }
@@ -89,8 +82,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Business
 
         public static void Remove(params WebUser[] WebUsers)
         {
-            EntityCRUD<WebUser> ec = new EntityCRUD<WebUser>();
-            ec.Remove(WebUsers);
+            DbMngmt<WebUser>.Remove(WebUsers);
         }
     }
 }

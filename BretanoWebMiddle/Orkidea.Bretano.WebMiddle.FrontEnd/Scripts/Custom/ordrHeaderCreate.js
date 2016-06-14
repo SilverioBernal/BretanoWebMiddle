@@ -28,10 +28,18 @@
     });
 
     $('#paymentState').click(function () {
-        var url = '../Customer/paymentAge/' + $('#cardCode').val();
+        $.getJSON("../../Customer/AsyncPaymentReportType", function (result) {
+            var url = ''
+            if (result == "Si") {
+                url = '../../Customer/smallPaymentAge/' + $('#cardCode').val();
+            }
+            else {
+                url = '../../Customer/paymentAge/' + $('#cardCode').val();
+            }
 
-        $(".stockBody").load(url);
-        $('#paymentModal').modal('show')
+            $(".stockBody").load(url);
+            $('#paymentModal').modal('show')
+        });
     })
 
     var series = $('#series');
@@ -82,6 +90,7 @@
             var data = table.row($(this).parents('tr')).data();
             $('#cardCode').val(data[0]);
             $('#cardName').val(data[1]);
+            $('#customerCardName').val(data[1]);
 
             var shipToCode = $('#shipToCode');
             var payToCode = $('#payToCode');
@@ -139,6 +148,22 @@
                     );
                 });
             });
+
+            var urlC = '../../Customer/AsyncCustomerDetails/' + data[0];
+
+            $.getJSON(urlC, function (result) {
+                var customerAddress = "";
+                var customerPhone1 = "";
+                var customerPhone2 = "";
+                var customerContact = "";
+
+                $('#customerAddress').val(result.address);
+                $('#customerPhone1').val(result.phone1);
+                $('#customerPhone2').val(result.phone2);
+                $('#customerContact').val(result.cntctPrsn);
+            });
         });
     });
+
+
 });

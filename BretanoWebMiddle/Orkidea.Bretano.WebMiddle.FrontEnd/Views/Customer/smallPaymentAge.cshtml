@@ -1,35 +1,28 @@
-﻿
-@{
-    ViewBag.Title = "searchLastPrices";
+﻿@{
+    ViewBag.Title = "Edades de cartera";
     Layout = null;
 }
 
-<table id="orders" class="display" cellspacing="0">
+<table id="payTable" class="display" cellspacing="0">
     <thead>
         <tr>
-            <th>Fecha</th>
-            <th>Item</th>
-            <th>Nombre </th>
-            <th>Cantidad</th>
-            <th>Precio</th>            
+            <th>Documento</th>
+            <th>Contabilización</th>
+            <th>Valor</th>
+            <th>Referencia</th>
         </tr>
     </thead>
 </table>
 
 <script>
-    $(document).ready(function () {        
-        var itemsTable = $('#orders').DataTable({
-            //processing: true,
-            "ajax": '@Url.Action("AsyncListPricesList", new { id = ViewBag.data })',
-            "columnDefs": [{
-                //"targets": -1,
-                "data": null,                
-            }],
+    $(document).ready(function () {
+        var whsTable = $('#payTable').DataTable({
+            "ajax": '@Url.Action("AsyncGetSmallPaymentAgeList", new { id = ViewBag.id })',
             "language": {
                 //"processing": "Hang on. Waiting for response...",
                 "lengthMenu": "Mostrar _MENU_ registros por pagina",
                 //"zeroRecords": "Ningun resultado encontrado",
-                "sLoadingRecords": "Obteniendo los precios, espere un momento...",
+                "sLoadingRecords": "Obteniendo la información del cliente, espere un momento...",
                 "info": "Página _PAGE_ de _PAGES_",
                 "infoEmpty": "Sin registros",
                 "infoFiltered": "(filtered from _MAX_ total records)",
@@ -42,6 +35,6 @@
                 },
             }
         });
+
     });
 </script>
-

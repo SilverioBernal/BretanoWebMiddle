@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Orkidea.Bretano.WebMiddle.FrontEnd.DAL
-{
+{   
     public class EntityCRUD<T> : IEntityCRUD<T> where T : class
     {
         public virtual IList<T> GetAll(params Expression<Func<T, object>>[] navigationProperties)
@@ -152,6 +152,30 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.DAL
                 }
                 context.SaveChanges();
             }
+        }
+
+        public virtual IList<T> executeSqlQueryToList(string sql) 
+        {
+            IList<T> list;
+
+            using (var context = new QcaWebMiddleEntities())
+            {
+                list = context.Database.SqlQuery<T>(sql).ToList();
+            }
+
+            return list;
+        }
+
+        public virtual T executeSqlQuerySingle(string sql)
+        {
+            T genericObject;
+
+            using (var context = new QcaWebMiddleEntities())
+            {
+                genericObject = context.Database.SqlQuery<T>(sql).FirstOrDefault();
+            }
+
+            return genericObject;
         }
     }
 }

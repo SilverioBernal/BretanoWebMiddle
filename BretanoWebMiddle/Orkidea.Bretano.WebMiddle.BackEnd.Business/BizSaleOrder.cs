@@ -332,7 +332,74 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
                 oAppConnData = BizUtilities.GetDataConnection(oAppConnData);
                 SaleOrderAccess = new MarketingDocumentData(oAppConnData.adoConnString);
 
-                List<LightMarketingDocument> orders = SaleOrderAccess.GetList(SapDocumentType.SalesOrder, startDate, endDate, cardCode);
+                List<LightMarketingDocument> orders = new List<LightMarketingDocument>();
+
+                if (!string.IsNullOrEmpty(cardCode))
+                    orders = SaleOrderAccess.GetList(SapDocumentType.SalesOrder, startDate, endDate, cardCode);
+                else
+                    orders = SaleOrderAccess.GetList(SapDocumentType.SalesOrder, startDate, endDate);
+
+                foreach (LightMarketingDocument item in orders)
+                {
+                    if (item.docStatus == "O")
+                        item.docStatus = "Abierto";
+                    else
+                        item.docStatus = "Cerrado";
+                }
+
+                return orders;
+            }
+            catch (DbException ex)
+            {
+                Exception outEx;
+                if (ExceptionPolicy.HandleException(ex, "Politica_SQLServer", out outEx))
+                {
+                    outEx.Data.Add("1", "14");
+                    outEx.Data.Add("2", "NA");
+                    //outEx.Data.Add("3", outEx.Message);
+                    outEx.Data.Add("3", outEx.Message + " Descripción: " + ex.Message);
+                    throw outEx;
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
+            catch (BusinessException ex)
+            {
+                BizUtilities.ProcessBusinessException(ex);
+            }
+            catch (Exception ex)
+            {
+                Exception outEx;
+                if (ExceptionPolicy.HandleException(ex, "Politica_ExcepcionGenerica", out outEx))
+                {
+                    outEx.Data.Add("1", "3");
+                    outEx.Data.Add("2", "NA");
+                    outEx.Data.Add("3", outEx.Message);
+                    throw outEx;
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
+            return null;
+        }
+
+        public List<LightMarketingDocument> List(DateTime startDate, DateTime endDate, char fieldFilter, string slp_card_Code, AppConnData oAppConnData)
+        {
+            try
+            {
+                if (!BizUtilities.ValidateServiceConnection(oAppConnData))
+                    throw new BusinessException(15, "Nombre de Usuario o Contraseña incorrecta para el Servicio");
+
+                oAppConnData = BizUtilities.GetDataConnection(oAppConnData);
+                SaleOrderAccess = new MarketingDocumentData(oAppConnData.adoConnString);
+
+                List<LightMarketingDocument> orders = new List<LightMarketingDocument>();
+
+                orders = SaleOrderAccess.GetList(SapDocumentType.SalesOrder, startDate, endDate, fieldFilter, slp_card_Code);
 
                 foreach (LightMarketingDocument item in orders)
                 {
