@@ -50,6 +50,15 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
                         model.companies = BizCompany.GetList().ToList();
                         return View(model);
                     }
+                    else
+                    {
+                        if (!userTarget.active)
+                        {
+                            ViewBag.ErrorMessage = "Usuario inactivo";
+                            model.companies = BizCompany.GetList().ToList();
+                            return View(model);
+                        }
+                    }
                 }
                 else
                 {

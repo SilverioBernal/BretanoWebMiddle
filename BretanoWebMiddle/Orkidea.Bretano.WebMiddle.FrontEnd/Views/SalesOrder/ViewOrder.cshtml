@@ -43,7 +43,7 @@
                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#rejectModal"><i class="fa fa-thumbs-down "></i> Rechazar</button>
                             <span> | </span>
                         }
-                        @Html.ActionLink("Cancelar", "AuthorizationReport", "SalesOrder", new { @class = "btn btn-danger" })
+                        @Html.ActionLink("Cancelar", "CancelAuthorizationRequest", "SalesOrder", new { id = ViewBag.id }, new { @class = "btn btn-danger" })
 
                         <span> | </span>
 

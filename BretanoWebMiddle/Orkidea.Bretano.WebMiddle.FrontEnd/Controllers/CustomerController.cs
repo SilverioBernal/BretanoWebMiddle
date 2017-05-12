@@ -218,7 +218,9 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
                 return View(new CustomerViewModel());
             }
 
-            string id = HexSerialization.StringToHex(string.Format("{0}|{1}", customer.cardCode, customer.cardName));
+            string customerName = customer.cardName.Length > 12 ? string.Format("{0}...",customer.cardName.Substring(0, 20)) : customer.cardName;
+
+            string id = HexSerialization.StringToHex(string.Format("{0}|{1}", customer.cardCode, customerName));
 
             return RedirectToAction("addContact", new { id = id });
             //customer.contactPersons = new List<ContactEmployee>();
@@ -536,7 +538,10 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
                 return View(customer);
             }
 
-            id = HexSerialization.StringToHex(string.Format("{0}|{1}", customer.cardCode, customer.cardName));
+            string customerName = customer.cardName.Length > 12 ? string.Format("{0}...", customer.cardName.Substring(0, 20)) : customer.cardName;
+
+            id = HexSerialization.StringToHex(string.Format("{0}|{1}", customer.cardCode, customerName));
+            //id = HexSerialization.StringToHex(string.Format("{0}|{1}", customer.cardCode, customer.cardName));
             return RedirectToAction("addContact", new { id = id });
             //customer.contactPersons = new List<ContactEmployee>();
             //return View("addContact", customer);

@@ -878,15 +878,23 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
             ORDR ordr = BizSalesOrderDraft.GetSingle(int.Parse(realId));
             ordr.authStatus = false;
             ordr.authUser = userId;
-            
+
             var myTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SA Pacific Standard Time");
             ordr.authDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, myTimeZone);
-            
+
             ordr.authComments = approvedOrder.authComments;
 
             BizSalesOrderDraft.Update(ordr);
 
             return RedirectToAction("AuthorizationReport");
+        }
+
+        [Authorize]
+        public ActionResult CancelAuthorizationRequest(string id)
+        {
+            RemoveOrder(id);
+
+            return View("AuthorizationReport");
         }
 
         [Authorize]
@@ -915,10 +923,7 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
         public ActionResult Remove(string id)
         {
 
-            string realId = HexSerialization.HexToString(id);
-            ORDR ordr = BizSalesOrderDraft.GetSingle(int.Parse(realId));
-
-            BizSalesOrderDraft.Delete(ordr);
+            RemoveOrder(id);
 
             return RedirectToAction("Index");
         }
@@ -2228,6 +2233,14 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Controllers
             }
 
             return Json(res, JsonRequestBehavior.AllowGet);
+        }
+
+        private void RemoveOrder(string id)
+        {
+            string realId = HexSerialization.HexToString(id);
+            ORDR ordr = BizSalesOrderDraft.GetSingle(int.Parse(realId));
+
+            BizSalesOrderDraft.Delete(ordr);
         }
     }
 }

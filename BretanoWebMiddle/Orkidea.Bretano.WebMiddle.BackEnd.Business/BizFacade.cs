@@ -240,7 +240,7 @@ namespace Orkidea.Bretano.WebMiddle.BackEnd.Business
         public List<SalesTaxCode> GetSalesTaxCodeList(AppConnData oAppConnData)
         {
 
-            List<SalesTaxCode> taxes = bizFinance.GetSalesTaxCodeList(oAppConnData).Where(x => x.name.Equals("IVA VENTAS 16%")).ToList();
+            List<SalesTaxCode> taxes = bizFinance.GetSalesTaxCodeList(oAppConnData).Where(x => x.name.Equals("IVA GENERAL 19%")).ToList();
             return taxes;
         }
 

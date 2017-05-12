@@ -148,13 +148,15 @@ namespace Orkidea.Bretano.WebMiddle.FrontEnd.Business
         }
 
         public static IList<SalesResume> GetSalesResumeList(DateTime from, DateTime to, int companyId)
-        {            
+        {
+            to = to.AddDays(1).AddSeconds(-1);
+
             StringBuilder oSql = new StringBuilder();
 
             oSql.Append("select d.name userName, count(a.id) salesCount , sum(b.price * b.quantity) salesValue  from ordr a inner join rdr1 b on a.id = b.orderId ");
             oSql.Append("inner join webusercompany c on a.idCompania = c.companyId and a.uOrkUsuarioWeb = c.webUserId and a.slpCode = c.slpCode ");
             oSql.Append("inner join webUser d on c.webUserId = d.id ");
-            oSql.Append(string.Format("where idcompania = {0} and a.docentry is not null and a.docDate between '{1}' and '{2}'", companyId, from.ToString("yyyy-MM-dd"), to.ToString("yyyy-MM-dd")));
+            oSql.Append(string.Format("where idcompania = {0} and a.docentry is not null and a.docDate between '{1}' and '{2}'", companyId, from.ToString("yyyy-MM-dd"), to.ToString("yyyy-MM-dd HH:mm:ss")));
             oSql.Append("group by d.name");
 
             return DbMngmt<SalesResume>.executeSqlQueryToList(oSql.ToString());
